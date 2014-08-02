@@ -50,3 +50,16 @@ weechat-*.cygport
 stamp*
 
 src/gui/curses/weechat
+
+# CMake files
+CMakeFiles/
+cmake_install.cmake
+cmake_uninstall.cmake
+CMakeCache.txt
+CPackConfig.cmake
+CPackSourceConfig.cmake
+
+# Xcode files
+*.xcworkspacedata
+*.xcuserstate
+*.xccheckout
