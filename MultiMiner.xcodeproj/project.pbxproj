@@ -1,0 +1,1146 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXFileReference section */
+		D2916F6A198C6CA500A102E0 /* config-git.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "config-git.h"; sourceTree = "<group>"; };
+		D2916F6E198C6CA500A102E0 /* config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
+		D29170A8198C6CA500A102E0 /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		D29170AE198C6CA500A102E0 /* CMakeLists.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
+		D29170D8198C6CA500A102E0 /* CMakeLists.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
+		D29170DA198C6CA500A102E0 /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		D29170DB198C6CA500A102E0 /* Makefile.am */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
+		D29170DC198C6CA500A102E0 /* wee-backtrace.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "wee-backtrace.c"; sourceTree = "<group>"; };
+		D29170DD198C6CA500A102E0 /* wee-backtrace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "wee-backtrace.h"; sourceTree = "<group>"; };
+		D29170DE198C6CA500A102E0 /* wee-command.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "wee-command.c"; sourceTree = "<group>"; };
+		D29170DF198C6CA500A102E0 /* wee-command.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "wee-command.h"; sourceTree = "<group>"; };
+		D29170E0198C6CA500A102E0 /* wee-completion.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "wee-completion.c"; sourceTree = "<group>"; };
+		D29170E1198C6CA500A102E0 /* wee-completion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "wee-completion.h"; sourceTree = "<group>"; };
+		D29170E2198C6CA500A102E0 /* wee-config-file.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "wee-config-file.c"; sourceTree = "<group>"; };
+		D29170E3198C6CA500A102E0 /* wee-config-file.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "wee-config-file.h"; sourceTree = "<group>"; };
+		D29170E4198C6CA500A102E0 /* wee-config.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "wee-config.c"; sourceTree = "<group>"; };
+		D29170E5198C6CA500A102E0 /* wee-config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "wee-config.h"; sourceTree = "<group>"; };
+		D29170E6198C6CA500A102E0 /* wee-debug.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "wee-debug.c"; sourceTree = "<group>"; };
+		D29170E7198C6CA500A102E0 /* wee-debug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "wee-debug.h"; sourceTree = "<group>"; };
+		D29170E8198C6CA500A102E0 /* wee-eval.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "wee-eval.c"; sourceTree = "<group>"; };
+		D29170E9198C6CA500A102E0 /* wee-eval.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "wee-eval.h"; sourceTree = "<group>"; };
+		D29170EA198C6CA500A102E0 /* wee-hashtable.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "wee-hashtable.c"; sourceTree = "<group>"; };
+		D29170EB198C6CA500A102E0 /* wee-hashtable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "wee-hashtable.h"; sourceTree = "<group>"; };
+		D29170EC198C6CA500A102E0 /* wee-hdata.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "wee-hdata.c"; sourceTree = "<group>"; };
+		D29170ED198C6CA500A102E0 /* wee-hdata.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "wee-hdata.h"; sourceTree = "<group>"; };
+		D29170EE198C6CA500A102E0 /* wee-hook.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "wee-hook.c"; sourceTree = "<group>"; };
+		D29170EF198C6CA500A102E0 /* wee-hook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "wee-hook.h"; sourceTree = "<group>"; };
+		D29170F0198C6CA500A102E0 /* wee-infolist.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "wee-infolist.c"; sourceTree = "<group>"; };
+		D29170F1198C6CA500A102E0 /* wee-infolist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "wee-infolist.h"; sourceTree = "<group>"; };
+		D29170F2198C6CA500A102E0 /* wee-input.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "wee-input.c"; sourceTree = "<group>"; };
+		D29170F3198C6CA500A102E0 /* wee-input.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "wee-input.h"; sourceTree = "<group>"; };
+		D29170F4198C6CA500A102E0 /* wee-list.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "wee-list.c"; sourceTree = "<group>"; };
+		D29170F5198C6CA500A102E0 /* wee-list.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "wee-list.h"; sourceTree = "<group>"; };
+		D29170F6198C6CA500A102E0 /* wee-log.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "wee-log.c"; sourceTree = "<group>"; };
+		D29170F7198C6CA500A102E0 /* wee-log.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "wee-log.h"; sourceTree = "<group>"; };
+		D29170F8198C6CA500A102E0 /* wee-network.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "wee-network.c"; sourceTree = "<group>"; };
+		D29170F9198C6CA500A102E0 /* wee-network.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "wee-network.h"; sourceTree = "<group>"; };
+		D29170FA198C6CA500A102E0 /* wee-proxy.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "wee-proxy.c"; sourceTree = "<group>"; };
+		D29170FB198C6CA500A102E0 /* wee-proxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "wee-proxy.h"; sourceTree = "<group>"; };
+		D29170FC198C6CA500A102E0 /* wee-secure.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "wee-secure.c"; sourceTree = "<group>"; };
+		D29170FD198C6CA500A102E0 /* wee-secure.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "wee-secure.h"; sourceTree = "<group>"; };
+		D29170FE198C6CA500A102E0 /* wee-string.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "wee-string.c"; sourceTree = "<group>"; };
+		D29170FF198C6CA500A102E0 /* wee-string.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "wee-string.h"; sourceTree = "<group>"; };
+		D2917100198C6CA500A102E0 /* wee-upgrade-file.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "wee-upgrade-file.c"; sourceTree = "<group>"; };
+		D2917101198C6CA500A102E0 /* wee-upgrade-file.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "wee-upgrade-file.h"; sourceTree = "<group>"; };
+		D2917102198C6CA500A102E0 /* wee-upgrade.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "wee-upgrade.c"; sourceTree = "<group>"; };
+		D2917103198C6CA500A102E0 /* wee-upgrade.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "wee-upgrade.h"; sourceTree = "<group>"; };
+		D2917104198C6CA500A102E0 /* wee-url.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "wee-url.c"; sourceTree = "<group>"; };
+		D2917105198C6CA500A102E0 /* wee-url.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "wee-url.h"; sourceTree = "<group>"; };
+		D2917106198C6CA500A102E0 /* wee-utf8.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "wee-utf8.c"; sourceTree = "<group>"; };
+		D2917107198C6CA500A102E0 /* wee-utf8.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "wee-utf8.h"; sourceTree = "<group>"; };
+		D2917108198C6CA500A102E0 /* wee-util.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "wee-util.c"; sourceTree = "<group>"; };
+		D2917109198C6CA500A102E0 /* wee-util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "wee-util.h"; sourceTree = "<group>"; };
+		D291710A198C6CA500A102E0 /* wee-version.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "wee-version.c"; sourceTree = "<group>"; };
+		D291710B198C6CA500A102E0 /* wee-version.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "wee-version.h"; sourceTree = "<group>"; };
+		D291710C198C6CA500A102E0 /* weechat.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = weechat.c; sourceTree = "<group>"; };
+		D291710D198C6CA500A102E0 /* weechat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = weechat.h; sourceTree = "<group>"; };
+		D2917131198C6CA500A102E0 /* CMakeLists.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
+		D2917155198C6CA500A102E0 /* CMakeLists.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
+		D2917156198C6CA500A102E0 /* gui-curses-bar-window.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "gui-curses-bar-window.c"; sourceTree = "<group>"; };
+		D2917157198C6CA500A102E0 /* gui-curses-chat.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "gui-curses-chat.c"; sourceTree = "<group>"; };
+		D2917158198C6CA500A102E0 /* gui-curses-color.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "gui-curses-color.c"; sourceTree = "<group>"; };
+		D2917159198C6CA500A102E0 /* gui-curses-key.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "gui-curses-key.c"; sourceTree = "<group>"; };
+		D291715A198C6CA500A102E0 /* gui-curses-main.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "gui-curses-main.c"; sourceTree = "<group>"; };
+		D291715B198C6CA500A102E0 /* gui-curses-mouse.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "gui-curses-mouse.c"; sourceTree = "<group>"; };
+		D291715C198C6CA500A102E0 /* gui-curses-term.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "gui-curses-term.c"; sourceTree = "<group>"; };
+		D291715D198C6CA500A102E0 /* gui-curses-window.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "gui-curses-window.c"; sourceTree = "<group>"; };
+		D291715E198C6CA500A102E0 /* gui-curses.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "gui-curses.h"; sourceTree = "<group>"; };
+		D2917160198C6CA500A102E0 /* main.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
+		D2917161198C6CA500A102E0 /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		D2917162198C6CA500A102E0 /* Makefile.am */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
+		D2917164198C6CA500A102E0 /* gui-bar-item.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "gui-bar-item.c"; sourceTree = "<group>"; };
+		D2917165198C6CA500A102E0 /* gui-bar-item.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "gui-bar-item.h"; sourceTree = "<group>"; };
+		D2917166198C6CA500A102E0 /* gui-bar-window.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "gui-bar-window.c"; sourceTree = "<group>"; };
+		D2917167198C6CA500A102E0 /* gui-bar-window.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "gui-bar-window.h"; sourceTree = "<group>"; };
+		D2917168198C6CA500A102E0 /* gui-bar.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "gui-bar.c"; sourceTree = "<group>"; };
+		D2917169198C6CA500A102E0 /* gui-bar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "gui-bar.h"; sourceTree = "<group>"; };
+		D291716A198C6CA500A102E0 /* gui-buffer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "gui-buffer.c"; sourceTree = "<group>"; };
+		D291716B198C6CA500A102E0 /* gui-buffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "gui-buffer.h"; sourceTree = "<group>"; };
+		D291716C198C6CA500A102E0 /* gui-chat.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "gui-chat.c"; sourceTree = "<group>"; };
+		D291716D198C6CA500A102E0 /* gui-chat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "gui-chat.h"; sourceTree = "<group>"; };
+		D291716E198C6CA500A102E0 /* gui-color.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "gui-color.c"; sourceTree = "<group>"; };
+		D291716F198C6CA500A102E0 /* gui-color.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "gui-color.h"; sourceTree = "<group>"; };
+		D2917170198C6CA500A102E0 /* gui-completion.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "gui-completion.c"; sourceTree = "<group>"; };
+		D2917171198C6CA500A102E0 /* gui-completion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "gui-completion.h"; sourceTree = "<group>"; };
+		D2917172198C6CA500A102E0 /* gui-cursor.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "gui-cursor.c"; sourceTree = "<group>"; };
+		D2917173198C6CA500A102E0 /* gui-cursor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "gui-cursor.h"; sourceTree = "<group>"; };
+		D2917174198C6CA500A102E0 /* gui-filter.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "gui-filter.c"; sourceTree = "<group>"; };
+		D2917175198C6CA500A102E0 /* gui-filter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "gui-filter.h"; sourceTree = "<group>"; };
+		D2917176198C6CA500A102E0 /* gui-focus.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "gui-focus.c"; sourceTree = "<group>"; };
+		D2917177198C6CA500A102E0 /* gui-focus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "gui-focus.h"; sourceTree = "<group>"; };
+		D2917178198C6CA500A102E0 /* gui-history.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "gui-history.c"; sourceTree = "<group>"; };
+		D2917179198C6CA500A102E0 /* gui-history.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "gui-history.h"; sourceTree = "<group>"; };
+		D291717A198C6CA500A102E0 /* gui-hotlist.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "gui-hotlist.c"; sourceTree = "<group>"; };
+		D291717B198C6CA500A102E0 /* gui-hotlist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "gui-hotlist.h"; sourceTree = "<group>"; };
+		D291717C198C6CA500A102E0 /* gui-input.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "gui-input.c"; sourceTree = "<group>"; };
+		D291717D198C6CA500A102E0 /* gui-input.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "gui-input.h"; sourceTree = "<group>"; };
+		D291717E198C6CA500A102E0 /* gui-key.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "gui-key.c"; sourceTree = "<group>"; };
+		D291717F198C6CA500A102E0 /* gui-key.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "gui-key.h"; sourceTree = "<group>"; };
+		D2917180198C6CA500A102E0 /* gui-layout.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "gui-layout.c"; sourceTree = "<group>"; };
+		D2917181198C6CA500A102E0 /* gui-layout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "gui-layout.h"; sourceTree = "<group>"; };
+		D2917182198C6CA500A102E0 /* gui-line.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "gui-line.c"; sourceTree = "<group>"; };
+		D2917183198C6CA500A102E0 /* gui-line.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "gui-line.h"; sourceTree = "<group>"; };
+		D2917184198C6CA500A102E0 /* gui-main.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "gui-main.h"; sourceTree = "<group>"; };
+		D2917185198C6CA500A102E0 /* gui-mouse.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "gui-mouse.c"; sourceTree = "<group>"; };
+		D2917186198C6CA500A102E0 /* gui-mouse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "gui-mouse.h"; sourceTree = "<group>"; };
+		D2917187198C6CA500A102E0 /* gui-nicklist.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "gui-nicklist.c"; sourceTree = "<group>"; };
+		D2917188198C6CA500A102E0 /* gui-nicklist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "gui-nicklist.h"; sourceTree = "<group>"; };
+		D2917189198C6CA500A102E0 /* gui-window.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "gui-window.c"; sourceTree = "<group>"; };
+		D291718A198C6CA500A102E0 /* gui-window.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "gui-window.h"; sourceTree = "<group>"; };
+		D291718C198C6CA500A102E0 /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		D291718D198C6CA500A102E0 /* Makefile.am */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
+		D291718E198C6CA500A102E0 /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		D291718F198C6CA500A102E0 /* Makefile.am */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
+		D2917192198C6CA500A102E0 /* alias-config.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "alias-config.c"; sourceTree = "<group>"; };
+		D2917193198C6CA500A102E0 /* alias-config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "alias-config.h"; sourceTree = "<group>"; };
+		D2917194198C6CA500A102E0 /* alias-info.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "alias-info.c"; sourceTree = "<group>"; };
+		D2917195198C6CA500A102E0 /* alias-info.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "alias-info.h"; sourceTree = "<group>"; };
+		D2917196198C6CA500A102E0 /* alias.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = alias.c; sourceTree = "<group>"; };
+		D2917197198C6CA500A102E0 /* alias.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = alias.h; sourceTree = "<group>"; };
+		D29171AA198C6CA500A102E0 /* CMakeLists.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
+		D29171AB198C6CA500A102E0 /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		D29171AC198C6CA500A102E0 /* Makefile.am */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
+		D29171D6198C6CA500A102E0 /* charset.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = charset.c; sourceTree = "<group>"; };
+		D29171E7198C6CA500A102E0 /* CMakeLists.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
+		D29171E8198C6CA500A102E0 /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		D29171E9198C6CA500A102E0 /* Makefile.am */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
+		D291720A198C6CA600A102E0 /* CMakeLists.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
+		D291721F198C6CA600A102E0 /* CMakeLists.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
+		D2917220198C6CA600A102E0 /* exec-buffer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "exec-buffer.c"; sourceTree = "<group>"; };
+		D2917221198C6CA600A102E0 /* exec-buffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "exec-buffer.h"; sourceTree = "<group>"; };
+		D2917222198C6CA600A102E0 /* exec-command.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "exec-command.c"; sourceTree = "<group>"; };
+		D2917223198C6CA600A102E0 /* exec-command.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "exec-command.h"; sourceTree = "<group>"; };
+		D2917224198C6CA600A102E0 /* exec-completion.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "exec-completion.c"; sourceTree = "<group>"; };
+		D2917225198C6CA600A102E0 /* exec-completion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "exec-completion.h"; sourceTree = "<group>"; };
+		D2917226198C6CA600A102E0 /* exec-config.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "exec-config.c"; sourceTree = "<group>"; };
+		D2917227198C6CA600A102E0 /* exec-config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "exec-config.h"; sourceTree = "<group>"; };
+		D2917228198C6CA600A102E0 /* exec.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = exec.c; sourceTree = "<group>"; };
+		D2917229198C6CA600A102E0 /* exec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = exec.h; sourceTree = "<group>"; };
+		D291722B198C6CA600A102E0 /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		D291722C198C6CA600A102E0 /* Makefile.am */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
+		D291723E198C6CA600A102E0 /* CMakeLists.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
+		D291723F198C6CA600A102E0 /* fifo-info.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "fifo-info.c"; sourceTree = "<group>"; };
+		D2917240198C6CA600A102E0 /* fifo-info.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "fifo-info.h"; sourceTree = "<group>"; };
+		D2917241198C6CA600A102E0 /* fifo.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = fifo.c; sourceTree = "<group>"; };
+		D2917242198C6CA600A102E0 /* fifo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fifo.h; sourceTree = "<group>"; };
+		D2917244198C6CA600A102E0 /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		D2917245198C6CA600A102E0 /* Makefile.am */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
+		D2917257198C6CA600A102E0 /* CMakeLists.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
+		D2917259198C6CA600A102E0 /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		D291725A198C6CA600A102E0 /* Makefile.am */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
+		D291725B198C6CA600A102E0 /* weechat-guile-api.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "weechat-guile-api.c"; sourceTree = "<group>"; };
+		D291725C198C6CA600A102E0 /* weechat-guile-api.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "weechat-guile-api.h"; sourceTree = "<group>"; };
+		D291725D198C6CA600A102E0 /* weechat-guile.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "weechat-guile.c"; sourceTree = "<group>"; };
+		D291725E198C6CA600A102E0 /* weechat-guile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "weechat-guile.h"; sourceTree = "<group>"; };
+		D29172D0198C6CA600A102E0 /* CMakeLists.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
+		D29172D1198C6CA600A102E0 /* logger-buffer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "logger-buffer.c"; sourceTree = "<group>"; };
+		D29172D2198C6CA600A102E0 /* logger-buffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "logger-buffer.h"; sourceTree = "<group>"; };
+		D29172D3198C6CA600A102E0 /* logger-config.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "logger-config.c"; sourceTree = "<group>"; };
+		D29172D4198C6CA600A102E0 /* logger-config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "logger-config.h"; sourceTree = "<group>"; };
+		D29172D5198C6CA600A102E0 /* logger-info.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "logger-info.c"; sourceTree = "<group>"; };
+		D29172D6198C6CA600A102E0 /* logger-info.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "logger-info.h"; sourceTree = "<group>"; };
+		D29172D7198C6CA600A102E0 /* logger-tail.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "logger-tail.c"; sourceTree = "<group>"; };
+		D29172D8198C6CA600A102E0 /* logger-tail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "logger-tail.h"; sourceTree = "<group>"; };
+		D29172D9198C6CA600A102E0 /* logger.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = logger.c; sourceTree = "<group>"; };
+		D29172DA198C6CA600A102E0 /* logger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = logger.h; sourceTree = "<group>"; };
+		D29172DC198C6CA600A102E0 /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		D29172DD198C6CA600A102E0 /* Makefile.am */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
+		D29172EF198C6CA600A102E0 /* CMakeLists.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
+		D29172F1198C6CA600A102E0 /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		D29172F2198C6CA600A102E0 /* Makefile.am */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
+		D29172F3198C6CA600A102E0 /* weechat-lua-api.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "weechat-lua-api.c"; sourceTree = "<group>"; };
+		D29172F4198C6CA600A102E0 /* weechat-lua-api.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "weechat-lua-api.h"; sourceTree = "<group>"; };
+		D29172F5198C6CA600A102E0 /* weechat-lua.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "weechat-lua.c"; sourceTree = "<group>"; };
+		D29172F6198C6CA600A102E0 /* weechat-lua.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "weechat-lua.h"; sourceTree = "<group>"; };
+		D29172F7198C6CA600A102E0 /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		D29172F8198C6CA600A102E0 /* Makefile.am */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
+		D291730A198C6CA600A102E0 /* CMakeLists.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
+		D291730B198C6CA600A102E0 /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		D291730C198C6CA600A102E0 /* Makefile.am */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
+		D291730E198C6CA600A102E0 /* weechat-perl-api.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "weechat-perl-api.c"; sourceTree = "<group>"; };
+		D291730F198C6CA600A102E0 /* weechat-perl-api.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "weechat-perl-api.h"; sourceTree = "<group>"; };
+		D2917310198C6CA600A102E0 /* weechat-perl.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "weechat-perl.c"; sourceTree = "<group>"; };
+		D2917311198C6CA600A102E0 /* weechat-perl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "weechat-perl.h"; sourceTree = "<group>"; };
+		D2917312198C6CA600A102E0 /* plugin-api.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "plugin-api.c"; sourceTree = "<group>"; };
+		D2917313198C6CA600A102E0 /* plugin-api.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "plugin-api.h"; sourceTree = "<group>"; };
+		D2917314198C6CA600A102E0 /* plugin-config.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "plugin-config.c"; sourceTree = "<group>"; };
+		D2917315198C6CA600A102E0 /* plugin-config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "plugin-config.h"; sourceTree = "<group>"; };
+		D2917316198C6CA600A102E0 /* plugin-script-api.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "plugin-script-api.c"; sourceTree = "<group>"; };
+		D2917317198C6CA600A102E0 /* plugin-script-api.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "plugin-script-api.h"; sourceTree = "<group>"; };
+		D2917318198C6CA600A102E0 /* plugin-script-callback.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "plugin-script-callback.c"; sourceTree = "<group>"; };
+		D2917319198C6CA600A102E0 /* plugin-script-callback.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "plugin-script-callback.h"; sourceTree = "<group>"; };
+		D291731A198C6CA600A102E0 /* plugin-script.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "plugin-script.c"; sourceTree = "<group>"; };
+		D291731B198C6CA600A102E0 /* plugin-script.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "plugin-script.h"; sourceTree = "<group>"; };
+		D291731C198C6CA600A102E0 /* plugin.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = plugin.c; sourceTree = "<group>"; };
+		D291731D198C6CA600A102E0 /* plugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = plugin.h; sourceTree = "<group>"; };
+		D291732F198C6CA600A102E0 /* CMakeLists.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
+		D2917330198C6CA600A102E0 /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		D2917331198C6CA600A102E0 /* Makefile.am */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
+		D2917333198C6CA600A102E0 /* weechat-python-api.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "weechat-python-api.c"; sourceTree = "<group>"; };
+		D2917334198C6CA600A102E0 /* weechat-python-api.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "weechat-python-api.h"; sourceTree = "<group>"; };
+		D2917335198C6CA600A102E0 /* weechat-python.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "weechat-python.c"; sourceTree = "<group>"; };
+		D2917336198C6CA600A102E0 /* weechat-python.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "weechat-python.h"; sourceTree = "<group>"; };
+		D2917392198C6CA600A102E0 /* CMakeLists.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
+		D2917393198C6CA600A102E0 /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		D2917394198C6CA600A102E0 /* Makefile.am */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
+		D2917396198C6CA600A102E0 /* weechat-ruby-api.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "weechat-ruby-api.c"; sourceTree = "<group>"; };
+		D2917397198C6CA600A102E0 /* weechat-ruby-api.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "weechat-ruby-api.h"; sourceTree = "<group>"; };
+		D2917398198C6CA600A102E0 /* weechat-ruby.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "weechat-ruby.c"; sourceTree = "<group>"; };
+		D2917399198C6CA600A102E0 /* weechat-ruby.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "weechat-ruby.h"; sourceTree = "<group>"; };
+		D29173B1198C6CA600A102E0 /* CMakeLists.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
+		D29173B2198C6CA600A102E0 /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		D29173B3198C6CA600A102E0 /* Makefile.am */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
+		D29173B4198C6CA600A102E0 /* script-action.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "script-action.c"; sourceTree = "<group>"; };
+		D29173B5198C6CA600A102E0 /* script-action.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "script-action.h"; sourceTree = "<group>"; };
+		D29173B6198C6CA600A102E0 /* script-buffer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "script-buffer.c"; sourceTree = "<group>"; };
+		D29173B7198C6CA600A102E0 /* script-buffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "script-buffer.h"; sourceTree = "<group>"; };
+		D29173B8198C6CA600A102E0 /* script-command.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "script-command.c"; sourceTree = "<group>"; };
+		D29173B9198C6CA600A102E0 /* script-command.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "script-command.h"; sourceTree = "<group>"; };
+		D29173BA198C6CA600A102E0 /* script-completion.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "script-completion.c"; sourceTree = "<group>"; };
+		D29173BB198C6CA600A102E0 /* script-completion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "script-completion.h"; sourceTree = "<group>"; };
+		D29173BC198C6CA600A102E0 /* script-config.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "script-config.c"; sourceTree = "<group>"; };
+		D29173BD198C6CA600A102E0 /* script-config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "script-config.h"; sourceTree = "<group>"; };
+		D29173BE198C6CA600A102E0 /* script-info.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "script-info.c"; sourceTree = "<group>"; };
+		D29173BF198C6CA600A102E0 /* script-info.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "script-info.h"; sourceTree = "<group>"; };
+		D29173C0198C6CA600A102E0 /* script-repo.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "script-repo.c"; sourceTree = "<group>"; };
+		D29173C1198C6CA600A102E0 /* script-repo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "script-repo.h"; sourceTree = "<group>"; };
+		D29173C2198C6CA600A102E0 /* script.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = script.c; sourceTree = "<group>"; };
+		D29173C3198C6CA600A102E0 /* script.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = script.h; sourceTree = "<group>"; };
+		D29173D6198C6CA600A102E0 /* CMakeLists.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
+		D29173D7198C6CA600A102E0 /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		D29173D8198C6CA600A102E0 /* Makefile.am */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
+		D29173DA198C6CA600A102E0 /* weechat-tcl-api.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "weechat-tcl-api.c"; sourceTree = "<group>"; };
+		D29173DB198C6CA600A102E0 /* weechat-tcl-api.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "weechat-tcl-api.h"; sourceTree = "<group>"; };
+		D29173DC198C6CA600A102E0 /* weechat-tcl.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "weechat-tcl.c"; sourceTree = "<group>"; };
+		D29173DD198C6CA600A102E0 /* weechat-tcl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "weechat-tcl.h"; sourceTree = "<group>"; };
+		D29173F3198C6CA600A102E0 /* CMakeLists.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
+		D29173F4198C6CA600A102E0 /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		D29173F5198C6CA600A102E0 /* Makefile.am */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
+		D29173F6198C6CA600A102E0 /* trigger-buffer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "trigger-buffer.c"; sourceTree = "<group>"; };
+		D29173F7198C6CA600A102E0 /* trigger-buffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "trigger-buffer.h"; sourceTree = "<group>"; };
+		D29173F8198C6CA600A102E0 /* trigger-callback.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "trigger-callback.c"; sourceTree = "<group>"; };
+		D29173F9198C6CA600A102E0 /* trigger-callback.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "trigger-callback.h"; sourceTree = "<group>"; };
+		D29173FA198C6CA600A102E0 /* trigger-command.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "trigger-command.c"; sourceTree = "<group>"; };
+		D29173FB198C6CA600A102E0 /* trigger-command.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "trigger-command.h"; sourceTree = "<group>"; };
+		D29173FC198C6CA600A102E0 /* trigger-completion.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "trigger-completion.c"; sourceTree = "<group>"; };
+		D29173FD198C6CA600A102E0 /* trigger-completion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "trigger-completion.h"; sourceTree = "<group>"; };
+		D29173FE198C6CA600A102E0 /* trigger-config.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "trigger-config.c"; sourceTree = "<group>"; };
+		D29173FF198C6CA600A102E0 /* trigger-config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "trigger-config.h"; sourceTree = "<group>"; };
+		D2917400198C6CA600A102E0 /* trigger.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = trigger.c; sourceTree = "<group>"; };
+		D2917401198C6CA600A102E0 /* trigger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = trigger.h; sourceTree = "<group>"; };
+		D2917403198C6CA600A102E0 /* weechat-plugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "weechat-plugin.h"; sourceTree = "<group>"; };
+		D2917438198C6CA600A102E0 /* weechat-1.0-rc1-1.cygport */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "weechat-1.0-rc1-1.cygport"; sourceTree = "<group>"; };
+		D2917439198C6CA600A102E0 /* weechat.pc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = weechat.pc; sourceTree = "<group>"; };
+		D291743A198C6CA600A102E0 /* AUTHORS.asciidoc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = AUTHORS.asciidoc; sourceTree = "<group>"; };
+		D291743B198C6CA600A102E0 /* autogen.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = autogen.sh; sourceTree = "<group>"; };
+		D291743C198C6CA600A102E0 /* ChangeLog.asciidoc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ChangeLog.asciidoc; sourceTree = "<group>"; };
+		D291743E198C6CA600A102E0 /* cmake_uninstall.cmake.in */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cmake_uninstall.cmake.in; sourceTree = "<group>"; };
+		D291743F198C6CA600A102E0 /* CMakeParseArguments.cmake */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CMakeParseArguments.cmake; sourceTree = "<group>"; };
+		D2917440198C6CA600A102E0 /* FindAsciidoc.cmake */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = FindAsciidoc.cmake; sourceTree = "<group>"; };
+		D2917442198C6CA600A102E0 /* FindCppUTest.cmake */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = FindCppUTest.cmake; sourceTree = "<group>"; };
+		D2917443198C6CA600A102E0 /* FindENCHANT.cmake */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = FindENCHANT.cmake; sourceTree = "<group>"; };
+		D2917444198C6CA600A102E0 /* FindGCRYPT.cmake */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = FindGCRYPT.cmake; sourceTree = "<group>"; };
+		D2917445198C6CA600A102E0 /* FindGettext.cmake */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = FindGettext.cmake; sourceTree = "<group>"; };
+		D2917446198C6CA600A102E0 /* FindGnuTLS.cmake */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = FindGnuTLS.cmake; sourceTree = "<group>"; };
+		D2917447198C6CA600A102E0 /* FindGuile.cmake */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = FindGuile.cmake; sourceTree = "<group>"; };
+		D2917448198C6CA600A102E0 /* FindIconv.cmake */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = FindIconv.cmake; sourceTree = "<group>"; };
+		D2917449198C6CA600A102E0 /* FindLua.cmake */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = FindLua.cmake; sourceTree = "<group>"; };
+		D291744A198C6CA600A102E0 /* FindNcurses.cmake */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = FindNcurses.cmake; sourceTree = "<group>"; };
+		D291744B198C6CA600A102E0 /* FindPackageHandleStandardArgs.cmake */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = FindPackageHandleStandardArgs.cmake; sourceTree = "<group>"; };
+		D291744C198C6CA600A102E0 /* FindPerl.cmake */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = FindPerl.cmake; sourceTree = "<group>"; };
+		D291744D198C6CA600A102E0 /* FindPkgConfig.cmake */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = FindPkgConfig.cmake; sourceTree = "<group>"; };
+		D291744E198C6CA600A102E0 /* FindPython.cmake */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = FindPython.cmake; sourceTree = "<group>"; };
+		D291744F198C6CA600A102E0 /* FindRuby.cmake */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = FindRuby.cmake; sourceTree = "<group>"; };
+		D2917450198C6CA600A102E0 /* FindSourcehighlight.cmake */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = FindSourcehighlight.cmake; sourceTree = "<group>"; };
+		D2917451198C6CA600A102E0 /* FindTCL.cmake */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = FindTCL.cmake; sourceTree = "<group>"; };
+		D2917452198C6CA600A102E0 /* FindZLIB.cmake */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = FindZLIB.cmake; sourceTree = "<group>"; };
+		D2917453198C6CA600A102E0 /* CMakeLists.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
+		D2917454198C6CA600A102E0 /* config.h.cmake */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = config.h.cmake; sourceTree = "<group>"; };
+		D2917455198C6CA600A102E0 /* configure.ac */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = configure.ac; sourceTree = "<group>"; };
+		D2917456198C6CA600A102E0 /* Contributing.asciidoc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Contributing.asciidoc; sourceTree = "<group>"; };
+		D2917457198C6CA600A102E0 /* COPYING */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = COPYING; sourceTree = "<group>"; };
+		D2917459198C6CA600A102E0 /* changelog */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = changelog; sourceTree = "<group>"; };
+		D291745A198C6CA600A102E0 /* compat */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = compat; sourceTree = "<group>"; };
+		D291745B198C6CA600A102E0 /* control */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = control; sourceTree = "<group>"; };
+		D291745C198C6CA600A102E0 /* copyright */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = copyright; sourceTree = "<group>"; };
+		D291745D198C6CA600A102E0 /* NEWS */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = NEWS; sourceTree = "<group>"; };
+		D291745E198C6CA600A102E0 /* rules */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = rules; sourceTree = "<group>"; };
+		D291745F198C6CA600A102E0 /* watch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = watch; sourceTree = "<group>"; };
+		D2917460198C6CA600A102E0 /* weechat-core.docs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "weechat-core.docs"; sourceTree = "<group>"; };
+		D2917461198C6CA600A102E0 /* weechat-core.install */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "weechat-core.install"; sourceTree = "<group>"; };
+		D2917462198C6CA600A102E0 /* weechat-curses.dirs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "weechat-curses.dirs"; sourceTree = "<group>"; };
+		D2917463198C6CA600A102E0 /* weechat-curses.install */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "weechat-curses.install"; sourceTree = "<group>"; };
+		D2917464198C6CA600A102E0 /* weechat-curses.links */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "weechat-curses.links"; sourceTree = "<group>"; };
+		D2917465198C6CA600A102E0 /* weechat-curses.menu */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "weechat-curses.menu"; sourceTree = "<group>"; };
+		D2917466198C6CA600A102E0 /* weechat-dev.dirs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "weechat-dev.dirs"; sourceTree = "<group>"; };
+		D2917467198C6CA600A102E0 /* weechat-dev.install */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "weechat-dev.install"; sourceTree = "<group>"; };
+		D2917468198C6CA600A102E0 /* weechat-doc.doc-base.dev-en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "weechat-doc.doc-base.dev-en"; sourceTree = "<group>"; };
+		D2917469198C6CA600A102E0 /* weechat-doc.doc-base.dev-fr */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "weechat-doc.doc-base.dev-fr"; sourceTree = "<group>"; };
+		D291746A198C6CA600A102E0 /* weechat-doc.doc-base.dev-ja */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "weechat-doc.doc-base.dev-ja"; sourceTree = "<group>"; };
+		D291746B198C6CA600A102E0 /* weechat-doc.doc-base.faq-de */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "weechat-doc.doc-base.faq-de"; sourceTree = "<group>"; };
+		D291746C198C6CA600A102E0 /* weechat-doc.doc-base.faq-en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "weechat-doc.doc-base.faq-en"; sourceTree = "<group>"; };
+		D291746D198C6CA600A102E0 /* weechat-doc.doc-base.faq-fr */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "weechat-doc.doc-base.faq-fr"; sourceTree = "<group>"; };
+		D291746E198C6CA600A102E0 /* weechat-doc.doc-base.faq-it */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "weechat-doc.doc-base.faq-it"; sourceTree = "<group>"; };
+		D291746F198C6CA600A102E0 /* weechat-doc.doc-base.faq-ja */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "weechat-doc.doc-base.faq-ja"; sourceTree = "<group>"; };
+		D2917470198C6CA600A102E0 /* weechat-doc.doc-base.faq-pl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "weechat-doc.doc-base.faq-pl"; sourceTree = "<group>"; };
+		D2917471198C6CA600A102E0 /* weechat-doc.doc-base.plugin-en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "weechat-doc.doc-base.plugin-en"; sourceTree = "<group>"; };
+		D2917472198C6CA600A102E0 /* weechat-doc.doc-base.plugin-fr */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "weechat-doc.doc-base.plugin-fr"; sourceTree = "<group>"; };
+		D2917473198C6CA600A102E0 /* weechat-doc.doc-base.plugin-it */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "weechat-doc.doc-base.plugin-it"; sourceTree = "<group>"; };
+		D2917474198C6CA600A102E0 /* weechat-doc.doc-base.plugin-ja */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "weechat-doc.doc-base.plugin-ja"; sourceTree = "<group>"; };
+		D2917475198C6CA600A102E0 /* weechat-doc.doc-base.quickstart-de */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "weechat-doc.doc-base.quickstart-de"; sourceTree = "<group>"; };
+		D2917476198C6CA600A102E0 /* weechat-doc.doc-base.quickstart-en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "weechat-doc.doc-base.quickstart-en"; sourceTree = "<group>"; };
+		D2917477198C6CA600A102E0 /* weechat-doc.doc-base.quickstart-es */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "weechat-doc.doc-base.quickstart-es"; sourceTree = "<group>"; };
+		D2917478198C6CA600A102E0 /* weechat-doc.doc-base.quickstart-fr */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "weechat-doc.doc-base.quickstart-fr"; sourceTree = "<group>"; };
+		D2917479198C6CA600A102E0 /* weechat-doc.doc-base.quickstart-it */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "weechat-doc.doc-base.quickstart-it"; sourceTree = "<group>"; };
+		D291747A198C6CA600A102E0 /* weechat-doc.doc-base.quickstart-ja */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "weechat-doc.doc-base.quickstart-ja"; sourceTree = "<group>"; };
+		D291747B198C6CA600A102E0 /* weechat-doc.doc-base.quickstart-pl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "weechat-doc.doc-base.quickstart-pl"; sourceTree = "<group>"; };
+		D291747C198C6CA600A102E0 /* weechat-doc.doc-base.quickstart-ru */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "weechat-doc.doc-base.quickstart-ru"; sourceTree = "<group>"; };
+		D291747D198C6CA600A102E0 /* weechat-doc.doc-base.relay-protocol-en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "weechat-doc.doc-base.relay-protocol-en"; sourceTree = "<group>"; };
+		D291747E198C6CA600A102E0 /* weechat-doc.doc-base.relay-protocol-fr */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "weechat-doc.doc-base.relay-protocol-fr"; sourceTree = "<group>"; };
+		D291747F198C6CA600A102E0 /* weechat-doc.doc-base.relay-protocol-ja */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "weechat-doc.doc-base.relay-protocol-ja"; sourceTree = "<group>"; };
+		D2917480198C6CA600A102E0 /* weechat-doc.doc-base.scripting-de */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "weechat-doc.doc-base.scripting-de"; sourceTree = "<group>"; };
+		D2917481198C6CA600A102E0 /* weechat-doc.doc-base.scripting-en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "weechat-doc.doc-base.scripting-en"; sourceTree = "<group>"; };
+		D2917482198C6CA600A102E0 /* weechat-doc.doc-base.scripting-fr */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "weechat-doc.doc-base.scripting-fr"; sourceTree = "<group>"; };
+		D2917483198C6CA600A102E0 /* weechat-doc.doc-base.scripting-it */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "weechat-doc.doc-base.scripting-it"; sourceTree = "<group>"; };
+		D2917484198C6CA600A102E0 /* weechat-doc.doc-base.scripting-ja */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "weechat-doc.doc-base.scripting-ja"; sourceTree = "<group>"; };
+		D2917485198C6CA600A102E0 /* weechat-doc.doc-base.scripting-pl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "weechat-doc.doc-base.scripting-pl"; sourceTree = "<group>"; };
+		D2917486198C6CA600A102E0 /* weechat-doc.doc-base.tester-de */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "weechat-doc.doc-base.tester-de"; sourceTree = "<group>"; };
+		D2917487198C6CA600A102E0 /* weechat-doc.doc-base.tester-en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "weechat-doc.doc-base.tester-en"; sourceTree = "<group>"; };
+		D2917488198C6CA600A102E0 /* weechat-doc.doc-base.tester-fr */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "weechat-doc.doc-base.tester-fr"; sourceTree = "<group>"; };
+		D2917489198C6CA600A102E0 /* weechat-doc.doc-base.tester-it */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "weechat-doc.doc-base.tester-it"; sourceTree = "<group>"; };
+		D291748A198C6CA600A102E0 /* weechat-doc.doc-base.tester-ja */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "weechat-doc.doc-base.tester-ja"; sourceTree = "<group>"; };
+		D291748B198C6CA600A102E0 /* weechat-doc.doc-base.tester-pl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "weechat-doc.doc-base.tester-pl"; sourceTree = "<group>"; };
+		D291748C198C6CA600A102E0 /* weechat-doc.doc-base.user-de */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "weechat-doc.doc-base.user-de"; sourceTree = "<group>"; };
+		D291748D198C6CA600A102E0 /* weechat-doc.doc-base.user-en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "weechat-doc.doc-base.user-en"; sourceTree = "<group>"; };
+		D291748E198C6CA600A102E0 /* weechat-doc.doc-base.user-fr */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "weechat-doc.doc-base.user-fr"; sourceTree = "<group>"; };
+		D291748F198C6CA600A102E0 /* weechat-doc.doc-base.user-it */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "weechat-doc.doc-base.user-it"; sourceTree = "<group>"; };
+		D2917490198C6CA600A102E0 /* weechat-doc.doc-base.user-ja */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "weechat-doc.doc-base.user-ja"; sourceTree = "<group>"; };
+		D2917491198C6CA600A102E0 /* weechat-doc.doc-base.user-pl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "weechat-doc.doc-base.user-pl"; sourceTree = "<group>"; };
+		D2917492198C6CA600A102E0 /* weechat-doc.install */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "weechat-doc.install"; sourceTree = "<group>"; };
+		D2917493198C6CA600A102E0 /* weechat-doc.links */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "weechat-doc.links"; sourceTree = "<group>"; };
+		D2917494198C6CA600A102E0 /* weechat-plugins.dirs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "weechat-plugins.dirs"; sourceTree = "<group>"; };
+		D2917495198C6CA600A102E0 /* weechat-plugins.install */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "weechat-plugins.install"; sourceTree = "<group>"; };
+		D2917496198C6CA600A102E0 /* weechat.xpm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = weechat.xpm; sourceTree = "<group>"; };
+		D2917497198C6CA600A102E0 /* makedist.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = makedist.sh; sourceTree = "<group>"; };
+		D2917498198C6CA600A102E0 /* Makefile.am */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
+		D2917499198C6CA600A102E0 /* README.asciidoc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.asciidoc; sourceTree = "<group>"; };
+		D291749A198C6CA600A102E0 /* ReleaseNotes.asciidoc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ReleaseNotes.asciidoc; sourceTree = "<group>"; };
+		D291749C198C6CA600A102E0 /* build.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = build.sh; sourceTree = "<group>"; };
+		D291749D198C6CA600A102E0 /* git-version.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = "git-version.sh"; sourceTree = "<group>"; };
+		D291749F198C6CA600A102E0 /* CMakeLists.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
+		D29174A0198C6CA600A102E0 /* Makefile.am */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
+		D29174A1198C6CA600A102E0 /* ncurses-fake.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "ncurses-fake.c"; sourceTree = "<group>"; };
+		D29174A2198C6CA600A102E0 /* tests.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tests.cpp; sourceTree = "<group>"; };
+		D29174A5198C6CA700A102E0 /* test-eval.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "test-eval.cpp"; sourceTree = "<group>"; };
+		D29174A6198C6CA700A102E0 /* test-hashtable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "test-hashtable.cpp"; sourceTree = "<group>"; };
+		D29174A7198C6CA700A102E0 /* test-hdata.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "test-hdata.cpp"; sourceTree = "<group>"; };
+		D29174A8198C6CA700A102E0 /* test-infolist.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "test-infolist.cpp"; sourceTree = "<group>"; };
+		D29174A9198C6CA700A102E0 /* test-list.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "test-list.cpp"; sourceTree = "<group>"; };
+		D29174AA198C6CA700A102E0 /* test-string.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "test-string.cpp"; sourceTree = "<group>"; };
+		D29174AB198C6CA700A102E0 /* test-url.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "test-url.cpp"; sourceTree = "<group>"; };
+		D29174AC198C6CA700A102E0 /* test-utf8.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "test-utf8.cpp"; sourceTree = "<group>"; };
+		D29174AD198C6CA700A102E0 /* test-util.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "test-util.cpp"; sourceTree = "<group>"; };
+		D29174AE198C6CA700A102E0 /* weechat.cygport.in */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = weechat.cygport.in; sourceTree = "<group>"; };
+		D29174AF198C6CA700A102E0 /* weechat.pc.in */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = weechat.pc.in; sourceTree = "<group>"; };
+		D29174B0198C6CA700A102E0 /* weechat.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = weechat.png; sourceTree = "<group>"; };
+		D29174B1198C6CA700A102E0 /* weechat.spec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = weechat.spec; sourceTree = "<group>"; };
+		D29174B3198CA0B800A102E0 /* cmake_install.cmake */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cmake_install.cmake; sourceTree = "<group>"; };
+		D29174FF198CA0B800A102E0 /* CMakeLists.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
+		D2917500198CA0B800A102E0 /* cs.po */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cs.po; sourceTree = "<group>"; };
+		D2917501198CA0B800A102E0 /* de.po */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = de.po; sourceTree = "<group>"; };
+		D2917502198CA0B800A102E0 /* es.po */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = es.po; sourceTree = "<group>"; };
+		D2917503198CA0B800A102E0 /* fr.po */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = fr.po; sourceTree = "<group>"; };
+		D2917504198CA0B800A102E0 /* hu.po */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = hu.po; sourceTree = "<group>"; };
+		D2917505198CA0B800A102E0 /* it.po */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = it.po; sourceTree = "<group>"; };
+		D2917506198CA0B800A102E0 /* ja.po */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ja.po; sourceTree = "<group>"; };
+		D2917507198CA0B800A102E0 /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		D2917508198CA0B800A102E0 /* Makevars */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Makevars; sourceTree = "<group>"; };
+		D2917509198CA0B800A102E0 /* pl.po */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = pl.po; sourceTree = "<group>"; };
+		D291750A198CA0B800A102E0 /* POTFILES.in */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = POTFILES.in; sourceTree = "<group>"; };
+		D291750B198CA0B800A102E0 /* pt_BR.po */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = pt_BR.po; sourceTree = "<group>"; };
+		D291750C198CA0B800A102E0 /* remove-potcdate.sin */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "remove-potcdate.sin"; sourceTree = "<group>"; };
+		D291750D198CA0B800A102E0 /* ru.po */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ru.po; sourceTree = "<group>"; };
+		D291750E198CA0B800A102E0 /* srcfiles.cmake */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = srcfiles.cmake; sourceTree = "<group>"; };
+		D291750F198CA0B800A102E0 /* tr.po */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = tr.po; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		D2916F5F198C6C7000A102E0 = {
+			isa = PBXGroup;
+			children = (
+				D291743A198C6CA600A102E0 /* AUTHORS.asciidoc */,
+				D291743B198C6CA600A102E0 /* autogen.sh */,
+				D291743C198C6CA600A102E0 /* ChangeLog.asciidoc */,
+				D291743D198C6CA600A102E0 /* cmake */,
+				D2917453198C6CA600A102E0 /* CMakeLists.txt */,
+				D2916F6A198C6CA500A102E0 /* config-git.h */,
+				D2916F6E198C6CA500A102E0 /* config.h */,
+				D2917454198C6CA600A102E0 /* config.h.cmake */,
+				D2917455198C6CA600A102E0 /* configure.ac */,
+				D2917456198C6CA600A102E0 /* Contributing.asciidoc */,
+				D2917457198C6CA600A102E0 /* COPYING */,
+				D2917458198C6CA600A102E0 /* debian */,
+				D2917497198C6CA600A102E0 /* makedist.sh */,
+				D29170A8198C6CA500A102E0 /* Makefile */,
+				D2917498198C6CA600A102E0 /* Makefile.am */,
+				D29174B2198CA0B800A102E0 /* po */,
+				D2917499198C6CA600A102E0 /* README.asciidoc */,
+				D291749A198C6CA600A102E0 /* ReleaseNotes.asciidoc */,
+				D291749B198C6CA600A102E0 /* scripts */,
+				D29170A9198C6CA500A102E0 /* src */,
+				D291749E198C6CA600A102E0 /* tests */,
+				D2917438198C6CA600A102E0 /* weechat-1.0-rc1-1.cygport */,
+				D29174AE198C6CA700A102E0 /* weechat.cygport.in */,
+				D2917439198C6CA600A102E0 /* weechat.pc */,
+				D29174AF198C6CA700A102E0 /* weechat.pc.in */,
+				D29174B0198C6CA700A102E0 /* weechat.png */,
+				D29174B1198C6CA700A102E0 /* weechat.spec */,
+			);
+			sourceTree = "<group>";
+		};
+		D29170A9198C6CA500A102E0 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				D29170AE198C6CA500A102E0 /* CMakeLists.txt */,
+				D29170AF198C6CA500A102E0 /* core */,
+				D291710E198C6CA500A102E0 /* gui */,
+				D291718E198C6CA500A102E0 /* Makefile */,
+				D291718F198C6CA500A102E0 /* Makefile.am */,
+				D2917190198C6CA500A102E0 /* plugins */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
+		D29170AF198C6CA500A102E0 /* core */ = {
+			isa = PBXGroup;
+			children = (
+				D29170D8198C6CA500A102E0 /* CMakeLists.txt */,
+				D29170DA198C6CA500A102E0 /* Makefile */,
+				D29170DB198C6CA500A102E0 /* Makefile.am */,
+				D29170DC198C6CA500A102E0 /* wee-backtrace.c */,
+				D29170DD198C6CA500A102E0 /* wee-backtrace.h */,
+				D29170DE198C6CA500A102E0 /* wee-command.c */,
+				D29170DF198C6CA500A102E0 /* wee-command.h */,
+				D29170E0198C6CA500A102E0 /* wee-completion.c */,
+				D29170E1198C6CA500A102E0 /* wee-completion.h */,
+				D29170E2198C6CA500A102E0 /* wee-config-file.c */,
+				D29170E3198C6CA500A102E0 /* wee-config-file.h */,
+				D29170E4198C6CA500A102E0 /* wee-config.c */,
+				D29170E5198C6CA500A102E0 /* wee-config.h */,
+				D29170E6198C6CA500A102E0 /* wee-debug.c */,
+				D29170E7198C6CA500A102E0 /* wee-debug.h */,
+				D29170E8198C6CA500A102E0 /* wee-eval.c */,
+				D29170E9198C6CA500A102E0 /* wee-eval.h */,
+				D29170EA198C6CA500A102E0 /* wee-hashtable.c */,
+				D29170EB198C6CA500A102E0 /* wee-hashtable.h */,
+				D29170EC198C6CA500A102E0 /* wee-hdata.c */,
+				D29170ED198C6CA500A102E0 /* wee-hdata.h */,
+				D29170EE198C6CA500A102E0 /* wee-hook.c */,
+				D29170EF198C6CA500A102E0 /* wee-hook.h */,
+				D29170F0198C6CA500A102E0 /* wee-infolist.c */,
+				D29170F1198C6CA500A102E0 /* wee-infolist.h */,
+				D29170F2198C6CA500A102E0 /* wee-input.c */,
+				D29170F3198C6CA500A102E0 /* wee-input.h */,
+				D29170F4198C6CA500A102E0 /* wee-list.c */,
+				D29170F5198C6CA500A102E0 /* wee-list.h */,
+				D29170F6198C6CA500A102E0 /* wee-log.c */,
+				D29170F7198C6CA500A102E0 /* wee-log.h */,
+				D29170F8198C6CA500A102E0 /* wee-network.c */,
+				D29170F9198C6CA500A102E0 /* wee-network.h */,
+				D29170FA198C6CA500A102E0 /* wee-proxy.c */,
+				D29170FB198C6CA500A102E0 /* wee-proxy.h */,
+				D29170FC198C6CA500A102E0 /* wee-secure.c */,
+				D29170FD198C6CA500A102E0 /* wee-secure.h */,
+				D29170FE198C6CA500A102E0 /* wee-string.c */,
+				D29170FF198C6CA500A102E0 /* wee-string.h */,
+				D2917100198C6CA500A102E0 /* wee-upgrade-file.c */,
+				D2917101198C6CA500A102E0 /* wee-upgrade-file.h */,
+				D2917102198C6CA500A102E0 /* wee-upgrade.c */,
+				D2917103198C6CA500A102E0 /* wee-upgrade.h */,
+				D2917104198C6CA500A102E0 /* wee-url.c */,
+				D2917105198C6CA500A102E0 /* wee-url.h */,
+				D2917106198C6CA500A102E0 /* wee-utf8.c */,
+				D2917107198C6CA500A102E0 /* wee-utf8.h */,
+				D2917108198C6CA500A102E0 /* wee-util.c */,
+				D2917109198C6CA500A102E0 /* wee-util.h */,
+				D291710A198C6CA500A102E0 /* wee-version.c */,
+				D291710B198C6CA500A102E0 /* wee-version.h */,
+				D291710C198C6CA500A102E0 /* weechat.c */,
+				D291710D198C6CA500A102E0 /* weechat.h */,
+			);
+			path = core;
+			sourceTree = "<group>";
+		};
+		D291710E198C6CA500A102E0 /* gui */ = {
+			isa = PBXGroup;
+			children = (
+				D2917131198C6CA500A102E0 /* CMakeLists.txt */,
+				D2917132198C6CA500A102E0 /* curses */,
+				D2917164198C6CA500A102E0 /* gui-bar-item.c */,
+				D2917165198C6CA500A102E0 /* gui-bar-item.h */,
+				D2917166198C6CA500A102E0 /* gui-bar-window.c */,
+				D2917167198C6CA500A102E0 /* gui-bar-window.h */,
+				D2917168198C6CA500A102E0 /* gui-bar.c */,
+				D2917169198C6CA500A102E0 /* gui-bar.h */,
+				D291716A198C6CA500A102E0 /* gui-buffer.c */,
+				D291716B198C6CA500A102E0 /* gui-buffer.h */,
+				D291716C198C6CA500A102E0 /* gui-chat.c */,
+				D291716D198C6CA500A102E0 /* gui-chat.h */,
+				D291716E198C6CA500A102E0 /* gui-color.c */,
+				D291716F198C6CA500A102E0 /* gui-color.h */,
+				D2917170198C6CA500A102E0 /* gui-completion.c */,
+				D2917171198C6CA500A102E0 /* gui-completion.h */,
+				D2917172198C6CA500A102E0 /* gui-cursor.c */,
+				D2917173198C6CA500A102E0 /* gui-cursor.h */,
+				D2917174198C6CA500A102E0 /* gui-filter.c */,
+				D2917175198C6CA500A102E0 /* gui-filter.h */,
+				D2917176198C6CA500A102E0 /* gui-focus.c */,
+				D2917177198C6CA500A102E0 /* gui-focus.h */,
+				D2917178198C6CA500A102E0 /* gui-history.c */,
+				D2917179198C6CA500A102E0 /* gui-history.h */,
+				D291717A198C6CA500A102E0 /* gui-hotlist.c */,
+				D291717B198C6CA500A102E0 /* gui-hotlist.h */,
+				D291717C198C6CA500A102E0 /* gui-input.c */,
+				D291717D198C6CA500A102E0 /* gui-input.h */,
+				D291717E198C6CA500A102E0 /* gui-key.c */,
+				D291717F198C6CA500A102E0 /* gui-key.h */,
+				D2917180198C6CA500A102E0 /* gui-layout.c */,
+				D2917181198C6CA500A102E0 /* gui-layout.h */,
+				D2917182198C6CA500A102E0 /* gui-line.c */,
+				D2917183198C6CA500A102E0 /* gui-line.h */,
+				D2917184198C6CA500A102E0 /* gui-main.h */,
+				D2917185198C6CA500A102E0 /* gui-mouse.c */,
+				D2917186198C6CA500A102E0 /* gui-mouse.h */,
+				D2917187198C6CA500A102E0 /* gui-nicklist.c */,
+				D2917188198C6CA500A102E0 /* gui-nicklist.h */,
+				D2917189198C6CA500A102E0 /* gui-window.c */,
+				D291718A198C6CA500A102E0 /* gui-window.h */,
+				D291718C198C6CA500A102E0 /* Makefile */,
+				D291718D198C6CA500A102E0 /* Makefile.am */,
+			);
+			path = gui;
+			sourceTree = "<group>";
+		};
+		D2917132198C6CA500A102E0 /* curses */ = {
+			isa = PBXGroup;
+			children = (
+				D2917155198C6CA500A102E0 /* CMakeLists.txt */,
+				D2917156198C6CA500A102E0 /* gui-curses-bar-window.c */,
+				D2917157198C6CA500A102E0 /* gui-curses-chat.c */,
+				D2917158198C6CA500A102E0 /* gui-curses-color.c */,
+				D2917159198C6CA500A102E0 /* gui-curses-key.c */,
+				D291715A198C6CA500A102E0 /* gui-curses-main.c */,
+				D291715B198C6CA500A102E0 /* gui-curses-mouse.c */,
+				D291715C198C6CA500A102E0 /* gui-curses-term.c */,
+				D291715D198C6CA500A102E0 /* gui-curses-window.c */,
+				D291715E198C6CA500A102E0 /* gui-curses.h */,
+				D2917160198C6CA500A102E0 /* main.c */,
+				D2917161198C6CA500A102E0 /* Makefile */,
+				D2917162198C6CA500A102E0 /* Makefile.am */,
+			);
+			path = curses;
+			sourceTree = "<group>";
+		};
+		D2917190198C6CA500A102E0 /* plugins */ = {
+			isa = PBXGroup;
+			children = (
+				D2917191198C6CA500A102E0 /* alias */,
+				D29171D5198C6CA500A102E0 /* charset */,
+				D291720A198C6CA600A102E0 /* CMakeLists.txt */,
+				D291720B198C6CA600A102E0 /* exec */,
+				D291722D198C6CA600A102E0 /* fifo */,
+				D2917246198C6CA600A102E0 /* guile */,
+				D29172BC198C6CA600A102E0 /* logger */,
+				D29172DE198C6CA600A102E0 /* lua */,
+				D29172F7198C6CA600A102E0 /* Makefile */,
+				D29172F8198C6CA600A102E0 /* Makefile.am */,
+				D29172F9198C6CA600A102E0 /* perl */,
+				D2917312198C6CA600A102E0 /* plugin-api.c */,
+				D2917313198C6CA600A102E0 /* plugin-api.h */,
+				D2917314198C6CA600A102E0 /* plugin-config.c */,
+				D2917315198C6CA600A102E0 /* plugin-config.h */,
+				D2917316198C6CA600A102E0 /* plugin-script-api.c */,
+				D2917317198C6CA600A102E0 /* plugin-script-api.h */,
+				D2917318198C6CA600A102E0 /* plugin-script-callback.c */,
+				D2917319198C6CA600A102E0 /* plugin-script-callback.h */,
+				D291731A198C6CA600A102E0 /* plugin-script.c */,
+				D291731B198C6CA600A102E0 /* plugin-script.h */,
+				D291731C198C6CA600A102E0 /* plugin.c */,
+				D291731D198C6CA600A102E0 /* plugin.h */,
+				D291731E198C6CA600A102E0 /* python */,
+				D2917381198C6CA600A102E0 /* ruby */,
+				D291739A198C6CA600A102E0 /* script */,
+				D29173C5198C6CA600A102E0 /* tcl */,
+				D29173DE198C6CA600A102E0 /* trigger */,
+				D2917403198C6CA600A102E0 /* weechat-plugin.h */,
+			);
+			path = plugins;
+			sourceTree = "<group>";
+		};
+		D2917191198C6CA500A102E0 /* alias */ = {
+			isa = PBXGroup;
+			children = (
+				D2917192198C6CA500A102E0 /* alias-config.c */,
+				D2917193198C6CA500A102E0 /* alias-config.h */,
+				D2917194198C6CA500A102E0 /* alias-info.c */,
+				D2917195198C6CA500A102E0 /* alias-info.h */,
+				D2917196198C6CA500A102E0 /* alias.c */,
+				D2917197198C6CA500A102E0 /* alias.h */,
+				D29171AA198C6CA500A102E0 /* CMakeLists.txt */,
+				D29171AB198C6CA500A102E0 /* Makefile */,
+				D29171AC198C6CA500A102E0 /* Makefile.am */,
+			);
+			path = alias;
+			sourceTree = "<group>";
+		};
+		D29171D5198C6CA500A102E0 /* charset */ = {
+			isa = PBXGroup;
+			children = (
+				D29171D6198C6CA500A102E0 /* charset.c */,
+				D29171E7198C6CA500A102E0 /* CMakeLists.txt */,
+				D29171E8198C6CA500A102E0 /* Makefile */,
+				D29171E9198C6CA500A102E0 /* Makefile.am */,
+			);
+			path = charset;
+			sourceTree = "<group>";
+		};
+		D291720B198C6CA600A102E0 /* exec */ = {
+			isa = PBXGroup;
+			children = (
+				D291721F198C6CA600A102E0 /* CMakeLists.txt */,
+				D2917220198C6CA600A102E0 /* exec-buffer.c */,
+				D2917221198C6CA600A102E0 /* exec-buffer.h */,
+				D2917222198C6CA600A102E0 /* exec-command.c */,
+				D2917223198C6CA600A102E0 /* exec-command.h */,
+				D2917224198C6CA600A102E0 /* exec-completion.c */,
+				D2917225198C6CA600A102E0 /* exec-completion.h */,
+				D2917226198C6CA600A102E0 /* exec-config.c */,
+				D2917227198C6CA600A102E0 /* exec-config.h */,
+				D2917228198C6CA600A102E0 /* exec.c */,
+				D2917229198C6CA600A102E0 /* exec.h */,
+				D291722B198C6CA600A102E0 /* Makefile */,
+				D291722C198C6CA600A102E0 /* Makefile.am */,
+			);
+			path = exec;
+			sourceTree = "<group>";
+		};
+		D291722D198C6CA600A102E0 /* fifo */ = {
+			isa = PBXGroup;
+			children = (
+				D291723E198C6CA600A102E0 /* CMakeLists.txt */,
+				D291723F198C6CA600A102E0 /* fifo-info.c */,
+				D2917240198C6CA600A102E0 /* fifo-info.h */,
+				D2917241198C6CA600A102E0 /* fifo.c */,
+				D2917242198C6CA600A102E0 /* fifo.h */,
+				D2917244198C6CA600A102E0 /* Makefile */,
+				D2917245198C6CA600A102E0 /* Makefile.am */,
+			);
+			path = fifo;
+			sourceTree = "<group>";
+		};
+		D2917246198C6CA600A102E0 /* guile */ = {
+			isa = PBXGroup;
+			children = (
+				D2917257198C6CA600A102E0 /* CMakeLists.txt */,
+				D2917259198C6CA600A102E0 /* Makefile */,
+				D291725A198C6CA600A102E0 /* Makefile.am */,
+				D291725B198C6CA600A102E0 /* weechat-guile-api.c */,
+				D291725C198C6CA600A102E0 /* weechat-guile-api.h */,
+				D291725D198C6CA600A102E0 /* weechat-guile.c */,
+				D291725E198C6CA600A102E0 /* weechat-guile.h */,
+			);
+			path = guile;
+			sourceTree = "<group>";
+		};
+		D29172BC198C6CA600A102E0 /* logger */ = {
+			isa = PBXGroup;
+			children = (
+				D29172D0198C6CA600A102E0 /* CMakeLists.txt */,
+				D29172D1198C6CA600A102E0 /* logger-buffer.c */,
+				D29172D2198C6CA600A102E0 /* logger-buffer.h */,
+				D29172D3198C6CA600A102E0 /* logger-config.c */,
+				D29172D4198C6CA600A102E0 /* logger-config.h */,
+				D29172D5198C6CA600A102E0 /* logger-info.c */,
+				D29172D6198C6CA600A102E0 /* logger-info.h */,
+				D29172D7198C6CA600A102E0 /* logger-tail.c */,
+				D29172D8198C6CA600A102E0 /* logger-tail.h */,
+				D29172D9198C6CA600A102E0 /* logger.c */,
+				D29172DA198C6CA600A102E0 /* logger.h */,
+				D29172DC198C6CA600A102E0 /* Makefile */,
+				D29172DD198C6CA600A102E0 /* Makefile.am */,
+			);
+			path = logger;
+			sourceTree = "<group>";
+		};
+		D29172DE198C6CA600A102E0 /* lua */ = {
+			isa = PBXGroup;
+			children = (
+				D29172EF198C6CA600A102E0 /* CMakeLists.txt */,
+				D29172F1198C6CA600A102E0 /* Makefile */,
+				D29172F2198C6CA600A102E0 /* Makefile.am */,
+				D29172F3198C6CA600A102E0 /* weechat-lua-api.c */,
+				D29172F4198C6CA600A102E0 /* weechat-lua-api.h */,
+				D29172F5198C6CA600A102E0 /* weechat-lua.c */,
+				D29172F6198C6CA600A102E0 /* weechat-lua.h */,
+			);
+			path = lua;
+			sourceTree = "<group>";
+		};
+		D29172F9198C6CA600A102E0 /* perl */ = {
+			isa = PBXGroup;
+			children = (
+				D291730A198C6CA600A102E0 /* CMakeLists.txt */,
+				D291730B198C6CA600A102E0 /* Makefile */,
+				D291730C198C6CA600A102E0 /* Makefile.am */,
+				D291730E198C6CA600A102E0 /* weechat-perl-api.c */,
+				D291730F198C6CA600A102E0 /* weechat-perl-api.h */,
+				D2917310198C6CA600A102E0 /* weechat-perl.c */,
+				D2917311198C6CA600A102E0 /* weechat-perl.h */,
+			);
+			path = perl;
+			sourceTree = "<group>";
+		};
+		D291731E198C6CA600A102E0 /* python */ = {
+			isa = PBXGroup;
+			children = (
+				D291732F198C6CA600A102E0 /* CMakeLists.txt */,
+				D2917330198C6CA600A102E0 /* Makefile */,
+				D2917331198C6CA600A102E0 /* Makefile.am */,
+				D2917333198C6CA600A102E0 /* weechat-python-api.c */,
+				D2917334198C6CA600A102E0 /* weechat-python-api.h */,
+				D2917335198C6CA600A102E0 /* weechat-python.c */,
+				D2917336198C6CA600A102E0 /* weechat-python.h */,
+			);
+			path = python;
+			sourceTree = "<group>";
+		};
+		D2917381198C6CA600A102E0 /* ruby */ = {
+			isa = PBXGroup;
+			children = (
+				D2917392198C6CA600A102E0 /* CMakeLists.txt */,
+				D2917393198C6CA600A102E0 /* Makefile */,
+				D2917394198C6CA600A102E0 /* Makefile.am */,
+				D2917396198C6CA600A102E0 /* weechat-ruby-api.c */,
+				D2917397198C6CA600A102E0 /* weechat-ruby-api.h */,
+				D2917398198C6CA600A102E0 /* weechat-ruby.c */,
+				D2917399198C6CA600A102E0 /* weechat-ruby.h */,
+			);
+			path = ruby;
+			sourceTree = "<group>";
+		};
+		D291739A198C6CA600A102E0 /* script */ = {
+			isa = PBXGroup;
+			children = (
+				D29173B1198C6CA600A102E0 /* CMakeLists.txt */,
+				D29173B2198C6CA600A102E0 /* Makefile */,
+				D29173B3198C6CA600A102E0 /* Makefile.am */,
+				D29173B4198C6CA600A102E0 /* script-action.c */,
+				D29173B5198C6CA600A102E0 /* script-action.h */,
+				D29173B6198C6CA600A102E0 /* script-buffer.c */,
+				D29173B7198C6CA600A102E0 /* script-buffer.h */,
+				D29173B8198C6CA600A102E0 /* script-command.c */,
+				D29173B9198C6CA600A102E0 /* script-command.h */,
+				D29173BA198C6CA600A102E0 /* script-completion.c */,
+				D29173BB198C6CA600A102E0 /* script-completion.h */,
+				D29173BC198C6CA600A102E0 /* script-config.c */,
+				D29173BD198C6CA600A102E0 /* script-config.h */,
+				D29173BE198C6CA600A102E0 /* script-info.c */,
+				D29173BF198C6CA600A102E0 /* script-info.h */,
+				D29173C0198C6CA600A102E0 /* script-repo.c */,
+				D29173C1198C6CA600A102E0 /* script-repo.h */,
+				D29173C2198C6CA600A102E0 /* script.c */,
+				D29173C3198C6CA600A102E0 /* script.h */,
+			);
+			path = script;
+			sourceTree = "<group>";
+		};
+		D29173C5198C6CA600A102E0 /* tcl */ = {
+			isa = PBXGroup;
+			children = (
+				D29173D6198C6CA600A102E0 /* CMakeLists.txt */,
+				D29173D7198C6CA600A102E0 /* Makefile */,
+				D29173D8198C6CA600A102E0 /* Makefile.am */,
+				D29173DA198C6CA600A102E0 /* weechat-tcl-api.c */,
+				D29173DB198C6CA600A102E0 /* weechat-tcl-api.h */,
+				D29173DC198C6CA600A102E0 /* weechat-tcl.c */,
+				D29173DD198C6CA600A102E0 /* weechat-tcl.h */,
+			);
+			path = tcl;
+			sourceTree = "<group>";
+		};
+		D29173DE198C6CA600A102E0 /* trigger */ = {
+			isa = PBXGroup;
+			children = (
+				D29173F3198C6CA600A102E0 /* CMakeLists.txt */,
+				D29173F4198C6CA600A102E0 /* Makefile */,
+				D29173F5198C6CA600A102E0 /* Makefile.am */,
+				D29173F6198C6CA600A102E0 /* trigger-buffer.c */,
+				D29173F7198C6CA600A102E0 /* trigger-buffer.h */,
+				D29173F8198C6CA600A102E0 /* trigger-callback.c */,
+				D29173F9198C6CA600A102E0 /* trigger-callback.h */,
+				D29173FA198C6CA600A102E0 /* trigger-command.c */,
+				D29173FB198C6CA600A102E0 /* trigger-command.h */,
+				D29173FC198C6CA600A102E0 /* trigger-completion.c */,
+				D29173FD198C6CA600A102E0 /* trigger-completion.h */,
+				D29173FE198C6CA600A102E0 /* trigger-config.c */,
+				D29173FF198C6CA600A102E0 /* trigger-config.h */,
+				D2917400198C6CA600A102E0 /* trigger.c */,
+				D2917401198C6CA600A102E0 /* trigger.h */,
+			);
+			path = trigger;
+			sourceTree = "<group>";
+		};
+		D291743D198C6CA600A102E0 /* cmake */ = {
+			isa = PBXGroup;
+			children = (
+				D291743E198C6CA600A102E0 /* cmake_uninstall.cmake.in */,
+				D291743F198C6CA600A102E0 /* CMakeParseArguments.cmake */,
+				D2917440198C6CA600A102E0 /* FindAsciidoc.cmake */,
+				D2917442198C6CA600A102E0 /* FindCppUTest.cmake */,
+				D2917443198C6CA600A102E0 /* FindENCHANT.cmake */,
+				D2917444198C6CA600A102E0 /* FindGCRYPT.cmake */,
+				D2917445198C6CA600A102E0 /* FindGettext.cmake */,
+				D2917446198C6CA600A102E0 /* FindGnuTLS.cmake */,
+				D2917447198C6CA600A102E0 /* FindGuile.cmake */,
+				D2917448198C6CA600A102E0 /* FindIconv.cmake */,
+				D2917449198C6CA600A102E0 /* FindLua.cmake */,
+				D291744A198C6CA600A102E0 /* FindNcurses.cmake */,
+				D291744B198C6CA600A102E0 /* FindPackageHandleStandardArgs.cmake */,
+				D291744C198C6CA600A102E0 /* FindPerl.cmake */,
+				D291744D198C6CA600A102E0 /* FindPkgConfig.cmake */,
+				D291744E198C6CA600A102E0 /* FindPython.cmake */,
+				D291744F198C6CA600A102E0 /* FindRuby.cmake */,
+				D2917450198C6CA600A102E0 /* FindSourcehighlight.cmake */,
+				D2917451198C6CA600A102E0 /* FindTCL.cmake */,
+				D2917452198C6CA600A102E0 /* FindZLIB.cmake */,
+			);
+			path = cmake;
+			sourceTree = "<group>";
+		};
+		D2917458198C6CA600A102E0 /* debian */ = {
+			isa = PBXGroup;
+			children = (
+				D2917459198C6CA600A102E0 /* changelog */,
+				D291745A198C6CA600A102E0 /* compat */,
+				D291745B198C6CA600A102E0 /* control */,
+				D291745C198C6CA600A102E0 /* copyright */,
+				D291745D198C6CA600A102E0 /* NEWS */,
+				D291745E198C6CA600A102E0 /* rules */,
+				D291745F198C6CA600A102E0 /* watch */,
+				D2917460198C6CA600A102E0 /* weechat-core.docs */,
+				D2917461198C6CA600A102E0 /* weechat-core.install */,
+				D2917462198C6CA600A102E0 /* weechat-curses.dirs */,
+				D2917463198C6CA600A102E0 /* weechat-curses.install */,
+				D2917464198C6CA600A102E0 /* weechat-curses.links */,
+				D2917465198C6CA600A102E0 /* weechat-curses.menu */,
+				D2917466198C6CA600A102E0 /* weechat-dev.dirs */,
+				D2917467198C6CA600A102E0 /* weechat-dev.install */,
+				D2917468198C6CA600A102E0 /* weechat-doc.doc-base.dev-en */,
+				D2917469198C6CA600A102E0 /* weechat-doc.doc-base.dev-fr */,
+				D291746A198C6CA600A102E0 /* weechat-doc.doc-base.dev-ja */,
+				D291746B198C6CA600A102E0 /* weechat-doc.doc-base.faq-de */,
+				D291746C198C6CA600A102E0 /* weechat-doc.doc-base.faq-en */,
+				D291746D198C6CA600A102E0 /* weechat-doc.doc-base.faq-fr */,
+				D291746E198C6CA600A102E0 /* weechat-doc.doc-base.faq-it */,
+				D291746F198C6CA600A102E0 /* weechat-doc.doc-base.faq-ja */,
+				D2917470198C6CA600A102E0 /* weechat-doc.doc-base.faq-pl */,
+				D2917471198C6CA600A102E0 /* weechat-doc.doc-base.plugin-en */,
+				D2917472198C6CA600A102E0 /* weechat-doc.doc-base.plugin-fr */,
+				D2917473198C6CA600A102E0 /* weechat-doc.doc-base.plugin-it */,
+				D2917474198C6CA600A102E0 /* weechat-doc.doc-base.plugin-ja */,
+				D2917475198C6CA600A102E0 /* weechat-doc.doc-base.quickstart-de */,
+				D2917476198C6CA600A102E0 /* weechat-doc.doc-base.quickstart-en */,
+				D2917477198C6CA600A102E0 /* weechat-doc.doc-base.quickstart-es */,
+				D2917478198C6CA600A102E0 /* weechat-doc.doc-base.quickstart-fr */,
+				D2917479198C6CA600A102E0 /* weechat-doc.doc-base.quickstart-it */,
+				D291747A198C6CA600A102E0 /* weechat-doc.doc-base.quickstart-ja */,
+				D291747B198C6CA600A102E0 /* weechat-doc.doc-base.quickstart-pl */,
+				D291747C198C6CA600A102E0 /* weechat-doc.doc-base.quickstart-ru */,
+				D291747D198C6CA600A102E0 /* weechat-doc.doc-base.relay-protocol-en */,
+				D291747E198C6CA600A102E0 /* weechat-doc.doc-base.relay-protocol-fr */,
+				D291747F198C6CA600A102E0 /* weechat-doc.doc-base.relay-protocol-ja */,
+				D2917480198C6CA600A102E0 /* weechat-doc.doc-base.scripting-de */,
+				D2917481198C6CA600A102E0 /* weechat-doc.doc-base.scripting-en */,
+				D2917482198C6CA600A102E0 /* weechat-doc.doc-base.scripting-fr */,
+				D2917483198C6CA600A102E0 /* weechat-doc.doc-base.scripting-it */,
+				D2917484198C6CA600A102E0 /* weechat-doc.doc-base.scripting-ja */,
+				D2917485198C6CA600A102E0 /* weechat-doc.doc-base.scripting-pl */,
+				D2917486198C6CA600A102E0 /* weechat-doc.doc-base.tester-de */,
+				D2917487198C6CA600A102E0 /* weechat-doc.doc-base.tester-en */,
+				D2917488198C6CA600A102E0 /* weechat-doc.doc-base.tester-fr */,
+				D2917489198C6CA600A102E0 /* weechat-doc.doc-base.tester-it */,
+				D291748A198C6CA600A102E0 /* weechat-doc.doc-base.tester-ja */,
+				D291748B198C6CA600A102E0 /* weechat-doc.doc-base.tester-pl */,
+				D291748C198C6CA600A102E0 /* weechat-doc.doc-base.user-de */,
+				D291748D198C6CA600A102E0 /* weechat-doc.doc-base.user-en */,
+				D291748E198C6CA600A102E0 /* weechat-doc.doc-base.user-fr */,
+				D291748F198C6CA600A102E0 /* weechat-doc.doc-base.user-it */,
+				D2917490198C6CA600A102E0 /* weechat-doc.doc-base.user-ja */,
+				D2917491198C6CA600A102E0 /* weechat-doc.doc-base.user-pl */,
+				D2917492198C6CA600A102E0 /* weechat-doc.install */,
+				D2917493198C6CA600A102E0 /* weechat-doc.links */,
+				D2917494198C6CA600A102E0 /* weechat-plugins.dirs */,
+				D2917495198C6CA600A102E0 /* weechat-plugins.install */,
+				D2917496198C6CA600A102E0 /* weechat.xpm */,
+			);
+			path = debian;
+			sourceTree = "<group>";
+		};
+		D291749B198C6CA600A102E0 /* scripts */ = {
+			isa = PBXGroup;
+			children = (
+				D291749C198C6CA600A102E0 /* build.sh */,
+				D291749D198C6CA600A102E0 /* git-version.sh */,
+			);
+			path = scripts;
+			sourceTree = "<group>";
+		};
+		D291749E198C6CA600A102E0 /* tests */ = {
+			isa = PBXGroup;
+			children = (
+				D291749F198C6CA600A102E0 /* CMakeLists.txt */,
+				D29174A0198C6CA600A102E0 /* Makefile.am */,
+				D29174A1198C6CA600A102E0 /* ncurses-fake.c */,
+				D29174A2198C6CA600A102E0 /* tests.cpp */,
+				D29174A3198C6CA700A102E0 /* unit */,
+			);
+			path = tests;
+			sourceTree = "<group>";
+		};
+		D29174A3198C6CA700A102E0 /* unit */ = {
+			isa = PBXGroup;
+			children = (
+				D29174A4198C6CA700A102E0 /* core */,
+			);
+			path = unit;
+			sourceTree = "<group>";
+		};
+		D29174A4198C6CA700A102E0 /* core */ = {
+			isa = PBXGroup;
+			children = (
+				D29174A5198C6CA700A102E0 /* test-eval.cpp */,
+				D29174A6198C6CA700A102E0 /* test-hashtable.cpp */,
+				D29174A7198C6CA700A102E0 /* test-hdata.cpp */,
+				D29174A8198C6CA700A102E0 /* test-infolist.cpp */,
+				D29174A9198C6CA700A102E0 /* test-list.cpp */,
+				D29174AA198C6CA700A102E0 /* test-string.cpp */,
+				D29174AB198C6CA700A102E0 /* test-url.cpp */,
+				D29174AC198C6CA700A102E0 /* test-utf8.cpp */,
+				D29174AD198C6CA700A102E0 /* test-util.cpp */,
+			);
+			path = core;
+			sourceTree = "<group>";
+		};
+		D29174B2198CA0B800A102E0 /* po */ = {
+			isa = PBXGroup;
+			children = (
+				D29174B3198CA0B800A102E0 /* cmake_install.cmake */,
+				D29174FF198CA0B800A102E0 /* CMakeLists.txt */,
+				D2917500198CA0B800A102E0 /* cs.po */,
+				D2917501198CA0B800A102E0 /* de.po */,
+				D2917502198CA0B800A102E0 /* es.po */,
+				D2917503198CA0B800A102E0 /* fr.po */,
+				D2917504198CA0B800A102E0 /* hu.po */,
+				D2917505198CA0B800A102E0 /* it.po */,
+				D2917506198CA0B800A102E0 /* ja.po */,
+				D2917507198CA0B800A102E0 /* Makefile */,
+				D2917508198CA0B800A102E0 /* Makevars */,
+				D2917509198CA0B800A102E0 /* pl.po */,
+				D291750A198CA0B800A102E0 /* POTFILES.in */,
+				D291750B198CA0B800A102E0 /* pt_BR.po */,
+				D291750C198CA0B800A102E0 /* remove-potcdate.sin */,
+				D291750D198CA0B800A102E0 /* ru.po */,
+				D291750E198CA0B800A102E0 /* srcfiles.cmake */,
+				D291750F198CA0B800A102E0 /* tr.po */,
+			);
+			path = po;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXLegacyTarget section */
+		D2916F64198C6C7000A102E0 /* MultiMiner */ = {
+			isa = PBXLegacyTarget;
+			buildArgumentsString = "$(ACTION)";
+			buildConfigurationList = D2916F67198C6C7000A102E0 /* Build configuration list for PBXLegacyTarget "MultiMiner" */;
+			buildPhases = (
+			);
+			buildToolPath = /usr/bin/make;
+			dependencies = (
+			);
+			name = MultiMiner;
+			passBuildSettingsInEnvironment = 1;
+			productName = MultiMiner;
+		};
+/* End PBXLegacyTarget section */
+
+/* Begin PBXProject section */
+		D2916F60198C6C7000A102E0 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0510;
+				ORGANIZATIONNAME = "Nate Woolls";
+			};
+			buildConfigurationList = D2916F63198C6C7000A102E0 /* Build configuration list for PBXProject "MultiMiner" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = D2916F5F198C6C7000A102E0;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D2916F64198C6C7000A102E0 /* MultiMiner */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin XCBuildConfiguration section */
+		D2916F65198C6C7000A102E0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		D2916F66198C6C7000A102E0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		D2916F68198C6C7000A102E0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEBUGGING_SYMBOLS = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		D2916F69198C6C7000A102E0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		D2916F63198C6C7000A102E0 /* Build configuration list for PBXProject "MultiMiner" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D2916F65198C6C7000A102E0 /* Debug */,
+				D2916F66198C6C7000A102E0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D2916F67198C6C7000A102E0 /* Build configuration list for PBXLegacyTarget "MultiMiner" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D2916F68198C6C7000A102E0 /* Debug */,
+				D2916F69198C6C7000A102E0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = D2916F60198C6C7000A102E0 /* Project object */;
+}
