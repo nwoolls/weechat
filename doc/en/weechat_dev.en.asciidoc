@@ -92,6 +92,7 @@ WeeChat "core" is located in following directories:
 | Path/file                     | Description
 | core/                         | Core functions: entry point, internal structures
 |    weechat.c                  | Main functions: command line options, startup
+|    wee-arraylist.c            | Array lists
 |    wee-backtrace.c            | Display a backtrace after a crash
 |    wee-command.c              | WeeChat core commands
 |    wee-completion.c           | Default completions
@@ -291,16 +292,18 @@ WeeChat "core" is located in following directories:
 |===
 | Path/file                         | Description
 | tests/                            | Root of tests
+|    tests.cpp                      | Program used to run tests
 |    unit/                          | Root of unit tests
-|       test-eval.cpp               | Tests: evaluation of expressions
-|       test-hashtble.cpp           | Tests: hashtables
-|       test-hdata.cpp              | Tests: hdata
-|       test-infolist.cpp           | Tests: infolists
-|       test-list.cpp               | Tests: lists
-|       test-string.cpp             | Tests: strings
-|       test-url.cpp                | Tests: URLs
-|       test-utf8.cpp               | Tests: UTF-8
-|       test-util.cpp               | Tests: util functions
+|       core/                       | Root of unit tests for core
+|          test-eval.cpp            | Tests: evaluation of expressions
+|          test-hashtble.cpp        | Tests: hashtables
+|          test-hdata.cpp           | Tests: hdata
+|          test-infolist.cpp        | Tests: infolists
+|          test-list.cpp            | Tests: lists
+|          test-string.cpp          | Tests: strings
+|          test-url.cpp             | Tests: URLs
+|          test-utf8.cpp            | Tests: UTF-8
+|          test-util.cpp            | Tests: utility functions
 |===
 
 [[documentation_translations]]
@@ -942,7 +945,7 @@ server->hook_timer_sasl = weechat_hook_timer (timeout * 1000,
 Git repository is at this URL: https://github.com/weechat/weechat
 
 Any patch for bug or new feature must be done on master branch, preferred way is
-a Github pull request. A patch can also be sent by e-mail (made with `git diff`
+a GitHub pull request. A patch can also be sent by e-mail (made with `git diff`
 or `git format-patch`).
 
 Format of commit message is the following (to close a GitHub issue):

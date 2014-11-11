@@ -343,6 +343,11 @@
 ** type: boolean
 ** values: on, off (default value: `on`)
 
+* [[option_irc.look.temporary_servers]] *irc.look.temporary_servers*
+** description: `enable creation of temporary servers with command /connect`
+** type: boolean
+** values: on, off (default value: `off`)
+
 * [[option_irc.look.topic_strip_colors]] *irc.look.topic_strip_colors*
 ** description: `strip colors in topic (used only when displaying buffer title)`
 ** type: boolean
@@ -479,7 +484,7 @@
 ** values: 0 .. 1000000 (default value: `25`)
 
 * [[option_irc.server_default.capabilities]] *irc.server_default.capabilities*
-** description: `comma-separated list of client capabilities to enable for server if they are available; capabilities supported by WeeChat are: multi-prefix, userhost-in-names, away-notify (example: "multi-prefix,userhost-in-names,away-notify")`
+** description: `comma-separated list of client capabilities to enable for server if they are available; capabilities supported by WeeChat are: away-notify, extended-join, multi-prefix, server-time, userhost-in-names (example: "away-notify,multi-prefix")`
 ** type: string
 ** values: any string (default value: `""`)
 
@@ -591,7 +596,7 @@
 * [[option_irc.server_default.ssl_priorities]] *irc.server_default.ssl_priorities*
 ** description: `string with priorities for gnutls (for syntax, see documentation of function gnutls_priority_init in gnutls manual, common strings are: "PERFORMANCE", "NORMAL", "SECURE128", "SECURE256", "EXPORT", "NONE")`
 ** type: string
-** values: any string (default value: `"NORMAL"`)
+** values: any string (default value: `"NORMAL:-VERS-SSL3.0"`)
 
 * [[option_irc.server_default.ssl_verify]] *irc.server_default.ssl_verify*
 ** description: `check that the SSL connection is fully trusted`

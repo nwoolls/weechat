@@ -54,6 +54,22 @@ Beachte, dass dieses Paket nicht immer exakt mit dem git Repository übereinstim
 und daher auch weniger brauchbar sein kann. Im Gegensatz zu der Möglichkeit, dass man selbst
 das Repository klont und daraus Updates installiert.
 
+[[compile_osx]]
+=== Wie installiere ich WeeChat auf OS X?
+
+Wir empfehlen, dass zur Installation http://brew.sh/[Homebrew] genutzt wird.
+Hilfe erhält man mittels:
+
+----
+brew info weechat
+----
+
+WeeChat kann durch folgenden Befehl installiert werden:
+
+----
+brew install weechat --with-python --with-perl
+----
+
 [[lost]]
 === Ich habe WeeChat gestartet, komme aber nicht mehr weiter - was kann ich tun?
 
@@ -225,7 +241,7 @@ werden sollte:
 ----
 
 [[terminal_copy_paste]]
-=== Wie kann ich einen Text kopieren und einfügen ohne das die Nickliste mit kopiert wird?
+=== Wie kann ich einen Text kopieren und einfügen ohne das die Nickliste (Benutzerliste) mit kopiert wird?
 
 Ab WeeChat ≥ 1.0 kann ein einfacher Anzeigemodus genutzt werden (Standardtastenbelegung: key[alt-l]).
 
@@ -233,7 +249,7 @@ Hierzu kannst Du ein Terminal nutzen welches Block-Auswahl erlaubt (wie z.B. rxv
 konsole, gnome-terminal, ...). Im Normalfall erfolgt die Markierung mittels der Tasten
 key[ctrl-]key[alt-] in Verbindung mit der Auswahl durch die Maus.
 
-Eine weitere Möglichkeit besteht darin die Nickliste am oberen oder unteren
+Eine weitere Möglichkeit besteht darin die Benutzerliste am oberen oder unteren
 Bildschirm zu positionieren:
 
 ----
@@ -247,7 +263,7 @@ Ab WeeChat ≥ 1.0 kann ein einfacher Anzeigemodus genutzt werden (Standardtaste
 
 WeeChat stellt standardmäßig die Uhrzeit als auch einen Präfix in jeder
 Zeile dar. Optional können zusätzlich auch Bars im Chatfenster dargestellt
-werden. Man kann die Nickliste z.B. am oberen Rand darstellen lassen und
+werden. Man kann die Benutzerliste z.B. am oberen Rand darstellen lassen und
 die Ausrichtung der Nicknamen entfernen:
 
 ----
@@ -658,7 +674,7 @@ der Voice Modus aufgeführt sein muss):
 ----
 
 [[color_away_nicks]]
-=== Wie kann ich Nicks in der Nickliste anzeigen lassen die abwesend sind?
+=== Wie kann ich Nicks in der Benutzerliste anzeigen lassen die abwesend sind?
 
 Dazu weist man der Option 'irc.server_default.away_check' ein Zeitintervall
 zu, in welchen Abständen eine Überprüfung stattfinden soll. Die Angabe des
@@ -683,11 +699,24 @@ Für Weechat ≤ 0.3.3, lauten die Optionen 'irc.network.away_check' und
 'irc.network.away_check_max_nicks'.
 
 [[highlight_notification]]
-=== Wie kann ich mich darüber informieren lassen falls mich jemand in einem Channel highlighted
+=== Wie kann ich mich benachrichtigen lassen, falls mich jemand in einem Channel highlighted
 
-Dazu kann man ein Skript nutzen wie z.B. 'beep.pl' oder 'launcher.pl'.
+Seit WeeChat ≥ 1.0 gibt es standardmäßig einen Trigger, "beep", der an das Terminal
+ein 'BEL' Signal schickt, sobald man eine highlight oder private Nachricht erhält.
+Nun muss man lediglich im Terminalprogramm (oder einem Multiplexer wie screen/tmux)
+einstellen welcher Befehl ausgeführt werden soll, sobald das Terminal das 'BEL'
+Signal erhält.
 
-Beim Skript 'launcher.pl' müssen noch die Befehle angepasst werden:
+Oder man führt im Trigger "beep" direkt einen Befehl aus:
+
+----
+/set trigger.trigger.beep.command "/print -beep;/exec -bg /Pfad/zum/Befehl Argumente"
+----
+
+Nutzt man eine ältere Version von WeeChat, können z.B. die Skripten 'beep.pl' oder 'launcher.pl'
+genutzt werden.
+
+Beim 'launcher.pl' Skript müssen noch die Befehle angepasst werden:
 
 ----
 /set plugins.var.perl.launcher.signal.weechat_highlight "/Pfad/zum/Befehl Argumente"

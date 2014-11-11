@@ -93,6 +93,7 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 | Chemin/fichier                | Description
 | core/                         | Fonctions du cœur : point d'entrée, structures internes
 |    weechat.c                  | Fonctions principales : options de ligne de commande, démarrage
+|    wee-arraylist.c            | Listes avec tableau (« arraylists »)
 |    wee-backtrace.c            | Afficher une trace après un plantage
 |    wee-command.c              | Commandes du cœur de WeeChat
 |    wee-completion.c           | Complétions par défaut
@@ -115,7 +116,7 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |    wee-upgrade.c              | Mise à jour du cœur de WeeChat (tampons, lignes, historique, ...)
 |    wee-url.c                  | Transfert d'URL (en utilisant libcurl)
 |    wee-utf8.c                 | Fonctions UTF-8
-|    wee-util.c                 | Quelques autres fonctions
+|    wee-util.c                 | Quelques autres fonctions utilitaires
 |    wee-version.c              | Fonctions pour la version de WeeChat
 | gui/                          | Fonctions pour les tampons, fenêtres, ... (utilisées par toutes les interfaces)
 |    gui-bar-item.c             | Objets de barre
@@ -292,16 +293,18 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |===
 | Chemin/fichier                    | Description
 | tests/                            | Racine des tests
+|    tests.cpp                      | Programme utilisé pour lancer les tests
 |    unit/                          | Racine des tests unitaires
-|       test-eval.cpp               | Tests : évaluation d'expressions
-|       test-hashtble.cpp           | Tests : tables de hachage
-|       test-hdata.cpp              | Tests : hdata
-|       test-infolist.cpp           | Tests : infolists
-|       test-list.cpp               | Tests : listes
-|       test-string.cpp             | Tests : chaînes
-|       test-url.cpp                | Tests : URLs
-|       test-utf8.cpp               | Tests : UTF-8
-|       test-util.cpp               | Tests : fonctions utiles
+|       core/                       | Racine des tests unitaires pour le cœur
+|          test-eval.cpp            | Tests : évaluation d'expressions
+|          test-hashtble.cpp        | Tests : tables de hachage
+|          test-hdata.cpp           | Tests : hdata
+|          test-infolist.cpp        | Tests : infolists
+|          test-list.cpp            | Tests : listes
+|          test-string.cpp          | Tests : chaînes
+|          test-url.cpp             | Tests : URLs
+|          test-utf8.cpp            | Tests : UTF-8
+|          test-util.cpp            | Tests : fonctions utiles
 |===
 
 [[documentation_translations]]
@@ -671,7 +674,7 @@ struct t_gui_window *gui_current_window = NULL; /* current window           */
 ----
 
 Il n'y a pas de convention pour les variables locales (dans les fonctions).
-La seule recommendation est que le nom soit explicite (et pas trop court). +
+La seule recommandation est que le nom soit explicite (et pas trop court). +
 Cependant, les pointeurs vers les structures sont souvent nommés 'ptr_xxxx', par
 exemple un pointeur sur 'struct t_gui_buffer *' sera : '*ptr_buffer'.
 
@@ -958,7 +961,7 @@ server->hook_timer_sasl = weechat_hook_timer (timeout * 1000,
 Le dépôt Git est à cette URL : https://github.com/weechat/weechat
 
 Tout patch pour un bug ou une nouvelle fonctionnalité doit être effectué sur la
-branche master, le format préféré étant une "pull request" sur Github. Un  patch
+branche master, le format préféré étant une "pull request" sur GitHub. Un patch
 peut aussi être envoyé par e-mail (fait avec `git diff` ou `git format-patch`).
 
 Le format du message de commit est le suivant (pour fermer un bug GitHub) :

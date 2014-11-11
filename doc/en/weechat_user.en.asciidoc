@@ -43,9 +43,9 @@ WeeChat homepage is here: http://weechat.org/
 In order to install WeeChat, you need:
 
 * a running GNU/Linux system (with compiler tools for source
-  package), or compatible OS
+  package), or a compatible OS
 * 'root' privileges (to install WeeChat in a system directory)
-* ncurses library
+* some libraries (see <<dependencies,dependencies>>).
 
 [[install]]
 == Installation
@@ -74,6 +74,11 @@ instructions.
 
 WeeChat can be compiled with cmake or autotools (cmake is recommended way).
 
+[NOTE]
+On OS X, you can use http://brew.sh/[Homebrew]:
+`brew install weechat --with-python --with-perl`
+(for help: `brew info weechat`).
+
 [[dependencies]]
 ==== Dependencies
 
@@ -84,18 +89,19 @@ compile WeeChat.
 |===
 | Package ^(1)^                   | Version     | Required | Feature
 | cmake                           |             | *yes*    | Build (autotools still possible, but cmake is recommended)
+| pkg-config                      |             | *yes*    | Detect installed libraries
 | libncursesw5-dev ^(2)^          |             | *yes*    | Ncurses interface
 | libcurl4-gnutls-dev             |             | *yes*    | URL transfer
 | zlib1g-dev                      |             | *yes*    | Compression of packets in relay plugin (weechat protocol), script plugin
-| libgcrypt11-dev                 |             | *yes*    | Secured data, IRC SASL authentication (DH-BLOWFISH/DH-AES), script plugin
-| libgnutls-dev                   | ≥ 2.2.0     |          | SSL connection to IRC server, support of SSL in relay plugin
+| libgcrypt20-dev                 |             | *yes*    | Secured data, IRC SASL authentication (DH-BLOWFISH/DH-AES), script plugin
+| libgnutls28-dev                 | ≥ 2.2.0     |          | SSL connection to IRC server, support of SSL in relay plugin
 | gettext                         |             |          | Internationalization (translation of messages; base language is English)
 | ca-certificates                 |             |          | Certificates for SSL connections
 | libaspell-dev or libenchant-dev |             |          | Aspell plugin
 | python-dev                      | ≥ 2.5 ^(3)^ |          | Python plugin
 | libperl-dev                     |             |          | Perl plugin
-| ruby1.9.1-dev                   | ≥ 1.8       |          | Ruby plugin
-| liblua5.1-0-dev                 |             |          | Lua plugin
+| ruby2.1-dev                     | ≥ 1.8       |          | Ruby plugin
+| liblua5.2-dev                   |             |          | Lua plugin
 | tcl-dev                         | ≥ 8.5       |          | Tcl plugin
 | guile-2.0-dev                   | ≥ 2.0       |          | Guile (scheme) plugin
 | asciidoc                        | ≥ 8.5.0     |          | Build man page and documentation
@@ -500,11 +506,11 @@ Screen is composed by following areas:
 
 Bar 'status' has following default items:
 
-[width="100%",cols="^3,^3,10",options="header"]
+[width="100%",cols="^3,^4,10",options="header"]
 |===
 | Item                  | Example               | Description
 | time                  | `[12:55]`             | Time
-| buffer_count          | `[6]`                 | Number of opened buffers
+| buffer_last_number    | `[6]`                 | Number of last buffer in list
 | buffer_plugin         | `[irc/freenode]`      | Plugin of current buffer (irc plugin can add IRC server name used by buffer)
 | buffer_number         | `3`                   | Current buffer number
 | buffer_name           | `#test`               | Current buffer name
@@ -512,22 +518,37 @@ Bar 'status' has following default items:
 | buffer_nicklist_count | `{4}`                 | Number of nicks in nicklist
 | buffer_zoom           | !                     | `!` means the merged buffer is zoomed (only this one is displayed), empty value means all merged buffers are displayed
 | buffer_filter         | `*`                   | Filtering indicator: `*` means some lines are filtered (hidden), empty value means all lines are displayed
+| scroll                | `-MORE(50)-`          | Scroll indicator, with number of lines below last line displayed
 | lag                   | `[Lag: 2.5]`          | Lag indicator, in seconds (hidden if lag is low)
 | hotlist               | `[H: 4:#abc(2,5), 6]` | List of buffers with activity (unread messages) (in example, 2 highlights and 5 unread messages on '#abc', one unread message on buffer #6)
 | completion            | `abc(2) def(5)`       | List of words for completion, with number of possible completions for each word
-| scroll                | `-MORE(50)-`          | Scroll indicator, with number of lines below last line displayed
 |===
 
 Bar 'input' has following default items:
 
-[width="100%",cols="^3,^6,8",options="header"]
+[width="100%",cols="^3,^4,10",options="header"]
 |===
 | Item         | Example                                      | Description
-| input_paste  | `[Paste 7 lines ? [ctrl-Y] Yes [ctrl-N] No]` | Question to user for pasting lines
 | input_prompt | `[@Flashy(i)]`                               | Input prompt, for irc: nick and modes (mode "+i" means invisible on freenode)
 | away         | `(away)`                                     | Away indicator
 | input_search | `[Search (~ str,msg)]`                       | Search indicator ("`~`": case insensitive, "`==`": case sensitive, "`str`": search string, "`regex`": search regular expression, "`msg`": search in messages, "`pre`": search in prefixes, "`pre\|msg`": search in prefixes and messages)
+| input_paste  | `[Paste 7 lines ? [ctrl-Y] Yes [ctrl-N] No]` | Question to user for pasting lines
 | input_text   | `hi peter!`                                  | Input text
+|===
+
+Other items available (not used in bars by default):
+
+[width="100%",cols="^3,^4,10",options="header"]
+|===
+| Item              | Example             | Description
+| aspell_dict       | `fr,en`             | Spelling dictionaries used on current buffer
+| aspell_suggest    | `print,prone,prune` | Spelling suggestions for word under cursor (if misspelled)
+| buffer_count      | `10`                | Total number of buffers opened
+| buffer_short_name | `#test`             | Current buffer short name
+| irc_channel       | `#test`             | Current IRC channel name
+| irc_nick_modes    | `@`                 | IRC modes for self nick
+| mouse_status      | `M`                 | Mouse status (empty if mouse is disabled)
+| window_number     | `2`                 | Current window number
 |===
 
 [[buffers_and_windows]]
@@ -1398,7 +1419,7 @@ Example: display of "hello everybody!" with "hello" in light blue bold and
 "everybody" in light red underlined:
 
 ----
-^Cc12^Cbhello ^Cb^Cc04^Cueverybody^Cu^Cc!
+^Cc12^Cbhello ^Cb^Cc04^C_everybody^C_^Cc!
 ----
 
 [NOTE]
@@ -3056,15 +3077,17 @@ The char "/" can be replaced by any char (one or more identical chars).
 
 Matching groups can be used in "replace":
 
-* `$0` to `$99`: `$0` is the whole match, `$1` to `$99` are groups captured
-* `$+`: the last match (with highest number)
-* `$.cN`: match "N" with all chars replaced by "c" (example: `$.*2` is the group
-  #2 with all chars replaced by `*`).
+* `${re:0}` to `${re:99}`: `${re:0}` is the whole match, `${re:1}` to
+  `${re:99}` are groups captured
+* `${re:+}`: the last match (with highest number)
+* `${hide:c,${re:N}}`: match "N" with all chars replaced by "c"
+  (example: `${hide:*,${re:2}}` is the group #2 with all chars replaced by
+  `*`).
 
 Example: use bold for words between "*":
 
 ----
-/\*(\S+)\*/*${color:bold}$1${color:-bold}*/
+/\*(\S+)\*/*${color:bold}${re:1}${color:-bold}*/
 ----
 
 Example: default trigger 'server_pass' uses this regular expression to hide
@@ -3072,7 +3095,7 @@ password in commands `/server` and `/connect` (chars in passwords are replaced
 by `*`):
 
 ----
-==^(/(server|connect) .*-(sasl_)?password=)(\S+)(.*)==$1$.*4$5
+==^(/(server|connect) .*-(sasl_)?password=)(\S+)(.*)==${re:1}${hide:*,${re:4}}${re:5}
 ----
 
 [NOTE]
@@ -3386,14 +3409,14 @@ include::autogen/user/xfer_commands.asciidoc[]
 == Support
 
 Before asking for support, be sure you've read documentation and FAQ provided
-with WeeChat (documentation is this document, if you don't read all lines
-until this sentence, you can start again!).
+with WeeChat.
 
-Ways to get support:
+For support with IRC, on server 'chat.freenode.net':
 
-* IRC: server 'irc.freenode.net', channels '#weechat' (English) and
-  '#weechat-fr' (French)
-* Mailing list:
-** subscribe: http://mail.nongnu.org/mailman/listinfo/weechat-support
-** send mail to weechat-support@nongnu.org
-** archives: http://mail.nongnu.org/archive/html/weechat-support
+* official channels (with developers):
+** '#weechat' (English)
+** '#weechat-fr' (French)
+* non-official channels:
+** '#weechat-de' (German)
+
+For other ways of support, see: http://weechat.org/dev/support

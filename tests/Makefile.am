@@ -17,13 +17,14 @@
 # along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-AM_CPPFLAGS = -DLOCALEDIR=\"$(datadir)/locale\" $(CPPUTEST_CFLAGS)
+AM_CPPFLAGS = -DLOCALEDIR=\"$(datadir)/locale\" $(CPPUTEST_CFLAGS) -I$(abs_top_srcdir)
 
 noinst_LIBRARIES = lib_ncurses_fake.a lib_weechat_unit_tests.a
 
 lib_ncurses_fake_a_SOURCES = ncurses-fake.c
 
-lib_weechat_unit_tests_a_SOURCES = unit/core/test-eval.cpp \
+lib_weechat_unit_tests_a_SOURCES = unit/core/test-arraylist.cpp \
+                                   unit/core/test-eval.cpp \
                                    unit/core/test-hashtable.cpp \
                                    unit/core/test-hdata.cpp \
                                    unit/core/test-infolist.cpp \
@@ -33,17 +34,17 @@ lib_weechat_unit_tests_a_SOURCES = unit/core/test-eval.cpp \
                                    unit/core/test-utf8.cpp \
                                    unit/core/test-util.cpp
 
-bin_PROGRAMS = tests
+noinst_PROGRAMS = tests
 
-# Because of a linker bug, we have to link 2 times with lib_weechat_core.a
+# Due to circular references, we must link two times with libweechat_core.a
 # (and it must be 2 different path/names to be kept by linker)
 tests_LDADD = ./../src/core/lib_weechat_core.a \
               ../src/plugins/lib_weechat_plugins.a \
               ../src/gui/lib_weechat_gui_common.a \
               ../src/gui/curses/lib_weechat_gui_curses.a \
-              ../src/core/lib_weechat_core.a \
               lib_ncurses_fake.a \
               lib_weechat_unit_tests.a \
+              ../src/core/lib_weechat_core.a \
               $(PLUGINS_LFLAGS) \
               $(GCRYPT_LFLAGS) \
               $(GNUTLS_LFLAGS) \
@@ -51,6 +52,7 @@ tests_LDADD = ./../src/core/lib_weechat_core.a \
               $(CPPUTEST_LFLAGS) \
               -lm
 
-tests_SOURCES = tests.cpp
+tests_SOURCES = tests.cpp \
+                tests.h
 
 EXTRA_DIST = CMakeLists.txt

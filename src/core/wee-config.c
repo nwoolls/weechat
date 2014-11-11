@@ -103,6 +103,7 @@ struct t_config_option *config_look_color_nick_offline;
 struct t_config_option *config_look_color_pairs_auto_reset;
 struct t_config_option *config_look_color_real_white;
 struct t_config_option *config_look_command_chars;
+struct t_config_option *config_look_command_incomplete;
 struct t_config_option *config_look_confirm_quit;
 struct t_config_option *config_look_day_change;
 struct t_config_option *config_look_day_change_message_1date;
@@ -134,6 +135,7 @@ struct t_config_option *config_look_input_undo_max;
 struct t_config_option *config_look_item_time_format;
 struct t_config_option *config_look_item_buffer_filter;
 struct t_config_option *config_look_item_buffer_zoom;
+struct t_config_option *config_look_item_mouse_status;
 struct t_config_option *config_look_jump_current_to_previous_buffer;
 struct t_config_option *config_look_jump_previous_buffer_when_closing;
 struct t_config_option *config_look_jump_smart_back_to_buffer;
@@ -228,6 +230,7 @@ struct t_config_option *config_color_status_data_msg;
 struct t_config_option *config_color_status_data_other;
 struct t_config_option *config_color_status_data_private;
 struct t_config_option *config_color_status_filter;
+struct t_config_option *config_color_status_mouse;
 struct t_config_option *config_color_status_name;
 struct t_config_option *config_color_status_name_ssl;
 struct t_config_option *config_color_status_nicklist_count;
@@ -241,6 +244,7 @@ struct t_config_option *config_color_nicklist_offline;
 /* config, completion section */
 
 struct t_config_option *config_completion_base_word_until_cursor;
+struct t_config_option *config_completion_command_inline;
 struct t_config_option *config_completion_default_template;
 struct t_config_option *config_completion_nick_add_space;
 struct t_config_option *config_completion_nick_completer;
@@ -2219,6 +2223,12 @@ config_weechat_init_options ()
            "input must start with one of these chars; the slash (\"/\") is "
            "always considered as command prefix (example: \".$\")"),
         NULL, 0, 0, "", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+    config_look_command_incomplete = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "command_incomplete", "boolean",
+        N_("if set, incomplete and unambiguous commands are allowed, for "
+           "example /he for /help"),
+        NULL, 0, 0, "off", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     config_look_confirm_quit = config_file_new_option (
         weechat_config_file, ptr_section,
         "confirm_quit", "boolean",
@@ -2430,6 +2440,12 @@ config_weechat_init_options ()
         N_("string used to show zoom on merged buffer "
            "(bar item \"buffer_zoom\")"),
         NULL, 0, 0, "!", NULL, 0, NULL, NULL, &config_change_buffer_content, NULL, NULL, NULL);
+    config_look_item_mouse_status = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "item_mouse_status", "string",
+        N_("string used to show if mouse is enabled "
+           "(bar item \"mouse_status\")"),
+        NULL, 0, 0, "M", NULL, 0, NULL, NULL, &config_change_buffer_content, NULL, NULL, NULL);
     config_look_jump_current_to_previous_buffer = config_file_new_option (
         weechat_config_file, ptr_section,
         "jump_current_to_previous_buffer", "boolean",
@@ -2836,19 +2852,23 @@ config_weechat_init_options ()
     config_color_chat_nick_offline = config_file_new_option (
         weechat_config_file, ptr_section,
         "chat_nick_offline", "color",
-        N_("text color for offline nick (not in nicklist any more)"),
+        N_("text color for offline nick (not in nicklist any more); this "
+           "color is used only if option weechat.look.color_nick_offline is "
+           "enabled"),
         NULL, GUI_COLOR_CHAT_NICK_OFFLINE, 0, "default", NULL, 0,
         NULL, NULL, &config_change_color, NULL, NULL, NULL);
     config_color_chat_nick_offline_highlight = config_file_new_option (
         weechat_config_file, ptr_section,
         "chat_nick_offline_highlight", "color",
-        N_("text color for offline nick with highlight"),
+        N_("text color for offline nick with highlight; this color is used "
+           "only if option weechat.look.color_nick_offline is enabled"),
         NULL, -1, 0, "default", NULL, 0,
         NULL, NULL, &config_change_color, NULL, NULL, NULL);
     config_color_chat_nick_offline_highlight_bg = config_file_new_option (
         weechat_config_file, ptr_section,
         "chat_nick_offline_highlight_bg", "color",
-        N_("background color for offline nick with highlight"),
+        N_("background color for offline nick with highlight; this color is "
+           "used only if option weechat.look.color_nick_offline is enabled"),
         NULL, -1, 0, "blue", NULL, 0,
         NULL, NULL, &config_change_color, NULL, NULL, NULL);
     config_color_chat_nick_other = config_file_new_option (
@@ -3093,6 +3113,12 @@ config_weechat_init_options ()
         N_("text color for filter indicator in status bar"),
         NULL, -1, 0, "green", NULL, 0,
         NULL, NULL, &config_change_color, NULL, NULL, NULL);
+    config_color_status_mouse = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "status_mouse", "color",
+        N_("text color for mouse indicator in status bar"),
+        NULL, -1, 0, "green", NULL, 0,
+        NULL, NULL, &config_change_color, NULL, NULL, NULL);
     config_color_status_name = config_file_new_option (
         weechat_config_file, ptr_section,
         "status_name", "color",
@@ -3166,6 +3192,15 @@ config_weechat_init_options ()
         "base_word_until_cursor", "boolean",
         N_("if enabled, the base word to complete ends at char before cursor; "
            "otherwise the base word ends at first space after cursor"),
+        NULL, 0, 0, "on", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+    config_completion_command_inline = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "command_inline", "boolean",
+        N_("if enabled, the commands inside command line are completed (the "
+           "command at beginning of line has higher priority and is used "
+           "first); note: when this option is enabled, there is no more "
+           "automatic completion of paths beginning with '/' (outside "
+           "commands arguments)"),
         NULL, 0, 0, "on", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     config_completion_default_template = config_file_new_option (
         weechat_config_file, ptr_section,

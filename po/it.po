@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-07-25 20:37+0200\n"
-"PO-Revision-Date: 2014-07-25 07:49+0200\n"
+"POT-Creation-Date: 2014-11-09 17:33+0100\n"
+"PO-Revision-Date: 2014-11-09 16:23+0100\n"
 "Last-Translator: Esteban I. Ruiz Moreno <exio4.com@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: it\n"
@@ -1440,11 +1440,12 @@ msgid ""
 "Some variables are replaced in expression, using the format ${variable}, "
 "variable can be, by order of priority:\n"
 "  1. a string with escaped chars (format: \"esc:xxx\" or \"\\xxx\")\n"
-"  2. a color (format: \"color:xxx\")\n"
-"  3. an info (format: \"info:name,arguments\", arguments are optional)\n"
-"  4. an option (format: \"file.section.option\")\n"
-"  5. a local variable in buffer\n"
-"  6. a hdata name/variable (the value is automatically converted to string), "
+"  2. a string with chars to hide (format: \"hide:char,string\")\n"
+"  3. a color (format: \"color:xxx\")\n"
+"  4. an info (format: \"info:name,arguments\", arguments are optional)\n"
+"  5. an option (format: \"file.section.option\")\n"
+"  6. a local variable in buffer\n"
+"  7. a hdata name/variable (the value is automatically converted to string), "
 "by default \"window\" and \"buffer\" point to current window/buffer.\n"
 "Format for hdata can be one of following:\n"
 "  hdata.var1.var2...: start with a hdata (pointer must be known), and ask "
@@ -1458,23 +1459,24 @@ msgid ""
 "function \"weechat_hdata_get\".\n"
 "\n"
 "Examples (simple strings):\n"
-"  /eval -n ${info:version}                 ==> 0.4.3\n"
-"  /eval -n ${weechat.look.scroll_amount}   ==> 3\n"
-"  /eval -n ${window}                       ==> 0x2549aa0\n"
-"  /eval -n ${window.buffer}                ==> 0x2549320\n"
-"  /eval -n ${window.buffer.full_name}      ==> core.weechat\n"
-"  /eval -n ${window.buffer.number}         ==> 1\n"
-"  /eval -n ${\\t}                           ==> <tab>\n"
+"  /eval -n ${info:version}                     ==> 0.4.3\n"
+"  /eval -n ${weechat.look.scroll_amount}       ==> 3\n"
+"  /eval -n ${window}                           ==> 0x2549aa0\n"
+"  /eval -n ${window.buffer}                    ==> 0x2549320\n"
+"  /eval -n ${window.buffer.full_name}          ==> core.weechat\n"
+"  /eval -n ${window.buffer.number}             ==> 1\n"
+"  /eval -n ${\\t}                               ==> <tab>\n"
+"  /eval -n ${hide:-,${relay.network.password}} ==> --------\n"
 "\n"
 "Examples (conditions):\n"
-"  /eval -n -c ${window.buffer.number} > 2  ==> 0\n"
-"  /eval -n -c ${window.win_width} > 100    ==> 1\n"
-"  /eval -n -c (8 > 12) || (5 > 2)          ==> 1\n"
-"  /eval -n -c (8 > 12) && (5 > 2)          ==> 0\n"
-"  /eval -n -c abcd =~ ^ABC                 ==> 1\n"
-"  /eval -n -c abcd =~ (?-i)^ABC            ==> 0\n"
-"  /eval -n -c abcd =~ (?-i)^abc            ==> 1\n"
-"  /eval -n -c abcd !~ abc                  ==> 0"
+"  /eval -n -c ${window.buffer.number} > 2 ==> 0\n"
+"  /eval -n -c ${window.win_width} > 100   ==> 1\n"
+"  /eval -n -c (8 > 12) || (5 > 2)         ==> 1\n"
+"  /eval -n -c (8 > 12) && (5 > 2)         ==> 0\n"
+"  /eval -n -c abcd =~ ^ABC                ==> 1\n"
+"  /eval -n -c abcd =~ (?-i)^ABC           ==> 0\n"
+"  /eval -n -c abcd =~ (?-i)^abc           ==> 1\n"
+"  /eval -n -c abcd !~ abc                 ==> 0"
 msgstr ""
 "         -n: mostra il risultato senza inviarlo al buffer (modalità debug)\n"
 "espressione: espressione da analizzare, le variabili con il formato "
@@ -1562,7 +1564,7 @@ msgid ""
 "   -all: delete all filters\n"
 " buffer: comma separated list of buffers where filter is active:\n"
 "         - this is full name including plugin (example: \"irc.freenode."
-"#weechat\")\n"
+"#weechat\" or \"irc.server.freenode\")\n"
 "         - \"*\" means all buffers\n"
 "         - a name starting with '!' is excluded\n"
 "         - wildcard \"*\" is allowed\n"
@@ -3117,6 +3119,11 @@ msgstr ""
 "sempre considerata come prefisso per comando (esempio: \".$\")"
 
 msgid ""
+"if set, incomplete and unambiguous commands are allowed, for example /he "
+"for /help"
+msgstr ""
+
+msgid ""
 "if set, /quit command must be confirmed with extra argument \"-yes\" (see /"
 "help quit)"
 msgstr ""
@@ -3319,6 +3326,12 @@ msgstr ""
 
 #, fuzzy
 msgid "string used to show zoom on merged buffer (bar item \"buffer_zoom\")"
+msgstr ""
+"stringa usata per mostrare che alcune righe sono state filtrate  nel buffer "
+"corrente (elemento barra \"buffer_filter\")"
+
+#, fuzzy
+msgid "string used to show if mouse is enabled (bar item \"mouse_status\")"
 msgstr ""
 "stringa usata per mostrare che alcune righe sono state filtrate  nel buffer "
 "corrente (elemento barra \"buffer_filter\")"
@@ -3650,14 +3663,20 @@ msgstr ""
 "colore per il prefisso del nick (stringa visualizzata prima del nick nel "
 "prefisso)"
 
-msgid "text color for offline nick (not in nicklist any more)"
-msgstr "colore del testo per i nick non in linea (non più in lista nick)"
+msgid ""
+"text color for offline nick (not in nicklist any more); this color is used "
+"only if option weechat.look.color_nick_offline is enabled"
+msgstr ""
 
-msgid "text color for offline nick with highlight"
-msgstr "colore del testo per i nick non in linea con highlight"
+msgid ""
+"text color for offline nick with highlight; this color is used only if "
+"option weechat.look.color_nick_offline is enabled"
+msgstr ""
 
-msgid "background color for offline nick with highlight"
-msgstr "colore di sfondo per i nick non in linea con highlight"
+msgid ""
+"background color for offline nick with highlight; this color is used only if "
+"option weechat.look.color_nick_offline is enabled"
+msgstr ""
 
 msgid "text color for other nick in private buffer"
 msgstr "colore del testo per gli altri nick nel buffer privato"
@@ -3804,6 +3823,10 @@ msgstr ""
 msgid "text color for filter indicator in status bar"
 msgstr "colore del testo per l'indicatore di filtro nella barra di stato"
 
+#, fuzzy
+msgid "text color for mouse indicator in status bar"
+msgstr "colore del testo per l'indicatore di filtro nella barra di stato"
+
 msgid "text color for current buffer name in status bar"
 msgstr "colore del testo per il nome del buffer corrente nella barra di stato"
 
@@ -3844,6 +3867,13 @@ msgid ""
 msgstr ""
 "se abilitata, la parola base da completare termina al carattere prima del "
 "cursore; altrimenti la parola base termina al primo spazio dopo il cursore"
+
+msgid ""
+"if enabled, the commands inside command line are completed (the command at "
+"beginning of line has higher priority and is used first); note: when this "
+"option is enabled, there is no more automatic completion of paths beginning "
+"with '/' (outside commands arguments)"
+msgstr ""
 
 msgid ""
 "default completion template (please see documentation for template codes and "
@@ -4093,6 +4123,10 @@ msgid "%sError with command \"%s\" (help on command: /help %s)"
 msgstr "%sErrore con il comando \"%s\" (digita /help %s)"
 
 #, c-format
+msgid "%sError: unknown command \"%s\" (type /help for help)"
+msgstr "%sErrore: comando \"%s\" sconosciuto (digita /help per l'aiuto)"
+
+#, c-format
 msgid ""
 "%sError: ambiguous command \"%s\": it exists in many plugins and not in \"%s"
 "\" plugin"
@@ -4100,13 +4134,14 @@ msgstr ""
 "%sErrore: comando ambiguo \"%s\": esiste in più plugin e non nel plugin \"%s"
 "\""
 
-#, c-format
-msgid "%sError: too much calls to command \"%s\" (looping)"
-msgstr "%sErrore: troppe chiamate al comando \"%s\" (loop)"
+#, fuzzy, c-format
+msgid ""
+"%sError: incomplete command \"%s\" and multiple commands start with this name"
+msgstr "%sErrore con il comando \"%s\" (digita /help %s)"
 
-#, c-format
-msgid "%sError: unknown command \"%s\" (type /help for help)"
-msgstr "%sErrore: comando \"%s\" sconosciuto (digita /help per l'aiuto)"
+#, fuzzy, c-format
+msgid "%sError: too many calls to command \"%s\" (looping)"
+msgstr "%sErrore: troppe chiamate al comando \"%s\" (loop)"
 
 msgid ""
 "Error: unable to create/append to log file (weechat.log)\n"
@@ -4263,9 +4298,9 @@ msgstr[1] "byte"
 msgid "debug: removing file: %s"
 msgstr "debug: rimozione del file: %s"
 
-#. TRANSLATORS: "%s" is translation of "second" or "seconds"
-#, c-format
-msgid "Upgrade done (%.02f %s)"
+#. TRANSLATORS: %.02fs is a float number + "s" ("seconds")
+#, fuzzy, c-format
+msgid "Upgrade done (%.02fs)"
 msgstr "Aggiornamento completato (%.02f %s)"
 
 #, c-format
@@ -5354,6 +5389,21 @@ msgstr "%s%s: la connessione al server \"%s\" è già in corso!"
 msgid "%s: server %s%s%s created (temporary server, NOT SAVED!)"
 msgstr "%s: server %s%s%s creato (server temporaneo, NON SALVATO!)"
 
+#, fuzzy, c-format
+msgid ""
+"%s%s: unable to create temporary server \"%s\" because the creation of "
+"temporary servers with command /connect is currently disabled"
+msgstr ""
+"%s%s: impossibile registrare lo script \"%s\" (esiste un altro script con lo "
+"stesso nome)"
+
+#, c-format
+msgid ""
+"%s%s: if you want to create a standard server, use the command \"/server add"
+"\" (see /help server); if you really want to create a temporary server (NOT "
+"SAVED), turn on the option irc.look.temporary_servers"
+msgstr ""
+
 #, c-format
 msgid "%sCTCP query to %s%s%s: %s%s%s%s%s"
 msgstr "%sRichiesta CTCP a %s%s%s: %s%s%s%s%s"
@@ -5748,10 +5798,11 @@ msgid ""
 "    server: server name, which can be:\n"
 "            - internal server name (created by /server add, recommended "
 "usage)\n"
-"            - hostname/port or IP/port (this will create a TEMPORARY "
-"server), port is 6667 by default\n"
+"            - hostname/port or IP/port, port is 6667 by default\n"
 "            - URL with format: irc[6][s]://[nickname[:password]@]irc.example."
 "org[:port][/#channel1][,#channel2[...]]\n"
+"            Note: for an address/IP/URL, a temporary server is created (NOT "
+"SAVED), see /help irc.look.temporary_servers\n"
 "    option: set option for server (for boolean option, value can be "
 "omitted)\n"
 "  nooption: set boolean option to 'off' (for example: -nossl)\n"
@@ -6493,7 +6544,8 @@ msgstr "<nick> <canale>[,<canale>...]"
 msgid "change mode on channel, without having operator status"
 msgstr "cambia modalità sul canale, senza avere lo status di operatore"
 
-msgid "<channel> <mode>"
+#, fuzzy
+msgid "[<channel>] <mode>"
 msgstr "<canale> <modalità>"
 
 msgid ""
@@ -6997,8 +7049,9 @@ msgstr ""
 #. TRANSLATORS: please keep words "client capabilities" between brackets if translation is different (see fr.po)
 msgid ""
 "comma-separated list of client capabilities to enable for server if they are "
-"available; capabilities supported by WeeChat are: multi-prefix, userhost-in-"
-"names, away-notify (example: \"multi-prefix,userhost-in-names,away-notify\")"
+"available; capabilities supported by WeeChat are: away-notify, extended-"
+"join, multi-prefix, server-time, userhost-in-names (example: \"away-notify,"
+"multi-prefix\")"
 msgstr ""
 
 msgid ""
@@ -7530,6 +7583,12 @@ msgstr ""
 "abilita filtro smart per i messaggi \"part\" (uscita) e \"quit "
 "(disconnessione)"
 
+#, fuzzy
+msgid "enable creation of temporary servers with command /connect"
+msgstr ""
+"%s%s: impossibile registrare lo script \"%s\" (esiste un altro script con lo "
+"stesso nome)"
+
 msgid "strip colors in topic (used only when displaying buffer title)"
 msgstr ""
 "elimina colori nell'argomento (usato solo quando mostrato il titolo del "
@@ -7710,9 +7769,10 @@ msgstr "%sCTCP richiesto da %s%s%s: %s%s%s%s%s%s"
 msgid " (blocked)"
 msgstr " (bloccato)"
 
-#, c-format
-msgid "%sCTCP reply from %s%s%s: %s%s%s %ld.%ld %s"
-msgstr "%sRisposta CTCP da %s%s%s: %s%s%s %ld,%ld %s"
+#. TRANSLATORS: %.3fs is a float number + "s" ("seconds")
+#, fuzzy, c-format
+msgid "%sCTCP reply from %s%s%s: %s%s%s %.3fs"
+msgstr "%sRisposta CTCP da %s%s%s: %s%s%s%s%s"
 
 #, c-format
 msgid "%sCTCP reply from %s%s%s: %s%s%s%s%s"
@@ -7977,8 +8037,8 @@ msgstr "%sSei stato invitato su %s%s%s da %s%s%s"
 msgid "%s%s: cannot create new channel \"%s\""
 msgstr "%s%s: impossibile creare il nuovo canale \"%s\""
 
-#, c-format
-msgid "%s%s%s%s%s%s%s%s%s%s has joined %s%s%s"
+#, fuzzy, c-format
+msgid "%s%s%s%s%s%s%s%s%s%s%s%s has joined %s%s%s"
 msgstr "%s%s%s%s%s%s%s%s%s%s è entrato in %s%s%s"
 
 #, c-format
@@ -8051,8 +8111,8 @@ msgid "%s%s%s%s has unset topic for %s%s%s"
 msgstr "%s%s%s%s ha rimosso l'argomento per %s%s%s"
 
 #, c-format
-msgid "%sWallops from %s%s %s(%s%s%s)%s: %s"
-msgstr "%sWallop da %s%s %s(%s%s%s)%s: %s"
+msgid "%sWallops from %s: %s"
+msgstr "%sWallop da %s: %s"
 
 #, c-format
 msgid "%sUser mode for %s%s%s is %s[%s%s%s]"
@@ -8145,22 +8205,26 @@ msgid "%sChannel reop %s%s%s: %s%s"
 msgstr "%sReop sul canale %s%s%s: %s%s"
 
 #. TRANSLATORS: "%s" after "on" is a date
-#, c-format
-msgid "%s%s[%s%s%s] %s%s%s invited by %s%s %s(%s%s%s)%s on %s"
-msgstr "%s%s[%s%s%s] %s%s%s invitato da %s%s %s(%s%s%s)%s il %s"
-
-#, c-format
-msgid "%s%s[%s%s%s] %s%s%s invited by %s%s %s(%s%s%s)"
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s] %s%s%s invited by %s on %s"
 msgstr "%s%s[%s%s%s] %s%s%s invitato da %s%s %s(%s%s%s)"
+
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s] %s%s%s invited by %s"
+msgstr "%s%s[%s%s%s] %s%s%s invitato"
 
 #, c-format
 msgid "%s%s[%s%s%s] %s%s%s invited"
 msgstr "%s%s[%s%s%s] %s%s%s invitato"
 
 #. TRANSLATORS: "%s" after "on" is a date
-#, c-format
-msgid "%s%s[%s%s%s]%s exception %s%s%s by %s%s %s(%s%s%s)%s on %s"
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s]%s exception %s%s%s by %s on %s"
 msgstr "%s%s[%s%s%s]%s eccezione %s%s%s da %s%s %s(%s%s%s)%s il %s"
+
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s]%s exception %s%s%s by %s"
+msgstr "%s%s[%s%s%s]%s eccezione %s%s"
 
 #, c-format
 msgid "%s%s[%s%s%s]%s exception %s%s"
@@ -8203,13 +8267,17 @@ msgstr[0] "nick"
 msgstr[1] "nick"
 
 #. TRANSLATORS: "%s" after "on" is a date
-#, c-format
-msgid "%s%s[%s%s%s] %s%s%s banned by %s%s %s(%s%s%s)%s on %s"
-msgstr "%s%s[%s%s%s] %s%s%s bannato da %s%s %s(%s%s%s)%s il %s"
-
-#, c-format
-msgid "%s%s[%s%s%s] %s%s%s banned by %s%s %s(%s%s%s)"
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s] %s%s%s banned by %s on %s"
 msgstr "%s%s[%s%s%s] %s%s%s bannato da %s%s %s(%s%s%s)"
+
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s] %s%s%s banned by %s"
+msgstr "%s%s[%s%s%s] %s%s%s bannato da %s%s %s(%s%s%s)"
+
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s] %s%s%s banned"
+msgstr "%s%s[%s%s%s] %s%s%s invitato"
 
 #, c-format
 msgid ""
@@ -8240,13 +8308,17 @@ msgid "%s%s: nickname \"%s\" is unavailable, trying nickname \"%s\""
 msgstr "%s%s: il nick \"%s\" non è disponibile, tentativo con il nick \"%s\""
 
 #. TRANSLATORS: "%s" after "on" is a date
-#, c-format
-msgid "%s%s[%s%s%s] %s%s%s quieted by %s%s %s(%s%s%s)%s on %s"
-msgstr "%s%s[%s%s%s] %s%s%s messo a tacere da %s%s %s(%s%s%s)%s il %s"
-
-#, c-format
-msgid "%s%s[%s%s%s] %s%s%s quieted by %s%s %s(%s%s%s)"
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s] %s%s%s quieted by %s on %s"
 msgstr "%s%s[%s%s%s] %s%s%s messo a tacere da %s%s %s(%s%s%s)"
+
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s] %s%s%s quieted by %s"
+msgstr "%s%s[%s%s%s] %s%s%s messo a tacere da %s%s %s(%s%s%s)"
+
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s] %s%s%s quieted"
+msgstr "%s%s[%s%s%s] %s%s%s invitato"
 
 #, c-format
 msgid "%s%s: command \"%s\" not found:"
@@ -9084,9 +9156,6 @@ msgstr "elenco dei buffer"
 msgid "structure with completion"
 msgstr "struttura con completamento"
 
-msgid "structure with partial completion"
-msgstr "struttura con completamento parziale"
-
 msgid "config file"
 msgstr "file di configurazione"
 
@@ -9494,11 +9563,11 @@ msgstr "Client connessi per il relay:"
 
 #, c-format
 msgid ""
-"  %s%s%s (%s%s%s), started on: %s, last activity: %s, bytes: %lu recv, %lu "
+"  %s%s%s (%s%s%s), started on: %s, last activity: %s, bytes: %llu recv, %llu "
 "sent"
 msgstr ""
-"  %s%s%s (%s%s%s), avviato il %s, attività recente: %s byte: %lu ricevuti, "
-"%lu inviati"
+"  %s%s%s (%s%s%s), avviato il %s, attività recente: %s byte: %llu ricevuti, "
+"%llu inviati"
 
 #, c-format
 msgid "  %s%s%s (%s%s%s), started on: %s"
@@ -9512,6 +9581,10 @@ msgstr "Nessun client connesso per il relay"
 
 msgid "Listening on ports:"
 msgstr "In ascolto sulle porte:"
+
+#, fuzzy, c-format
+msgid "  port %s%d%s, relay: %s%s%s, %s (not started)"
+msgstr "  porta %s%d%s, relay: %s%s%s, %s, avviato il: %s"
 
 #, c-format
 msgid "  port %s%d%s, relay: %s%s%s, %s, started on: %s"
@@ -9535,19 +9608,31 @@ msgstr "%s%s: relay \"%s\" non trovato"
 msgid "relay control"
 msgstr "controllo relay"
 
+#, fuzzy
 msgid ""
-"list|listfull|listrelay || add [ipv4.][ipv6.][ssl.]<protocol.name> <port> || "
-"del [ipv4.][ipv6.][ssl.]<protocol.name> || raw || sslcertkey"
+"list|listfull|listrelay || add <name> <port> || del|stop|restart <name> || "
+"raw || sslcertkey"
 msgstr ""
 "list|listfull|listrelay || add [ipv4.][ipv6.][ssl.]<protocollo.nome> <porta> "
 "|| del [ipv4.][ipv6.][ssl.]<protocollo.nome> || raw || sslcertkey"
 
+#, fuzzy
 msgid ""
 "         list: list relay clients (only active relays)\n"
 "     listfull: list relay clients (verbose, all relays)\n"
 "    listrelay: list relays (name and port)\n"
-"          add: add relay for a protocol + name\n"
-"          del: remove relay for a protocol + name\n"
+"          add: add a relay (listen on a port)\n"
+"          del: remove a relay (clients remain connected)\n"
+"         stop: close the server socket (clients remain connected)\n"
+"      restart: close the server socket and listen again on port (clients "
+"remain connected)\n"
+"         name: relay name (see format below)\n"
+"         port: port used for relay\n"
+"          raw: open buffer with raw Relay data\n"
+"   sslcertkey: set SSL certificate/key using path in option relay.network."
+"ssl_cert_key\n"
+"\n"
+"Relay name is: [ipv4.][ipv6.][ssl.]<protocol.name>\n"
 "         ipv4: force use of IPv4\n"
 "         ipv6: force use of IPv6\n"
 "          ssl: enable SSL\n"
@@ -9556,10 +9641,11 @@ msgid ""
 "if not given, the server name must be sent by client in command \"PASS\", "
 "with format: \"PASS server:password\")\n"
 "                 - protocol \"weechat\" (name is not used)\n"
-"         port: port used for relay\n"
-"          raw: open buffer with raw Relay data\n"
-"   sslcertkey: set SSL certificate/key using path in option relay.network."
-"ssl_cert_key\n"
+"\n"
+"The \"irc\" protocol allows any IRC client (including WeeChat itself) to "
+"connect on the port.\n"
+"The \"weechat\" protocol allows a remote interface to connect on the port, "
+"see the list here: http://weechat.org/download/\n"
 "\n"
 "Without argument, this command opens buffer with list of relay clients.\n"
 "\n"
@@ -9762,9 +9848,9 @@ msgid "display backlog starting from last client disconnect"
 msgstr "mostra la cronologia a partire dall'ultima disconnessione del client"
 
 msgid ""
-"tags of messages which are displayed in backlog per IRC channel (supported "
-"tags: \"irc_join\", \"irc_part\", \"irc_quit\", \"irc_nick\", \"irc_privmsg"
-"\"), \"*\" = all supported tags"
+"comma-separated list of messages tags which are displayed in backlog per IRC "
+"channel (supported tags: \"irc_join\", \"irc_part\", \"irc_quit\", \"irc_nick"
+"\", \"irc_privmsg\"), \"*\" = all supported tags"
 msgstr ""
 
 msgid ""
@@ -10434,6 +10520,12 @@ msgstr "Nessun rmodifier definito"
 msgid "List of default triggers:"
 msgstr "Elenco degli alias:"
 
+#, c-format
+msgid ""
+"%s%s: action \"%s\" can not be executed on trigger \"%s\" because it is "
+"currently running"
+msgstr ""
+
 #, fuzzy, c-format
 msgid "Trigger \"%s\" restarted"
 msgstr "Barra \"%s\" creata"
@@ -10535,6 +10627,14 @@ msgstr "Rmodifier \"%s\" eliminato"
 msgid "Trigger:"
 msgstr ""
 
+#, fuzzy, c-format
+msgid "Trigger \"%s\" restored"
+msgstr "Barra \"%s\" creata"
+
+#, fuzzy, c-format
+msgid "%sDefault trigger \"%s\" not found"
+msgstr "%sTasto \"%s\" non trovato"
+
 #, fuzzy
 msgid "Default triggers restored:"
 msgstr "Rmodifier predefiniti ripristinati:"
@@ -10556,8 +10656,8 @@ msgid ""
 "\" [\"<return_code>\"]]]]] || addinput [<hook>] || input|output|recreate "
 "<name> || set <name> <option> <value> || rename|copy <name> <new_name> || "
 "enable|disable|toggle [<name>|-all [<name>...]] || restart <name>|-all "
-"[<name>...] || show <name> || del <name>|-all [<name>...] || default -yes || "
-"monitor [<filter>]"
+"[<name>...] || show <name> || del <name>|-all [<name>...] || restore <name> "
+"[<name>...] || default -yes || monitor [<filter>]"
 msgstr ""
 
 msgid ""
@@ -10610,7 +10710,9 @@ msgid ""
 "       show: show detailed info on a trigger (with some stats)\n"
 "        del: delete a trigger\n"
 "       -all: do action on all triggers\n"
-"    default: restore default triggers\n"
+"    restore: restore trigger(s) with the default values (works only for "
+"default triggers)\n"
+"    default: delete all triggers and restore default ones\n"
 "    monitor: open the trigger monitor buffer, with optional filter:\n"
 "     filter: filter hooks/triggers to display (a hook must start with \"@\", "
 "for example \"@signal\"), many filters can be separated by commas; wildcard "
@@ -10628,9 +10730,9 @@ msgid ""
 "  add text attributes *bold*, _underline_ and /italic/ (only in user "
 "messages):\n"
 "    /trigger add effects modifier weechat_print \"${tg_tag_nick}\" \"=="
-"\\*(\\S+)\\*==*${color:bold}$1${color:-bold}*== ==_(\\S+)_==_${color:"
-"underline}$1${color:-underline}_== ==/(\\S+)/==/${color:italic}$1${color:-"
-"italic}/\"\n"
+"\\*(\\S+)\\*==*${color:bold}${re:1}${color:-bold}*== ==_(\\S+)_==_${color:"
+"underline}${re:1}${color:-underline}_== ==/(\\S+)/==/${color:"
+"italic}${re:1}${color:-italic}/\"\n"
 "  hide nicklist bar on small terminals:\n"
 "    /trigger add resize_small signal signal_sigwinch \"${info:term_width} < "
 "100\" \"\" \"/bar hide nicklist\"\n"
@@ -10645,6 +10747,10 @@ msgstr ""
 
 msgid "triggers"
 msgstr ""
+
+#, fuzzy
+msgid "default triggers"
+msgstr "Elenco degli alias:"
 
 #, fuzzy
 msgid "options for triggers"
@@ -10715,8 +10821,9 @@ msgid ""
 "can be separated by a space, for example: \"/regex1/replace1/var1 /regex2/"
 "replace2/var2\"; escaped chars are interpreted in the regex (for example "
 "\"\\n\"); the separator \"/\" can be replaced by any char (one or more "
-"identical chars); matching groups can be used in replace: $0 to $99, $+ for "
-"last match and $.cN to replace all chars of group N by char c"
+"identical chars); matching groups can be used in replace: ${re:0} to "
+"${re:99}, ${re:+} for last match and ${hide:c,${re:N}} to replace all chars "
+"of group N by char 'c'"
 msgstr ""
 
 msgid ""
@@ -10883,6 +10990,14 @@ msgid "%s: file %s (local filename: %s) will be resumed at position %llu"
 msgstr "%s: file %s (nome file locale: %s) verrà ripreso dalla posizione %llu"
 
 #, c-format
+msgid "%s%s: address \"%s\" resolved to a larger sockaddr than expected"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%s%s: invalid address \"%s\": error %d %s"
+msgstr "%s%s: set di caratter invalido: \"%s\""
+
+#, c-format
 msgid "%s%s: missing arguments (%s)"
 msgstr "%s%s: argomenti mancanti (%s)"
 
@@ -10897,14 +11012,6 @@ msgstr "%s%s: protocollo xfer  \"%s\" sconosciuto"
 #, c-format
 msgid "%s%s: cannot access file \"%s\""
 msgstr "%s%s: impossibile accedere al file \"%s\""
-
-#, fuzzy, c-format
-msgid "%s%s: invalid address \"%s\" (option xfer.network.own_ip): error %d %s"
-msgstr "%s%s: set di caratter invalido: \"%s\""
-
-#, fuzzy, c-format
-msgid "%s%s: unable to find address for \"%s\": error %d %s"
-msgstr "%s%s: set di caratter invalido: \"%s\""
 
 #, c-format
 msgid "%s%s: cannot create socket for xfer: error %d %s"
@@ -11194,3 +11301,7 @@ msgstr ""
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: timeout per \"%s\" con %s"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to connect: unexpected error (%d)"
+msgstr "%s%s: impossibile connettersi al mittente"

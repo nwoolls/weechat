@@ -959,7 +959,7 @@ Paramètres :
 
 * 'string' : chaîne
 * 'left' : supprime les caractères en début de chaîne si différent de 0
-* 'right' : supprime les caractères en fin de chaîne si different de 0
+* 'right' : supprime les caractères en fin de chaîne si différent de 0
 * 'chars' : chaîne avec les caractères à supprimer
 
 Valeur de retour :
@@ -1858,11 +1858,11 @@ str3 = weechat.string_input_for_buffer("//test")  # "/test"
 
 ==== weechat_string_eval_expression
 
-_WeeChat ≥ 0.4.0, mis à jour dans la 0.4.2._
+_WeeChat ≥ 0.4.0, mis à jour dans la 0.4.2 et 1.1._
 
 Évaluer l'expression et retourner le résultat sous forme de chaîne.
-Les variables spéciales avec le format `${variable}` sont étendues (voir la
-commande `/eval` dans le 'Guide utilisateur WeeChat').
+Les variables spéciales avec le format `${variable}` sont étendues (voir le
+tableau ci-dessous).
 
 [NOTE]
 Depuis la version 1.0, les variables imbriquées sont supportées, par exemple :
@@ -1880,11 +1880,17 @@ char *weechat_string_eval_expression (const char *expr,
 
 Paramètres :
 
-* 'expr' : l'expression à évaluer
+* 'expr' : l'expression à évaluer (voir le tableau ci-dessous)
 * 'pointers' : table de hachage avec les pointeurs (les clés doivent être des
   chaînes, les valeurs doivent être des pointeurs); les pointeurs "window" et
   "buffer" sont automatiquement ajoutés s'ils ne sont pas dans la table de
-  hachage (avec le pointer vers fenêtre/tampon courants) (peut être NULL)
+  hachage (avec le pointer vers fenêtre/tampon courants) (peut être NULL) :
+** 'regex' : pointeur vers une expression régulière (structure 'regex_t')
+   compilée avec la fonction WeeChat
+   <<_weechat_string_regcomp,weechat_string_regcomp>> ou regcomp (voir
+   `man regcomp`) ; cette option est similaire à 'regex' dans la table de
+   hachage 'options' (ci-dessous), mais est utilisée pour de meilleures
+   performances
 * 'extra_vars' : variables additionnelles qui seront étendues (peut être NULL)
 * 'options' : table de hachage avec des options (les clés et valeurs doivent
   être des chaînes) (peut être NULL) :
@@ -1894,6 +1900,12 @@ Paramètres :
     et parenthèses sont utilisés, le résultat est un booléen ("0" ou "1")
 ** 'prefix' : préfixe avant les variables à remplacer (par défaut : "${")
 ** 'suffix' : suffixe après les variables à remplacer (par défaut : "}")
+** 'regex' : une expression regulière pour remplacer du texte dans 'expr' (qui
+   n'est alors pas évalué)
+** 'regex_replace' : le texte de remplacement à utiliser avec 'regex', pour
+   remplacer du texte dans 'expr' ('regex_replace' est évalué sur chaque
+   correspondance de 'regex' sur 'expr', jusqu'à ce que plus aucune
+   correspondance ne soit trouvée)
 
 Valeur de retour :
 
@@ -1901,20 +1913,108 @@ Valeur de retour :
   utilisation), ou NULL si problème (expression invalide ou pas assez de
   mémoire)
 
+Liste des variables étendues dans l'expression (par ordre de priorité, de la
+première étendue à la dernière) :
+
+[width="100%",cols="2,8,3,3",options="header"]
+|===
+| Format | Description | Exemples | Résultats
+
+| `${nom}` | Variable `nom` de la table de hachage 'extra_vars' |
+  `${nom}` | `valeur`
+
+| `${esc:xxx}` +
+  `${\xxx}` | Chaîne avec caractères échappés |
+  `${esc:préfixe\tmessage}` +
+  `${\ua9}` |
+  `préfixe<TAB>message` +
+  `©`
+
+| `${hide:x,valeur}` |
+  Chaîne avec les caractères masqués (tous les caractères dans `valeur`
+  remplacés par `x` |
+  `${hide:*,mot_de_passe}` |
+ `************`
+
+| `${re:N}` |
+  Groupe regex capturé : 0 = toute la chaîne correspondante, 1 à 99 = groupe
+  capturé, `+` = dernier groupe capturé |
+  `${re:1}` |
+  `test`
+
+| `${color:nom}` |
+  Code couleur WeeChat (le nom de couleur a des attributs facultatifs) |
+  `${color:red}texte rouge` +
+  `${color:*214}texte orange gras` |
+  `texte rouge` (en rouge) +
+  `texte orange gras` (en orange gras)
+
+| `${info:name}` +
+  `${indo:name,arguments}` |
+  Info de WeeChat ou d'une extension, voir la fonction
+  <<_weechat_info_get,weechat_info_get>> |
+  `${info:version}` +
+  `${info:irc_nick_color_name,foo}` |
+  `1.0` +
+  `lightblue`
+
+| `${sec.data.nom}` |
+  Valeur de la donnée sécurisée `nom` |
+  `${sec.data.freenode_pass}` |
+  `mon_mot_de_passe`
+
+| `${file.section.option}` |
+  Valeur de l'option |
+  `${weechat.look.buffer_time_format}` |
+  `%H:%M:%S`
+
+| `${nom}` |
+  Valeur de la variable locale `nom` dans le tampon |
+  `${nick}` |
+  `FlashCode`
+
+| `${hdata.var1.var2...}` +
+  `${hdata[list].var1.var2...}` |
+  Valeur d'un hdata (les pointeurs `window` et `buffer` sont définis par défaut
+  avec la fenêtre et tampon courants) |
+  `${buffer[gui_buffers].full_name}` +
+  `${window.buffer.number}` |
+  `core.weechat` +
+  `1`
+|===
+
 Exemples en C :
 
 [source,C]
 ----
-struct t_hashtable *options = weechat_hashtable_new (8,
-                                                     WEECHAT_HASHTABLE_STRING,
-                                                     WEECHAT_HASHTABLE_STRING,
-                                                     NULL,
-                                                     NULL);
-if (options)
-    weechat_hashtable_set (options, "type", "condition");
-char *str1 = weechat_string_eval_expression ("${buffer.full_name}", NULL, NULL, NULL);           /* "core.weechat" */
-char *str2 = weechat_string_eval_expression ("${window.win_width} > 100", NULL, NULL, options);  /* "1" */
-char *str3 = weechat_string_eval_expression ("abc =~ def", NULL, NULL, options);                 /* "0" */
+/* conditions */
+struct t_hashtable *options1 = weechat_hashtable_new (8,
+                                                      WEECHAT_HASHTABLE_STRING,
+                                                      WEECHAT_HASHTABLE_STRING,
+                                                      NULL,
+                                                      NULL);
+weechat_hashtable_set (options1, "type", "condition");
+char *str1 = weechat_string_eval_expression ("${window.win_width} > 100", NULL, NULL, options1);  /* "1" */
+char *str2 = weechat_string_eval_expression ("abc =~ def", NULL, NULL, options1);                 /* "0" */
+
+/* expression simple */
+char *str3 = weechat_string_eval_expression ("${buffer.full_name}", NULL, NULL, NULL);  /* "core.weechat" */
+
+/* remplacement avec regex */
+struct t_hashtable *options2 = weechat_hashtable_new (8,
+                                                      WEECHAT_HASHTABLE_STRING,
+                                                      WEECHAT_HASHTABLE_STRING,
+                                                      NULL,
+                                                      NULL);
+/* ajout de crochets autour des URLs */
+weechat_hashtable_set (options2, "regex", "\\w+://\\S+");
+weechat_hashtable_set (options2, "regex_replace", "[ ${re:0} ]");
+char *str4 = weechat_string_eval_expression ("test: http://weechat.org", NULL, NULL, NULL);  /* "test: [ http://weechat.org ]" */
+
+/* masquage des mots de passe */
+weechat_hashtable_set (options2, "regex", "(password=)(\\S+)");
+weechat_hashtable_set (options2, "regex_replace", "${re:1}${hide:*,${re:2}}");
+char *str5 = weechat_string_eval_expression ("password=abc password=def", NULL, NULL, NULL);  /* "password=*** password=***" */
 ----
 
 Script (Python) :
@@ -1925,9 +2025,27 @@ Script (Python) :
 str = weechat.string_eval_expression(expr, pointers, extra_vars, options)
 
 # exemples
-str1 = weechat.string_eval_expression("${buffer.full_name}", {}, {}, {})                           # "core.weechat"
-str2 = weechat.string_eval_expression("${window.win_width} > 100", {}, {}, {"type": "condition"})  # "1"
-str3 = weechat.string_eval_expression("abc =~ def", {}, {}, {"type": "condition"})                 # "0"
+
+# conditions
+str1 = weechat.string_eval_expression("${window.win_width} > 100", {}, {}, {"type": "condition"})  # "1"
+str2 = weechat.string_eval_expression("abc =~ def", {}, {}, {"type": "condition"})                 # "0"
+
+# expression simple
+str3 = weechat.string_eval_expression("${buffer.full_name}", {}, {}, {}) # "core.weechat"
+
+# remplacement avec regex : ajout de crochets autour des URLs
+options = {
+    "regex": "\\w+://\\S+",
+    "regex_replace": "[ ${re:0} ]",
+}
+str4 = weechat.string_eval_expression("test: http://weechat.org", {}, {}, options)  # "test: [ http://weechat.org ]"
+
+# replace with regex : masquage des mots de passe
+options = {
+    "regex": "(password=)(\\S+)",
+    "regex_replace": "${re:1}${hide:*,${re:2}}",
+}
+str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, options)  # "password=*** password=***"
 ----
 
 [[utf-8]]
@@ -2713,13 +2831,15 @@ Cette fonction n'est pas disponible dans l'API script.
 
 ==== weechat_util_timeval_diff
 
-Retourner la différence (en millisecondes) entre deux structures "timeval".
+_Mis à jour dans la 1.1._
+
+Retourner la différence (en microsecondes) entre deux structures "timeval".
 
 Prototype :
 
 [source,C]
 ----
-long weechat_util_timeval_diff (struct timeval *tv1, struct timeval *tv2);
+long long weechat_util_timeval_diff (struct timeval *tv1, struct timeval *tv2);
 ----
 
 Paramètres :
@@ -2729,13 +2849,16 @@ Paramètres :
 
 Valeur de retour :
 
-* différence en millisecondes
+* différence en microsecondes
+
+[NOTE]
+Avec WeeChat ≤ 1.0, la valeur retournée était en millisecondes.
 
 Exemple en C :
 
 [source,C]
 ----
-long diff = weechat_util_timeval_diff (&tv1, &tv2);
+long long diff = weechat_util_timeval_diff (&tv1, &tv2);
 ----
 
 [NOTE]
@@ -2743,25 +2866,30 @@ Cette fonction n'est pas disponible dans l'API script.
 
 ==== weechat_util_timeval_add
 
-Ajouter un intervalle (en millisecondes) à une structure "timeval".
+_Mis à jour dans la 1.1._
+
+Ajouter un intervalle (en microsecondes) à une structure "timeval".
 
 Prototype :
 
 [source,C]
 ----
-void weechat_util_timeval_add (struct timeval *tv, long interval);
+void weechat_util_timeval_add (struct timeval *tv, long long interval);
 ----
 
 Paramètres :
 
 * 'tv' : structure "timeval"
-* 'interval' : intervalle (en millisecondes)
+* 'interval' : intervalle (en microsecondes)
+
+[NOTE]
+Avec WeeChat ≤ 1.0, l'intervalle était exprimé en millisecondes.
 
 Exemple en C :
 
 [source,C]
 ----
-weechat_util_timeval_add (&tv, 2000);  /* ajoute 2 secondes */
+weechat_util_timeval_add (&tv, 2000000);  /* ajouter 2 secondes */
 ----
 
 [NOTE]
@@ -3148,7 +3276,7 @@ weechat.list_set(item, "nouvelle donnée")
 
 ==== weechat_list_next
 
-Retourner l'éléement suivant dans la liste.
+Retourner l'élément suivant dans la liste.
 
 Prototype :
 
@@ -3415,8 +3543,8 @@ Prototype :
 struct t_hashtable *weechat_hashtable_new (int size,
                                            const char *type_keys,
                                            const char *type_values,
-                                           unsigned long (*callback_hash_key)(struct t_hashtable *hashtable,
-                                                                              const void *key),
+                                           unsigned long long (*callback_hash_key)(struct t_hashtable *hashtable,
+                                                                                   const void *key),
                                            int (*callback_keycmp)(struct t_hashtable *hashtable,
                                                                   const void *key1,
                                                                   const void *key2));
@@ -3870,7 +3998,14 @@ my_free_value_cb (struct t_hashtable *hashtable, const void *key, void *value)
     /* ... */
 }
 
+void
+my_free_key_cb (struct t_hashtable *hashtable, void *key)
+{
+    /* ... */
+}
+
 weechat_hashtable_set_pointer (hashtable, "callback_free_value", &my_free_value_cb);
+weechat_hashtable_set_pointer (hashtable, "callback_free_key", &my_free_key_cb);
 ----
 
 [NOTE]
@@ -7570,8 +7705,8 @@ Paramètres :
 * 'callback' : fonction appelée lorsque la connexion est ok ou a échoué,
   paramètres et valeur de retour :
 ** 'void *data' : pointeur
-** 'int status' : connection status :
-*** 'WEECHAT_HOOK_CONNECT_OK' : connextion ok
+** 'int status' : statut de connexion :
+*** 'WEECHAT_HOOK_CONNECT_OK' : connexion ok
 *** 'WEECHAT_HOOK_CONNECT_ADDRESS_NOT_FOUND' : adresse non trouvée
 *** 'WEECHAT_HOOK_CONNECT_IP_ADDRESS_NOT_FOUND' : adresse IP non trouvée
 *** 'WEECHAT_HOOK_CONNECT_CONNECTION_REFUSED' : connexion refusée
@@ -8221,7 +8356,7 @@ Liste des signaux envoyés par WeeChat et les extensions :
   Filtre ajouté
 
 | weechat | filter_removing |
-  Pointre : filtre |
+  Pointeur : filtre |
   Suppression de filtre en cours
 
 | weechat | filter_removed |
@@ -8282,6 +8417,16 @@ Liste des signaux envoyés par WeeChat et les extensions :
   _(WeeChat ≥ 1.0)_ |
   Chaîne : combinaison de touches |
   Combinaison de touches dans le contexte 'cursor'
+
+| weechat | mouse_enabled +
+  _(WeeChat ≥ 1.1)_ |
+  - |
+  Souris activée
+
+| weechat | mouse_disabled +
+  _(WeeChat ≥ 1.1)_ |
+  - |
+  Souris désactivée
 
 | weechat | nicklist_group_added +
   _(WeeChat ≥ 0.3.2)_ |
@@ -9275,7 +9420,7 @@ Paramètres :
 * 'completion' : pointeur vers la complétion
 * 'word' : mot à ajouter
 * 'nick_completion' : 1 si le mot est un pseudo, sinon 0
-* 'where' : pposition où sera inséré le mot dans la liste :
+* 'where' : position où sera inséré le mot dans la liste :
 ** 'WEECHAT_LIST_POS_SORT' : n'importe où, pour maintenir la liste triée
 ** 'WEECHAT_LIST_POS_BEGINNING' : au début de la liste
 ** 'WEECHAT_LIST_POS_END' : à la fin de la liste
@@ -9722,7 +9867,7 @@ Paramètres :
 ** 'void *data' : pointeur
 ** 'const char *infolist_name' : nom de l'infolist
 ** 'void *pointer' : pointeur vers un objet que l'infolist doit retourner (pour
-   obtenir unituqment cet objet dans l'infolist)
+   obtenir uniquement cet objet dans l'infolist)
 ** 'const char *arguments' : paramètres additionnels, dépendant de l'infolist
 ** valeur de retour : infolist demandée
 * 'callback_data' : pointeur donné au "callback" lorsqu'il est appelé par
@@ -12636,7 +12781,7 @@ Paramètres :
 
 * 'proxy' : nom du proxy à utiliser
 * 'sock' : socket à utiliser
-* 'address' : addresse (nom de machine ou adresse IP)
+* 'address' : adresse (nom de machine ou adresse IP)
 * 'port' : port
 
 Valeur de retour :

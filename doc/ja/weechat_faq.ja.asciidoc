@@ -51,6 +51,21 @@ autotools を使って (cmake を使わずに) コンパイルする場合、
 リポジトリからほぼ毎日ビルドされます。このパッケージは厳密には git ベースではなく、
 アップデートをインストールする場合には git をクローンする方法よりも不便であることに注意してください。
 
+[[compile_osx]]
+=== どうすれば OS X に WeeChat をインストールできますか?
+
+http://brew.sh/[Homebrew] を使うことをお勧めします、ヘルプを見るには:
+
+----
+brew info weechat
+----
+
+以下のコマンドで WeeChat をインストールします:
+
+----
+brew install weechat --with-python --with-perl
+----
+
 [[lost]]
 === WeeChat を起動しました。でも何をすればいいかわかりません。
 
@@ -646,7 +661,18 @@ WeeChat 0.3.3 以下では、オプション名が 'irc.network.away_check' と
 [[highlight_notification]]
 === どうすればあるチャンネルで自分が呼ばれたら警告できますか。
 
-'beep.pl' や 'launcher.pl' 等のスクリプトを使ってください。
+バージョン 1.0 以上では、デフォルトトリガ "beep"
+が設定されています。これはハイライトまたはプライベートメッセージを受け取った際に
+'BEL' を端末に送信します。このため、端末 (または screen/tmux などのマルチプレクサ)
+を設定して、'BEL' が発生した際にコマンドを実行させたり音を再生させることができます。
+
+もしくは "beep" トリガにコマンドを追加することもできます:
+
+----
+/set trigger.trigger.beep.command "/print -beep;/exec -bg /path/to/command arguments"
+----
+
+古い WeeChat をお使いの場合、'beep.pl' や 'launcher.pl' 等のスクリプトを使ってください。
 
 'launcher.pl' の場合、コマンドの設定が必要です:
 

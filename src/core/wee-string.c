@@ -1354,12 +1354,12 @@ string_replace_regex_get_replace (const char *string, regmatch_t *regex_match,
  *
  * Examples:
  *
- *    string   | regex         | replace   | result
- *   ----------+---------------+-----------+-------------
- *    test foo | test          | Z         | Z foo
- *    test foo | ^(test +)(.*) | $2        | foo
- *    test foo | ^(test +)(.*) | $1 / $.*2 | test / ***
- *    test foo | ^(test +)(.*) | $.%+      | %%%
+ *    string   | regex         | replace  | result
+ *   ----------+---------------+----------+-------------
+ *    test foo | test          | Z        | Z foo
+ *    test foo | ^(test +)(.*) | $2       | foo
+ *    test foo | ^(test +)(.*) | $1/ $.*2 | test / ***
+ *    test foo | ^(test +)(.*) | $.%+     | %%%
  *
  * Note: result must be freed after use.
  */
@@ -1374,7 +1374,7 @@ string_replace_regex (const char *string, void *regex, const char *replace,
     int length, length_replace, start_offset, i, rc, end, last_match;
     regmatch_t regex_match[100];
 
-    if (!string)
+    if (!string || !regex)
         return NULL;
 
     length = strlen (string) + 1;
@@ -1473,7 +1473,7 @@ string_replace_regex (const char *string, void *regex, const char *replace,
  *         array[1] = "de"
  *         array[2] = "fghi"
  *         array[3] = NULL
- *         string_split ("abc de  fghi", " ", 1, 0, NULL)
+ *   string_split ("abc de  fghi", " ", 1, 0, NULL)
  *     ==> array[0] = "abc de  fghi"
  *         array[1] = "de  fghi"
  *         array[2] = "fghi"
@@ -2256,6 +2256,10 @@ string_iconv_fprintf (FILE *file, const char *data, ...)
     int rc, num_written;
 
     rc = 0;
+
+    if (!data)
+        return rc;
+
     weechat_va_format (data);
     if (vbuffer)
     {
@@ -2300,13 +2304,13 @@ string_format_size (unsigned long long size)
 
     str_size[0] = '\0';
 
-    if (size < 10UL * 1000UL)
+    if (size < 10ULL * 1000ULL)
         num_unit = 0;
-    else if (size < 1000UL * 1000UL)
+    else if (size < 1000ULL * 1000ULL)
         num_unit = 1;
-    else if (size < 1000UL * 1000UL * 1000UL)
+    else if (size < 1000ULL * 1000ULL * 1000ULL)
         num_unit = 2;
-    else if (size < 1000UL * 1000UL * 1000UL * 1000UL)
+    else if (size < 1000ULL * 1000ULL * 1000ULL * 1000ULL)
         num_unit = 3;
     else
         num_unit = 4;
@@ -2477,7 +2481,7 @@ string_convbase64_6x4_to_8x3 (const unsigned char *from, unsigned char *to)
 {
     to[0] = from[0] << 2 | from[1] >> 4;
     to[1] = from[1] << 4 | from[2] >> 2;
-    to[2] = ((from[2] << 6) & 0xc0) | from[3];
+    to[2] = from[2] << 6 | from[3];
 }
 
 /*
@@ -2508,34 +2512,28 @@ string_decode_base64 (const char *from, char *to)
     while (ptr_from && ptr_from[0])
     {
         length = 0;
+        in[0] = 0;
+        in[1] = 0;
+        in[2] = 0;
+        in[3] = 0;
         for (i = 0; i < 4; i++)
         {
-            in[i] = 0;
-        }
-        for (i = 0; i < 4; i++)
-        {
-            c = 0;
-            while (ptr_from[0] && (c == 0))
-            {
-                c = (unsigned char) ptr_from[0];
-                ptr_from++;
-                c = ((c < 43) || (c > 122)) ? 0 : base64_table[c - 43];
-                if (c)
-                    c = (c == '$') ? 0 : c - 61;
-            }
-            if (ptr_from[0])
+            if (!ptr_from[0])
+                break;
+            c = (unsigned char) ptr_from[0];
+            ptr_from++;
+            c = ((c < 43) || (c > 122)) ? 0 : base64_table[c - 43];
+            if (c)
+                c = (c == '$') ? 0 : c - 61;
+            if (c)
             {
                 length++;
-                if (c)
-                    in[i] = c - 1;
+                in[i] = c - 1;
             }
             else
-            {
-                in[i] = '\0';
                 break;
-            }
         }
-        if (length)
+        if (length > 0)
         {
             string_convbase64_6x4_to_8x3 (in, out);
             for (i = 0; i < length - 1; i++)
@@ -2647,7 +2645,8 @@ string_input_for_buffer (const char *string)
  *
  * Nested variables are supported, for example: "${var1:${var2}}".
  *
- * Argument "errors" is set with number of keys not found by callback.
+ * Argument "errors" (if not NULL) is set with number of keys not found by
+ * callback.
  *
  * Note: result must be freed after use.
  */
@@ -2665,9 +2664,10 @@ string_replace_with_callback (const char *string,
     char *result, *result2, *key, *key2, *value;
     const char *pos_end_name;
 
-    *errors = 0;
+    if (errors)
+        *errors = 0;
 
-    if (!string || !prefix || !prefix[0] || !suffix || !suffix[0])
+    if (!string || !prefix || !prefix[0] || !suffix || !suffix[0] || !callback)
         return NULL;
 
     length_prefix = strlen (prefix);
@@ -2716,7 +2716,8 @@ string_replace_with_callback (const char *string,
                 if (!pos_end_name[0])
                 {
                     result[index_result] = '\0';
-                    (*errors)++;
+                    if (errors)
+                        (*errors)++;
                     return result;
                 }
                 key = string_strndup (string + index_string + length_prefix,
@@ -2730,7 +2731,8 @@ string_replace_with_callback (const char *string,
                                                              suffix, callback,
                                                              callback_data,
                                                              &sub_errors);
-                        (*errors) += sub_errors;
+                        if (errors)
+                            (*errors) += sub_errors;
                         free (key);
                         key = key2;
                     }
@@ -2761,7 +2763,8 @@ string_replace_with_callback (const char *string,
                     else
                     {
                         result[index_result++] = string[index_string++];
-                        (*errors)++;
+                        if (errors)
+                            (*errors)++;
                     }
                     if (key)
                         free (key);
@@ -2785,7 +2788,7 @@ string_replace_with_callback (const char *string,
  * Returns the hash of the shared string (variant of djb2).
  */
 
-unsigned long
+unsigned long long
 string_shared_hash_key (struct t_hashtable *hashtable,
                         const void *key)
 {
@@ -2821,12 +2824,10 @@ string_shared_keycmp (struct t_hashtable *hashtable,
  */
 
 void
-string_shared_free_key (struct t_hashtable *hashtable,
-                        void *key, const void *value)
+string_shared_free_key (struct t_hashtable *hashtable, void *key)
 {
     /* make C compiler happy */
     (void) hashtable;
-    (void) value;
 
     free (key);
 }

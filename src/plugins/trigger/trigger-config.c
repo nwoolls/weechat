@@ -53,7 +53,7 @@ char *trigger_config_default_list[][1 + TRIGGER_NUM_OPTIONS] =
     { "beep", "on",
       "print",
       "",
-      "${tg_highlight} || ${tg_msg_pv}",
+      "${tg_displayed} && (${tg_highlight} || ${tg_msg_pv})",
       "",
       "/print -beep",
       "ok" },
@@ -64,13 +64,13 @@ char *trigger_config_default_list[][1 + TRIGGER_NUM_OPTIONS] =
       "",
       "==^("
       "(/(msg|quote) +nickserv "
-      "+(id|identify|register|ghost +\\S+|release +\\S+|regain +\\S+) +)|"
-      "/oper +\\S+ +|"
+      "+(id|identify|register|ghost +[^ ]+|release +[^ ]+|regain +[^ ]+) +)|"
+      "/oper +[^ ]+ +|"
       "/quote +pass +|"
-      "/set +\\S*password\\S* +|"
-      "/secure +(passphrase|decrypt|set +\\S+) +)"
+      "/set +[^ ]*password[^ ]* +|"
+      "/secure +(passphrase|decrypt|set +[^ ]+) +)"
       "(.*)"
-      "==$1$.*+",
+      "==${re:1}${hide:*,${re:+}}",
       "",
       "" },
     /* hide password in IRC auth message displayed */
@@ -78,7 +78,8 @@ char *trigger_config_default_list[][1 + TRIGGER_NUM_OPTIONS] =
       "modifier",
       "5000|irc_message_auth",
       "",
-      "==^(.*(id|identify|register|ghost +\\S+|release +\\S+) +)(.*)==$1$.*+",
+      "==^(.*(id|identify|register|ghost +[^ ]+|release +[^ ]+) +)(.*)"
+      "==${re:1}${hide:*,${re:+}}",
       "",
       "" },
     /* hide server password in commands /server and /connect */
@@ -86,7 +87,8 @@ char *trigger_config_default_list[][1 + TRIGGER_NUM_OPTIONS] =
       "modifier",
       "5000|input_text_display;5000|history_add",
       "",
-      "==^(/(server|connect) .*-(sasl_)?password=)(\\S+)(.*)==$1$.*4$5"
+      "==^(/(server|connect) .*-(sasl_)?password=)([^ ]+)(.*)"
+      "==${re:1}${hide:*,${re:4}}${re:5}"
       "",
       "" },
     { NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL },
@@ -314,8 +316,9 @@ trigger_config_create_trigger_option (const char *trigger_name, int index_option
                    "chars are interpreted in the regex (for example \"\\n\"); "
                    "the separator \"/\" can be replaced by any char (one or "
                    "more identical chars); matching groups can be used in "
-                   "replace: $0 to $99, $+ for last match and $.cN to replace "
-                   "all chars of group N by char c"),
+                   "replace: ${re:0} to ${re:99}, ${re:+} for last match and "
+                   "${hide:c,${re:N}} to replace all chars of group N by "
+                   "char 'c'"),
                 NULL, 0, 0, value, NULL, 0, NULL, NULL,
                 &trigger_config_change_trigger_regex, NULL, NULL, NULL);
             break;

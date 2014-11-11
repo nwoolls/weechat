@@ -20,12 +20,14 @@
  */
 
 #include <stdlib.h>
+#include <string.h>
 #include <limits.h>
 #include <regex.h>
 
 #include "../weechat-plugin.h"
 #include "relay.h"
 #include "relay-config.h"
+#include "irc/relay-irc.h"
 #include "relay-client.h"
 #include "relay-buffer.h"
 #include "relay-network.h"
@@ -58,6 +60,7 @@ struct t_config_option *relay_config_network_ipv6;
 struct t_config_option *relay_config_network_max_clients;
 struct t_config_option *relay_config_network_password;
 struct t_config_option *relay_config_network_ssl_cert_key;
+struct t_config_option *relay_config_network_ssl_priorities;
 struct t_config_option *relay_config_network_websocket_allowed_origins;
 
 /* relay config, irc section */
@@ -191,6 +194,74 @@ relay_config_change_network_ssl_cert_key (void *data,
 }
 
 /*
+ * Callback for changes on option "relay.network.ssl_priorities".
+ */
+
+int
+relay_config_check_network_ssl_priorities (void *data,
+                                           struct t_config_option *option,
+                                           const char *value)
+{
+#ifdef HAVE_GNUTLS
+    gnutls_priority_t priority_cache;
+    const char *pos_error;
+    int rc;
+
+    /* make C compiler happy */
+    (void) data;
+    (void) option;
+
+    pos_error = value;
+
+    if (value && value[0])
+    {
+        rc = gnutls_priority_init (&priority_cache, value, &pos_error);
+        if (rc == GNUTLS_E_SUCCESS)
+        {
+            gnutls_priority_deinit (priority_cache);
+            return 1;
+        }
+    }
+
+    weechat_printf (NULL,
+                    _("%s%s: invalid priorities string, error "
+                      "at this position in string: \"%s\""),
+                    weechat_prefix ("error"), RELAY_PLUGIN_NAME,
+                    (pos_error) ? pos_error : value);
+
+    return 0;
+#else
+    /* make C compiler happy */
+    (void) data;
+    (void) option;
+    (void) value;
+
+    return 1;
+#endif
+}
+
+/*
+ * Callback for changes on option "relay.network.ssl_priorities".
+ */
+
+void
+relay_config_change_network_ssl_priorities (void *data,
+                                            struct t_config_option *option)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) option;
+
+#ifdef HAVE_GNUTLS
+    if (relay_network_init_ok && relay_gnutls_priority_cache)
+    {
+        gnutls_priority_deinit (*relay_gnutls_priority_cache);
+        relay_network_set_priority ();
+    }
+#endif
+}
+
+/*
  * Callback for changes on option "relay.network.websocker_allowed_origins".
  */
 
@@ -229,6 +300,50 @@ relay_config_change_network_websocket_allowed_origins (void *data,
 }
 
 /*
+ * Checks if IRC backlog tags are valid.
+ *
+ * Returns:
+ *   1: IRC backlog tags are valid
+ *   0: IRC backlog tags are not valid
+ */
+
+int
+relay_config_check_irc_backlog_tags (void *data,
+                                     struct t_config_option *option,
+                                     const char *value)
+{
+    char **tags;
+    int num_tags, i, rc;
+
+    /* make C compiler happy */
+    (void) data;
+    (void) option;
+
+    rc = 1;
+
+    /* "*" means all tags */
+    if (strcmp (value, "*") == 0)
+        return rc;
+
+    /* split tags and check them */
+    tags = weechat_string_split (value, ",", 0, 0, &num_tags);
+    if (tags)
+    {
+        for (i = 0; i < num_tags; i++)
+        {
+            if (relay_irc_search_backlog_commands_tags (tags[i]) < 0)
+            {
+                rc = 0;
+                break;
+            }
+        }
+        weechat_string_free_split (tags);
+    }
+
+    return rc;
+}
+
+/*
  * Callback for changes on option "relay.irc.backlog_tags".
  */
 
@@ -255,7 +370,7 @@ relay_config_change_irc_backlog_tags (void *data,
         weechat_hashtable_remove_all (relay_config_hashtable_irc_backlog_tags);
 
     items = weechat_string_split (weechat_config_string (relay_config_irc_backlog_tags),
-                                  ";", 0, 0, &num_items);
+                                  ",", 0, 0, &num_items);
     if (items)
     {
         for (i = 0; i < num_items; i++)
@@ -651,6 +766,16 @@ relay_config_init ()
            "with SSL)"),
         NULL, 0, 0, "%h/ssl/relay.pem", NULL, 0, NULL, NULL,
         &relay_config_change_network_ssl_cert_key, NULL, NULL, NULL);
+    relay_config_network_ssl_priorities = weechat_config_new_option (
+        relay_config_file, ptr_section,
+        "ssl_priorities", "string",
+        N_("string with priorities for gnutls (for syntax, see "
+           "documentation of function gnutls_priority_init in gnutls "
+           "manual, common strings are: \"PERFORMANCE\", \"NORMAL\", "
+           "\"SECURE128\", \"SECURE256\", \"EXPORT\", \"NONE\")"),
+        NULL, 0, 0, "NORMAL:-VERS-SSL3.0", NULL, 0,
+        &relay_config_check_network_ssl_priorities, NULL,
+        &relay_config_change_network_ssl_priorities, NULL, NULL, NULL);
     relay_config_network_websocket_allowed_origins = weechat_config_new_option (
         relay_config_file, ptr_section,
         "websocket_allowed_origins", "string",
@@ -696,10 +821,12 @@ relay_config_init ()
     relay_config_irc_backlog_tags = weechat_config_new_option (
         relay_config_file, ptr_section,
         "backlog_tags", "string",
-        N_("tags of messages which are displayed in backlog per IRC channel "
-           "(supported tags: \"irc_join\", \"irc_part\", \"irc_quit\", "
-           "\"irc_nick\", \"irc_privmsg\"), \"*\" = all supported tags"),
-        NULL, 0, 0, "irc_privmsg", NULL, 0, NULL, NULL,
+        N_("comma-separated list of messages tags which are displayed in "
+           "backlog per IRC channel (supported tags: \"irc_join\", "
+           "\"irc_part\", \"irc_quit\", \"irc_nick\", \"irc_privmsg\"), "
+           "\"*\" = all supported tags"),
+        NULL, 0, 0, "irc_privmsg", NULL, 0,
+        &relay_config_check_irc_backlog_tags, NULL,
         &relay_config_change_irc_backlog_tags, NULL, NULL, NULL);
     relay_config_irc_backlog_time_format = weechat_config_new_option (
         relay_config_file, ptr_section,

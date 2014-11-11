@@ -12,6 +12,7 @@
           restart <name>|-all [<name>...]
           show <name>
           del <name>|-all [<name>...]
+          restore <name> [<name>...]
           default -yes
           monitor [<filter>]
 
@@ -54,6 +55,7 @@ return_code: Rückgabewert für Callback (ok (standard), ok_eat, error)
        show: zeigt detaillierte Informationen zu einem Trigger (inklusive einer kleinen Statistik)
         del: entfernt einen Trigger
        -all: führt eine Aktion aus, die alle Trigger beinhaltet
+    restore: stellt Trigger mit Standardwerten wieder her (funktioniert nur bei vorgegebenen Triggern)
     default: stellt die standardmäßigen Trigger wieder her
     monitor: öffnet den Trigger Monitor-Buffer, mit optionaler Filterfunktion:
      Filter: zeigt Hooks/Trigger an (ein Hook muss mit "@" beginnen, zum Beispiel "@signal"), mehrere Filter können durch Kommata voneinander getrennt werden; Platzhalter "*" kann im Namen des Trigger verwendet werden
@@ -66,7 +68,7 @@ Wenn ein Trigger-Callback aufgerufen wird, dann wird folgende Befehlskette ausge
 
 Beispiele (die standardmäßig, eingebauten Trigger kann man sich mit "/trigger listdefault" anzeigen lassen):
   fügt einer Nachricht die Textattribute *fett*, _unterstrichen_ und /kursiv/ hinzu:
-    /trigger add effects modifier weechat_print "${tg_tag_nick}" "==\*(\S+)\*==*${color:bold}$1${color:-bold}*== ==_(\S+)_==_${color:underline}$1${color:-underline}_== ==/(\S+)/==/${color:italic}$1${color:-italic}/"
+    /trigger add effects modifier weechat_print "${tg_tag_nick}" "==\*(\S+)\*==*${color:bold}${re:1}${color:-bold}*== ==_(\S+)_==_${color:underline}${re:1}${color:-underline}_== ==/(\S+)/==/${color:italic}${re:1}${color:-italic}/"
   verbirgt die Nicklist auf kleineren Terminals:
     /trigger add resize_small signal signal_sigwinch "${info:term_width} < 100" "" "/bar hide nicklist"
     /trigger add resize_big signal signal_sigwinch "${info:term_width} >= 100" "" "/bar show nicklist"

@@ -59,7 +59,7 @@
 ** wartości: on, off (domyślna wartość: `on`)
 
 * [[option_relay.irc.backlog_tags]] *relay.irc.backlog_tags*
-** opis: `tagi dla wiadomości, które są wyświetlane w backlogu dla kanałów IRC (wspierane tagi: "irc_join", "irc_part", "irc_quit", "irc_nick", "irc_privmsg"), "*" = dla wszystkich wspieranych tagów`
+** opis: `comma-separated list of messages tags which are displayed in backlog per IRC channel (supported tags: "irc_join", "irc_part", "irc_quit", "irc_nick", "irc_privmsg"), "*" = all supported tags`
 ** typ: ciąg
 ** wartości: dowolny ciąg (domyślna wartość: `"irc_privmsg"`)
 
@@ -89,7 +89,7 @@
 ** wartości: dowolny ciąg (domyślna wartość: `""`)
 
 * [[option_relay.network.clients_purge_delay]] *relay.network.clients_purge_delay*
-** opis: `delay for purging disconnected clients (in minutes, 0 = purge clients immediately, -1 = never purge)`
+** opis: `opóźnienie, z jakim zostaną skasowane rozłączone klienty (w minutach, 0 = natychmiast, -1 nigdy)`
 ** typ: liczba
 ** wartości: -1 .. 43200 (domyślna wartość: `0`)
 
@@ -117,6 +117,11 @@
 ** opis: `plik z certyfikatem SSL i kluczem prywatnym (dla obsługi klientów poprzez SSL)`
 ** typ: ciąg
 ** wartości: dowolny ciąg (domyślna wartość: `"%h/ssl/relay.pem"`)
+
+* [[option_relay.network.ssl_priorities]] *relay.network.ssl_priorities*
+** opis: `ciąg z priorytetami dla gnutls (składnię można znaleźć w dokumentacji gnutls dla funkcji  gnutls_priority_init, często używane ciągi to: "PERFORMANCE", "NORMAL", "SECURE128", "SECURE256", "EXPORT", "NONE")`
+** typ: ciąg
+** wartości: dowolny ciąg (domyślna wartość: `"NORMAL:-VERS-SSL3.0"`)
 
 * [[option_relay.network.websocket_allowed_origins]] *relay.network.websocket_allowed_origins*
 ** opis: `rozszerzone wyrażenia regularne POSIX ze źródłami dozwolonymi dla gniazd webowych (nie wrażliwe na wielkość znaków, umieszczenie "(?-i)" na początku sprawi, że wielość znaków będzie miała znaczenie), przykład: "^http://(www\.)?przykład\.(com|org)"`

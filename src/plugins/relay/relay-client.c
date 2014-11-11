@@ -217,6 +217,7 @@ relay_client_handshake_timer_cb (void *data, int remaining_calls)
         /* handshake OK, set status to "connected" */
         weechat_unhook (client->hook_timer_handshake);
         client->hook_timer_handshake = NULL;
+        client->gnutls_handshake_ok = 1;
         relay_client_set_status (client, RELAY_STATUS_CONNECTED);
         return WEECHAT_RC_OK;
     }
@@ -388,6 +389,7 @@ relay_client_recv_text (struct t_relay_client *client, const char *data)
                          */
                         free (client->partial_message);
                         client->partial_message = NULL;
+                        weechat_string_free_split (lines);
                         return;
                     }
                 }
@@ -1061,6 +1063,7 @@ relay_client_new (int sock, const char *address, struct t_relay_server *server)
         new_client->ssl = server->ssl;
 #ifdef HAVE_GNUTLS
         new_client->hook_timer_handshake = NULL;
+        new_client->gnutls_handshake_ok = 0;
 #endif
         new_client->websocket = 0;
         new_client->http_headers = NULL;
@@ -1229,6 +1232,7 @@ relay_client_new_with_infolist (struct t_infolist *infolist)
 #ifdef HAVE_GNUTLS
         new_client->gnutls_sess = NULL;
         new_client->hook_timer_handshake = NULL;
+        new_client->gnutls_handshake_ok = 0;
 #endif
         new_client->websocket = weechat_infolist_integer (infolist, "websocket");
         new_client->http_headers = NULL;
@@ -1253,9 +1257,9 @@ relay_client_new_with_infolist (struct t_infolist *infolist)
             new_client->hook_fd = NULL;
         new_client->last_activity = weechat_infolist_time (infolist, "last_activity");
         sscanf (weechat_infolist_string (infolist, "bytes_recv"),
-                "%lu", &(new_client->bytes_recv));
+                "%llu", &(new_client->bytes_recv));
         sscanf (weechat_infolist_string (infolist, "bytes_sent"),
-                "%lu", &(new_client->bytes_sent));
+                "%llu", &(new_client->bytes_sent));
         new_client->recv_data_type = weechat_infolist_integer (infolist, "recv_data_type");
         new_client->send_data_type = weechat_infolist_integer (infolist, "send_data_type");
         str = weechat_infolist_string (infolist, "partial_message");
@@ -1320,6 +1324,14 @@ relay_client_set_status (struct t_relay_client *client,
 
         relay_client_outqueue_free_all (client);
 
+#ifdef HAVE_GNUTLS
+        if (client->hook_timer_handshake)
+        {
+            weechat_unhook (client->hook_timer_handshake);
+            client->hook_timer_handshake = NULL;
+        }
+        client->gnutls_handshake_ok = 0;
+#endif
         if (client->hook_fd)
         {
             weechat_unhook (client->hook_fd);
@@ -1363,7 +1375,7 @@ relay_client_set_status (struct t_relay_client *client,
         if (client->sock >= 0)
         {
 #ifdef HAVE_GNUTLS
-            if (client->ssl)
+            if (client->ssl && client->gnutls_handshake_ok)
                 gnutls_bye (client->gnutls_sess, GNUTLS_SHUT_WR);
 #endif
             close (client->sock);
@@ -1373,9 +1385,9 @@ relay_client_set_status (struct t_relay_client *client,
                 gnutls_deinit (client->gnutls_sess);
 #endif
         }
-
-        relay_client_send_signal (client);
     }
+
+    relay_client_send_signal (client);
 
     relay_buffer_refresh (WEECHAT_HOTLIST_MESSAGE);
 }
@@ -1527,6 +1539,8 @@ relay_client_add_to_infolist (struct t_infolist *infolist,
 #ifdef HAVE_GNUTLS
     if (!weechat_infolist_new_var_pointer (ptr_item, "hook_timer_handshake", client->hook_timer_handshake))
         return 0;
+    if (!weechat_infolist_new_var_integer (ptr_item, "gnutls_handshake_ok", client->gnutls_handshake_ok))
+        return 0;
 #endif
     if (!weechat_infolist_new_var_integer (ptr_item, "websocket", client->websocket))
         return 0;
@@ -1554,10 +1568,10 @@ relay_client_add_to_infolist (struct t_infolist *infolist,
         return 0;
     if (!weechat_infolist_new_var_time (ptr_item, "last_activity", client->last_activity))
         return 0;
-    snprintf (value, sizeof (value), "%lu", client->bytes_recv);
+    snprintf (value, sizeof (value), "%llu", client->bytes_recv);
     if (!weechat_infolist_new_var_string (ptr_item, "bytes_recv", value))
         return 0;
-    snprintf (value, sizeof (value), "%lu", client->bytes_sent);
+    snprintf (value, sizeof (value), "%llu", client->bytes_sent);
     if (!weechat_infolist_new_var_string (ptr_item, "bytes_sent", value))
         return 0;
     if (!weechat_infolist_new_var_integer (ptr_item, "recv_data_type", client->recv_data_type))
@@ -1603,6 +1617,7 @@ relay_client_print_log ()
 #ifdef HAVE_GNUTLS
         weechat_log_printf ("  gnutls_sess . . . . . : 0x%lx", ptr_client->gnutls_sess);
         weechat_log_printf ("  hook_timer_handshake. : 0x%lx", ptr_client->hook_timer_handshake);
+        weechat_log_printf ("  gnutls_handshake_ok . : 0x%lx", ptr_client->gnutls_handshake_ok);
 #endif
         weechat_log_printf ("  websocket . . . . . . : %d",   ptr_client->websocket);
         weechat_log_printf ("  http_headers. . . . . : 0x%lx (hashtable: '%s')",
@@ -1622,8 +1637,8 @@ relay_client_print_log ()
         weechat_log_printf ("  end_time. . . . . . . : %ld",   ptr_client->end_time);
         weechat_log_printf ("  hook_fd . . . . . . . : 0x%lx", ptr_client->hook_fd);
         weechat_log_printf ("  last_activity . . . . : %ld",   ptr_client->last_activity);
-        weechat_log_printf ("  bytes_recv. . . . . . : %lu",   ptr_client->bytes_recv);
-        weechat_log_printf ("  bytes_sent. . . . . . : %lu",   ptr_client->bytes_sent);
+        weechat_log_printf ("  bytes_recv. . . . . . : %llu",  ptr_client->bytes_recv);
+        weechat_log_printf ("  bytes_sent. . . . . . : %llu",  ptr_client->bytes_sent);
         weechat_log_printf ("  recv_data_type. . . . : %d (%s)",
                             ptr_client->recv_data_type,
                             relay_client_data_type_string[ptr_client->recv_data_type]);

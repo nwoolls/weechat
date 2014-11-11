@@ -3,25 +3,33 @@
 
 ----
 /relay  list|listfull|listrelay
-        add [ipv4.][ipv6.][ssl.]<protocol.name> <port>
-        del [ipv4.][ipv6.][ssl.]<protocol.name>
+        add <name> <port>
+        del|stop|restart <name>
         raw
         sslcertkey
 
          list: リレーするクライアントをリストアップ (アクティブなもののみ)
      listfull: リレーするクライアントをリストアップ (詳細、全てのリレー)
     listrelay: リレーをリストアップ (名前とポート番号)
-          add: プロトコル + 名前のリレーを追加
-          del: プロトコル + 名前のリレーを削除
+          add: リレーを追加 (ポートで接続を待ち受ける)
+          del: リレーを削除 (クライアントとの接続は保持)
+         stop: サーバソケットを閉じる (クライアントとの接続は保持)
+      restart: サーバソケットを閉じて同じポートで接続を待つ (クライアントとの接続は保持)
+         name: リレー名 (以下のフォーマットを参照)
+         port: リレーが使うポートの番号
+          raw: 生リレーデータを表示するバッファを開く
+   sslcertkey: オプション relay.network.ssl_cert_key のパスを使って SSL 証明書/鍵を指定
+
+リレー名のフォーマット: [ipv4.][ipv6.][ssl.]<protocol.name>
          ipv4: IPv4 を強制的に利用
          ipv6: IPv6 を強制的に利用
           ssl: SSL を有効化
 protocol.name: リレーするプロトコルと名前:
-                 - protocol "irc": name は共有するサーバ名 (任意指定、指定しない場合、サーバ名は "PASS" コマンドでクライアントが送信するものと同じでなければいけません、"PASS" コマンドのフォーマットは "PASS server:password")
-                 - protocol "weechat" (name は使われません)
-         port: リレーに使うポート番号
-          raw: 生 Relay データバッファを開く
-   sslcertkey: オプション relay.network.ssl_cert_key のパスを使って SSL 証明書/鍵を設定
+                 - "irc" プロトコル: name は共有するサーバ名 (任意指定、指定しない場合、サーバ名は "PASS" コマンドでクライアントが送信するものと同じでなければいけません、"PASS" コマンドのフォーマットは "PASS server:password")
+                 - "weechat" プロトコル (name は使われません)
+
+"irc" プロトコルを指定した場合、どんな IRC クライアント (WeeChat 自身を含めて) でもポートに接続することができます。
+"weechat" プロトコルを指定した場合、リモートインターフェイスを使ってポートに接続することができます、参照: http://weechat.org/download/
 
 引数無しの場合、リレークライアントのリストを含むバッファを開く
 

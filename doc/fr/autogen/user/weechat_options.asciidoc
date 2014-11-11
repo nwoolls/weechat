@@ -69,17 +69,17 @@
 ** valeurs: toute chaîne (valeur par défaut: `"cyan,magenta,green,brown,lightblue,default,lightcyan,lightmagenta,lightgreen,blue"`)
 
 * [[option_weechat.color.chat_nick_offline]] *weechat.color.chat_nick_offline*
-** description: `couleur du texte pour un pseudo déconnecté (qui n'est plus dans la liste de pseudos)`
+** description: `couleur du texte pour un pseudo déconnecté (qui n'est plus dans la liste de pseudos) ; cette couleur est utilisée seulement si l'option weechat.look.color_nick_offline est activée`
 ** type: couleur
 ** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias ; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour le gras, "!" pour la vidéo inverse, "/" pour l'italique, "_" pour le souligné (valeur par défaut: `default`)
 
 * [[option_weechat.color.chat_nick_offline_highlight]] *weechat.color.chat_nick_offline_highlight*
-** description: `couleur du texte pour un pseudo déconnecté avec highlight`
+** description: `couleur du texte pour un pseudo déconnecté avec highlight ; cette couleur est utilisée seulement si l'option weechat.look.color_nick_offline est activée`
 ** type: couleur
 ** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias ; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour le gras, "!" pour la vidéo inverse, "/" pour l'italique, "_" pour le souligné (valeur par défaut: `default`)
 
 * [[option_weechat.color.chat_nick_offline_highlight_bg]] *weechat.color.chat_nick_offline_highlight_bg*
-** description: `couleur du fond pour un pseudo déconnecté avec highlight`
+** description: `couleur du fond pour un pseudo déconnecté avec highlight ; cette couleur est utilisée seulement si l'option weechat.look.color_nick_offline est activée`
 ** type: couleur
 ** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias ; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour le gras, "!" pour la vidéo inverse, "/" pour l'italique, "_" pour le souligné (valeur par défaut: `blue`)
 
@@ -283,6 +283,11 @@
 ** type: couleur
 ** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias ; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour le gras, "!" pour la vidéo inverse, "/" pour l'italique, "_" pour le souligné (valeur par défaut: `yellow`)
 
+* [[option_weechat.color.status_mouse]] *weechat.color.status_mouse*
+** description: `couleur du texte pour l'indicateur de la souris dans la barre de statut`
+** type: couleur
+** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias ; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour le gras, "!" pour la vidéo inverse, "/" pour l'italique, "_" pour le souligné (valeur par défaut: `green`)
+
 * [[option_weechat.color.status_name]] *weechat.color.status_name*
 ** description: `couleur du texte pour le nom du tampon courant dans la barre de statut`
 ** type: couleur
@@ -310,6 +315,11 @@
 
 * [[option_weechat.completion.base_word_until_cursor]] *weechat.completion.base_word_until_cursor*
 ** description: `si activé, le mot de base pour la complétion s'arrête au caractère avant le curseur ; sinon le mot de base s'arrête au premier espace après le curseur`
+** type: booléen
+** valeurs: on, off (valeur par défaut: `on`)
+
+* [[option_weechat.completion.command_inline]] *weechat.completion.command_inline*
+** description: `si activé, les commandes à l'intérieur de la ligne de commande sont complétées (la commande en début de ligne a une priorité plus élevée et est utilisée en premier) ; note : lorsque cette option est activée, il n'y a plus de complétion automatique des chemins commençant par '/' (en dehors des paramètres de commandes)`
 ** type: booléen
 ** valeurs: on, off (valeur par défaut: `on`)
 
@@ -518,6 +528,11 @@
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `""`)
 
+* [[option_weechat.look.command_incomplete]] *weechat.look.command_incomplete*
+** description: `si activé, les commandes incomplètes et non ambiguës sont autorisées, par exemple /he pour /help`
+** type: booléen
+** valeurs: on, off (valeur par défaut: `off`)
+
 * [[option_weechat.look.confirm_quit]] *weechat.look.confirm_quit*
 ** description: `si activé, la commande /quit doit être confirmée par le paramètre supplémentaire "-yes" (voir /help quit)`
 ** type: booléen
@@ -662,6 +677,11 @@
 ** description: `chaîne utilisée pour montrer le zoom sur un tampon mélangé (objet de barre "buffer_zoom")`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `"!"`)
+
+* [[option_weechat.look.item_mouse_status]] *weechat.look.item_mouse_status*
+** description: `chaîne utilisée pour montrer si la souris est activée (objet de barre "mouse_status")`
+** type: chaîne
+** valeurs: toute chaîne (valeur par défaut: `"M"`)
 
 * [[option_weechat.look.item_time_format]] *weechat.look.item_time_format*
 ** description: `format de date/heure pour l'objet de barre "time" (voir man strftime pour le format de date/heure)`

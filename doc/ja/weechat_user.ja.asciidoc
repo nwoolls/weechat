@@ -45,7 +45,7 @@ WeeChat をインストールするには、以下のものが必要です:
 * GNU/Linux が稼動しているシステム (ソースパッケージを使う場合は、
   コンパイラツールも必要)、又は互換 OS
 * 'root' 特権 (WeeChat をシステムディレクトリにインストールする場合)
-* ncurses ライブラリ
+* 一部のライブラリ (<<dependencies,依存関係>>を参照)。
 
 [[install]]
 == インストール方法
@@ -74,6 +74,11 @@ WeeChat をインストールするには、以下のものが必要です:
 
 WeeChat は cmake または autotools を使ってコンパイルできます (cmake を使うことが推奨されています)。
 
+[NOTE]
+OS X では、http://brew.sh/[Homebrew] を使ってください:
+`brew install weechat --with-python --with-perl`
+(ヘルプを見るには: `brew info weechat`)。
+
 [[dependencies]]
 ==== 依存関係
 
@@ -82,20 +87,21 @@ WeeChat は cmake または autotools を使ってコンパイルできます (c
 
 [width="100%",cols="5,^3,^3,.^13",options="header"]
 |===
-| パッケージ ^(1)^                    | バージョン  | 必須  | 機能
-| cmake                               |             | *yes* | ビルド (autotools でも可能ですが、cmake を推奨します)
-| libncursesw5-dev ^(2)^              |             | *yes* | ncurses インターフェイス
-| libcurl4-gnutls-dev                 |             | *yes* | URL 転送
-| zlib1g-dev                          |             | *yes* | relay プラグインでパケットを圧縮 (weechat プロトコル)、スクリプトプラグイン
-| libgcrypt11-dev                     |             | *yes* | 保護データ、IRC SASL 認証 (DH-BLOWFISH/DH-AES)、スクリプトプラグイン
-| libgnutls-dev                       | ≥ 2.2.0     |       | IRC サーバへの SSL 接続
+| パッケージ ^(1)^                    | バージョン  | 要件  | 機能
+| cmake                               |             | *必須* | ビルド (autotools でも可能ですが、cmake を推奨します)
+| pkg-config                          |             | *必須* | インストール済みライブラリを検出
+| libncursesw5-dev ^(2)^              |             | *必須* | ncurses インターフェイス
+| libcurl4-gnutls-dev                 |             | *必須* | URL 転送
+| zlib1g-dev                          |             | *必須* | relay プラグインでパケットを圧縮 (weechat プロトコル)、スクリプトプラグイン
+| libgcrypt20-dev                     |             | *必須* | 保護データ、IRC SASL 認証 (DH-BLOWFISH/DH-AES)、スクリプトプラグイン
+| libgnutls28-dev                     | ≥ 2.2.0     |       | IRC サーバへの SSL 接続
 | gettext                             |             |       | 国際化 (メッセージの翻訳; ベース言語は英語です)
 | ca-certificates                     |             |       | SSL 接続に必要な証明書、relay プラグインで SSL サポート
 | libaspell-dev または libenchant-dev |             |       | aspell プラグイン
 | python-dev                          | ≥ 2.5 ^(3)^ |       | python プラグイン
 | libperl-dev                         |             |       | perl プラグイン
-| ruby1.9.1-dev                       | ≥ 1.8       |       | ruby プラグイン
-| liblua5.1-0-dev                     |             |       | lua プラグイン
+| ruby2.1-dev                         | ≥ 1.8       |       | ruby プラグイン
+| liblua5.2-dev                       |             |       | lua プラグイン
 | tcl-dev                             | ≥ 8.5       |       | tcl プラグイン
 | guile-2.0-dev                       | ≥ 2.0       |       | guile (scheme) プラグイン
 | asciidoc                            | ≥ 8.5.0     |       | man ページと文書のビルド
@@ -499,11 +505,11 @@ WeeChat を起動したターミナルの例:
 
 状態 ('status') バーは以下の初期値を持っています:
 
-[width="100%",cols="^3,^3,10",options="header"]
+[width="100%",cols="^3,^4,10",options="header"]
 |===
 | アイテム              | 例                    | 説明
 | time                  | `[12:55]`             | 時刻
-| buffer_count          | `[6]`                 | 開いているバッファの数
+| buffer_last_number    | `[6]`                 | リスト中の最後のバッファ番号
 | buffer_plugin         | `[irc/freenode]`      | 現在のバッファのプラグイン (irc プラグインではバッファで利用されている IRC サーバ名を追加できます)
 | buffer_number         | `3`                   | 現在のバッファの番号
 | buffer_name           | `#test`               | 現在のバッファの名前
@@ -511,22 +517,37 @@ WeeChat を起動したターミナルの例:
 | buffer_nicklist_count | `{4}`                 | ニックネームリスト中のニックネームの数
 | buffer_zoom           | !                     | `!` はマージされたバッファがズームされている状態 (ズームされたものだけを表示する状態) を示します、空の場合はすべてのマージされたバッファが表示されていることを示します
 | buffer_filter         | `*`                   | フィルタ表示: `*` の場合いくつかの行がフィルタされ (隠され) ます、空の場合すべての行が表示されます。
+| scroll                | `-MORE(50)-`          | スクロール表示、最後の行が表示されてから追加された行数を含む。
 | lag                   | `[Lag: 2.5]`          | 遅延秒表示 (遅延が短い場合は非表示)
 | hotlist               | `[H: 4:#abc(2,5), 6]` | 変化のあったバッファのリスト (未読メッセージ) (例では、'#abc' に 2 個のハイライトと 5 個の未読メッセージ、6 番目のバッファに 1 個の未読メッセージがあることを意味します。)
 | completion            | `abc(2) def(5)`       | 補完候補の単語リスト、各単語に対して適応される補完候補の数を含む。
-| scroll                | `-MORE(50)-`          | スクロール表示、最後の行が表示されてから追加された行数を含む。
 |===
 
 入力 ('input') バーは以下の初期値を持っています:
 
-[width="100%",cols="^3,^6,8",options="header"]
+[width="100%",cols="^3,^4,10",options="header"]
 |===
 | アイテム     | 例                                           | 説明
-| input_paste  | `[Paste 7 lines ? [ctrl-Y] Yes [ctrl-N] No]` | 行をペーストする場合にユーザへ行われる質問
 | input_prompt | `[@Flashy]`                                  | 入力プロンプト、irc の場合: ニックネームとモード (freenode では "+i" モードは不可視状態を意味します)
 | away         | `(away)`                                     | 離席状態表示
 | input_search | `[Search (~ str,msg)]`                       | 検索インジケータ ("`~`": 大文字小文字を区別しない、"`==`": 大文字小文字を区別する、"`str`": 検索文字列、"`regex`": 検索正規表現、"`msg`": メッセージ部分から検索、"`pre`": プレフィックス部分から検索、"`pre\|msg`": プレフィックス部分とメッセージ部分から検索)
+| input_paste  | `[Paste 7 lines ? [ctrl-Y] Yes [ctrl-N] No]` | 行をペーストする場合にユーザへ行われる質問
 | input_text   | `hi peter!`                                  | 入力テキスト
+|===
+
+その他の利用可能なアイテム (デフォルトではバーで使われていない):
+
+[width="100%",cols="^3,^4,10",options="header"]
+|===
+| アイテム          | 例                  | 説明
+| aspell_dict       | `fr,en`             | 現在のバッファにおけるスペリング辞書
+| aspell_suggest    | `print,prone,prune` | カーソル下の単語に対するスペリング候補 (スペルが間違っている場合)
+| buffer_count      | `10`                | 開いているバッファの総数
+| buffer_short_name | `#test`             | 現在のバッファの短い名前
+| irc_channel       | `#test`             | 現在の IRC チャンネル名
+| irc_nick_modes    | `@`                 | 自分のニックネームに対する IRC モード
+| mouse_status      | `M`                 | マウスの状態 (マウスが無効化されている場合は空文字列)
+| window_number     | `2`                 | 現在のウィンドウ番号
 |===
 
 [[buffers_and_windows]]
@@ -890,7 +911,7 @@ URL を簡単にクリックしたり、テキストを簡単に選択できる�
 オプションを使えば、時間フォーマットを変更することも可能です。
 
 <<command_weechat_window,/window>>
-コマンドを使えば、指定秒後に最低限表示を有効化することができます。
+コマンドを使えば、指定秒後に最小限表示を有効化することができます。
 
 WeeChat が以下のような表示状態の場合:
 
@@ -919,7 +940,7 @@ WeeChat が以下のような表示状態の場合:
 └───────────────────────────────────────────────────────────────────────────┘
 ....
 
-最低限表示では以下の様に表示されます:
+最小限表示では以下の様に表示されます:
 
 ....
 ┌───────────────────────────────────────────────────────────────────────────┐
@@ -1397,7 +1418,7 @@ key[ctrl-c,c] 用の色コード:
 を下線付きの明るい赤に表示したい場合:
 
 ----
-^Cc12^Cbこんにちは^Cb^Cc04^Cu皆さん^Cu^Cc!
+^Cc12^Cbこんにちは^Cb^Cc04^C_皆さん^C_^Cc!
 ----
 
 [NOTE]
@@ -2179,7 +2200,7 @@ WeeChat は SASL 認証をサポートします、以下の認証メカニズム
 
 [NOTE]
 "dh-blowfish" メカニズムを利用する場合、"gcrypt" ライブラリが
-WeeChat のコンパイル時に必要です (<<dependencies,依存関係>> を参照)。
+WeeChat のコンパイル時に必要です (<<dependencies,依存関係>>を参照)。
 
 [[irc_tor_freenode]]
 ==== TOR/SASL を使って Freenode に接続する場合
@@ -3054,15 +3075,16 @@ ${tg_highlight} || ${tg_msg_pv}
 
 マッチグループを "replace" の中で利用できます:
 
-* `$0` から `$99`: `$0` はマッチ部分の全体、`$1` から `$99` はグループ化されたマッチ部分
-* `$+`: 最後のマッチ部分 (最大のグループ番号を持つ)
-* `$.cN`: マッチグループ "N" のすべての文字を "c" で置換した文字列 (例: `$.*2` はグループ
-  #2 のすべての文字を `*` で置換した文字列).
+* `${re:0}` から `${re:99}`: `${re:0}` はマッチ部分の全体、`${re:1}` から
+  `${re:99}` はグループ化されたマッチ部分
+* `${re:+}`: 最後のマッチ部分 (最大のグループ番号を持つ)
+* `${hide:c,${re:N}}`: マッチグループ "N" のすべての文字を "c" で置換した文字列
+  (例: `${hide:*,${re:2}}` はグループ #2 のすべての文字を `*` で置換した文字列).
 
 例: "*" で囲まれた文字を太字にする:
 
 ----
-/\*(\S+)\*/*${color:bold}$1${color:-bold}*/
+/\*(\S+)\*/*${color:bold}${re:1}${color:-bold}*/
 ----
 
 例: デフォルトトリガ 'server_pass' はこの正規表現を使って、`/server`
@@ -3070,7 +3092,7 @@ ${tg_highlight} || ${tg_msg_pv}
 `*` で置換しています):
 
 ----
-==^(/(server|connect) .*-(sasl_)?password=)(\S+)(.*)==$1$.*4$5
+==^(/(server|connect) .*-(sasl_)?password=)(\S+)(.*)==${re:1}${hide:*,${re:4}}${re:5}
 ----
 
 [NOTE]
@@ -3381,15 +3403,14 @@ include::autogen/user/xfer_commands.asciidoc[]
 [[support]]
 == サポート
 
-サポートを依頼する前に、WeeChat に付属するドキュメントと FAQ を読んでください。
-(ドキュメントとはこの文書のことで、ここまでの全ての内容を読んでいないのであれば、
-読み直してください!)。
+サポートを依頼する前に、必ず WeeChat に付属するドキュメントと FAQ を読んでください。
 
-サポートを得る方法:
+IRC を使ったサポート窓口は 'chat.freenode.net' サーバにあります:
 
-* IRC: サーバ 'irc.freenode.net' 、チャンネル '#weechat' (英語) と
-  '#weechat-fr' (フランス語)
-* メーリングリスト:
-** 購読: http://mail.nongnu.org/mailman/listinfo/weechat-support
-** weechat-support@nongnu.org 宛にメールを送信
-** アーカイブ: http://mail.nongnu.org/archive/html/weechat-support
+* 公式チャンネル (開発者もいます):
+** '#weechat' (英語)
+** '#weechat-fr' (フランス語)
+* 非公式チャンネル:
+** '#weechat-de' (ドイツ語)
+
+他の方法でサポートを受けるには、以下のページをご覧ください: http://weechat.org/dev/support

@@ -572,6 +572,8 @@ trigger_regex_split (const char *str_regex,
                                                      pos_replace - ptr_regex);
         if (!(*regex)[index].str_regex)
             goto memory_error;
+        if (str_regex_escaped)
+            free (str_regex_escaped);
         str_regex_escaped = weechat_string_convert_escaped_chars ((*regex)[index].str_regex);
         if (!str_regex_escaped)
             goto memory_error;
@@ -1106,8 +1108,8 @@ trigger_print_log ()
             weechat_log_printf ("    hooks[%03d]. . . . . . : 0x%lx",
                                 i, ptr_trigger->hooks[i]);
         }
-        weechat_log_printf ("  hook_count_cb . . . . . : %lu",   ptr_trigger->hook_count_cb);
-        weechat_log_printf ("  hook_count_cmd. . . . . : %lu",   ptr_trigger->hook_count_cmd);
+        weechat_log_printf ("  hook_count_cb . . . . . : %llu",  ptr_trigger->hook_count_cb);
+        weechat_log_printf ("  hook_count_cmd. . . . . : %llu",  ptr_trigger->hook_count_cmd);
         weechat_log_printf ("  hook_running. . . . . . : %d",    ptr_trigger->hook_running);
         weechat_log_printf ("  hook_print_buffers. . . : '%s'",  ptr_trigger->hook_print_buffers);
         weechat_log_printf ("  regex_count . . . . . . : %d",    ptr_trigger->regex_count);

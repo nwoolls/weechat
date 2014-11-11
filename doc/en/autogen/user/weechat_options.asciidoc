@@ -69,17 +69,17 @@
 ** values: any string (default value: `"cyan,magenta,green,brown,lightblue,default,lightcyan,lightmagenta,lightgreen,blue"`)
 
 * [[option_weechat.color.chat_nick_offline]] *weechat.color.chat_nick_offline*
-** description: `text color for offline nick (not in nicklist any more)`
+** description: `text color for offline nick (not in nicklist any more); this color is used only if option weechat.look.color_nick_offline is enabled`
 ** type: color
 ** values: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (default value: `default`)
 
 * [[option_weechat.color.chat_nick_offline_highlight]] *weechat.color.chat_nick_offline_highlight*
-** description: `text color for offline nick with highlight`
+** description: `text color for offline nick with highlight; this color is used only if option weechat.look.color_nick_offline is enabled`
 ** type: color
 ** values: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (default value: `default`)
 
 * [[option_weechat.color.chat_nick_offline_highlight_bg]] *weechat.color.chat_nick_offline_highlight_bg*
-** description: `background color for offline nick with highlight`
+** description: `background color for offline nick with highlight; this color is used only if option weechat.look.color_nick_offline is enabled`
 ** type: color
 ** values: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (default value: `blue`)
 
@@ -283,6 +283,11 @@
 ** type: color
 ** values: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (default value: `yellow`)
 
+* [[option_weechat.color.status_mouse]] *weechat.color.status_mouse*
+** description: `text color for mouse indicator in status bar`
+** type: color
+** values: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (default value: `green`)
+
 * [[option_weechat.color.status_name]] *weechat.color.status_name*
 ** description: `text color for current buffer name in status bar`
 ** type: color
@@ -310,6 +315,11 @@
 
 * [[option_weechat.completion.base_word_until_cursor]] *weechat.completion.base_word_until_cursor*
 ** description: `if enabled, the base word to complete ends at char before cursor; otherwise the base word ends at first space after cursor`
+** type: boolean
+** values: on, off (default value: `on`)
+
+* [[option_weechat.completion.command_inline]] *weechat.completion.command_inline*
+** description: `if enabled, the commands inside command line are completed (the command at beginning of line has higher priority and is used first); note: when this option is enabled, there is no more automatic completion of paths beginning with '/' (outside commands arguments)`
 ** type: boolean
 ** values: on, off (default value: `on`)
 
@@ -518,6 +528,11 @@
 ** type: string
 ** values: any string (default value: `""`)
 
+* [[option_weechat.look.command_incomplete]] *weechat.look.command_incomplete*
+** description: `if set, incomplete and unambiguous commands are allowed, for example /he for /help`
+** type: boolean
+** values: on, off (default value: `off`)
+
 * [[option_weechat.look.confirm_quit]] *weechat.look.confirm_quit*
 ** description: `if set, /quit command must be confirmed with extra argument "-yes" (see /help quit)`
 ** type: boolean
@@ -662,6 +677,11 @@
 ** description: `string used to show zoom on merged buffer (bar item "buffer_zoom")`
 ** type: string
 ** values: any string (default value: `"!"`)
+
+* [[option_weechat.look.item_mouse_status]] *weechat.look.item_mouse_status*
+** description: `string used to show if mouse is enabled (bar item "mouse_status")`
+** type: string
+** values: any string (default value: `"M"`)
 
 * [[option_weechat.look.item_time_format]] *weechat.look.item_time_format*
 ** description: `time format for "time" bar item (see man strftime for date/time specifiers)`

@@ -29,6 +29,7 @@
 #include <time.h>
 
 #include "../core/weechat.h"
+#include "../core/wee-arraylist.h"
 #include "../core/wee-config.h"
 #include "../core/wee-hashtable.h"
 #include "../core/wee-hdata.h"
@@ -52,6 +53,7 @@
 #include "gui-line.h"
 #include "gui-nicklist.h"
 #include "gui-window.h"
+#include "gui-mouse.h"
 
 
 struct t_gui_bar_item *gui_bar_items = NULL;     /* first bar item          */
@@ -61,7 +63,7 @@ char *gui_bar_item_names[GUI_BAR_NUM_ITEMS] =
   "buffer_count", "buffer_last_number", "buffer_plugin", "buffer_number",
   "buffer_name", "buffer_short_name", "buffer_modes", "buffer_filter",
   "buffer_zoom", "buffer_nicklist_count", "scroll", "hotlist", "completion",
-  "buffer_title", "buffer_nicklist", "window_number"
+  "buffer_title", "buffer_nicklist", "window_number", "mouse_status"
 };
 char *gui_bar_items_default_for_bars[][2] =
 { { GUI_BAR_DEFAULT_NAME_INPUT,
@@ -71,7 +73,7 @@ char *gui_bar_items_default_for_bars[][2] =
   { GUI_BAR_DEFAULT_NAME_STATUS,
     "[time],[buffer_last_number],[buffer_plugin],buffer_number+:+"
     "buffer_name+(buffer_modes)+{buffer_nicklist_count}+buffer_zoom+"
-    "buffer_filter,[lag],[hotlist],completion,scroll" },
+    "buffer_filter,scroll,[lag],[hotlist],completion" },
   { GUI_BAR_DEFAULT_NAME_NICKLIST,
     "buffer_nicklist" },
   { NULL,
@@ -1137,8 +1139,11 @@ gui_bar_item_default_buffer_filter (void *data, struct t_gui_bar_item *item,
     if (!buffer)
         return NULL;
 
-    if (!gui_filters_enabled || !gui_filters || !buffer->lines->lines_hidden)
+    if (!gui_filters_enabled || !gui_filters
+        || !buffer->filter || !buffer->lines->lines_hidden)
+    {
         return NULL;
+    }
 
     snprintf (str_filter, sizeof (str_filter),
               "%s%s",
@@ -1481,9 +1486,9 @@ gui_bar_item_default_completion (void *data, struct t_gui_bar_item *item,
                                  struct t_gui_buffer *buffer,
                                  struct t_hashtable *extra_info)
 {
-    int length;
+    int length, i;
     char *buf, str_number[64];
-    struct t_gui_completion_partial *ptr_item;
+    struct t_gui_completion_word *ptr_completion_word;
 
     /* make C compiler happy */
     (void) data;
@@ -1492,37 +1497,39 @@ gui_bar_item_default_completion (void *data, struct t_gui_bar_item *item,
     (void) extra_info;
 
     if (!buffer || !buffer->completion
-        || !buffer->completion->partial_completion_list)
+        || (buffer->completion->partial_list->size == 0))
     {
         return NULL;
     }
 
     length = 1;
-    for (ptr_item = buffer->completion->partial_completion_list;
-         ptr_item; ptr_item = ptr_item->next_item)
+    for (i = 0; i < buffer->completion->partial_list->size; i++)
     {
-        length += strlen (ptr_item->word) + 32;
+        ptr_completion_word =
+            (struct t_gui_completion_word *)(buffer->completion->partial_list->data[i]);
+        length += strlen (ptr_completion_word->word) + 32;
     }
 
     buf = malloc (length);
     if (buf)
     {
         buf[0] = '\0';
-        for (ptr_item = buffer->completion->partial_completion_list;
-             ptr_item; ptr_item = ptr_item->next_item)
+        for (i = 0; i < buffer->completion->partial_list->size; i++)
         {
+            ptr_completion_word =
+                (struct t_gui_completion_word *)(buffer->completion->partial_list->data[i]);
             strcat (buf, GUI_COLOR_CUSTOM_BAR_FG);
-            strcat (buf, ptr_item->word);
-            if (ptr_item->count > 0)
+            strcat (buf, ptr_completion_word->word);
+            if (ptr_completion_word->count > 0)
             {
                 strcat (buf, GUI_COLOR_CUSTOM_BAR_DELIM);
                 strcat (buf, "(");
                 snprintf (str_number, sizeof (str_number),
-                          "%d", ptr_item->count);
+                          "%d", ptr_completion_word->count);
                 strcat (buf, str_number);
                 strcat (buf, ")");
             }
-            if (ptr_item->next_item)
+            if (i < buffer->completion->partial_list->size - 1)
                 strcat (buf, " ");
         }
     }
@@ -1717,6 +1724,35 @@ gui_bar_item_default_window_number (void *data, struct t_gui_bar_item *item,
     snprintf (str_number, sizeof (str_number), "%d", window->number);
 
     return strdup (str_number);
+}
+
+/*
+ * Default item for mouse status.
+ */
+
+char *
+gui_bar_item_default_mouse_status   (void *data, struct t_gui_bar_item *item,
+                                    struct t_gui_window *window,
+                                    struct t_gui_buffer *buffer,
+                                    struct t_hashtable *extra_info)
+{
+    char str_mouse[512];
+
+    /* make C compiler happy */
+    (void) data;
+    (void) item;
+    (void) window;
+    (void) extra_info;
+
+    if (!buffer || !gui_mouse_enabled)
+        return NULL;
+
+    snprintf (str_mouse, sizeof (str_mouse),
+              "%s%s",
+              gui_color_get_custom (gui_color_get_name (CONFIG_COLOR(config_color_status_mouse))),
+              CONFIG_STRING(config_look_item_mouse_status));
+
+    return strdup (str_mouse);
 }
 
 /*
@@ -2128,6 +2164,15 @@ gui_bar_item_init ()
                               gui_bar_item_names[GUI_BAR_ITEM_WINDOW_NUMBER]);
     gui_bar_item_hook_signal ("window_closed",
                               gui_bar_item_names[GUI_BAR_ITEM_WINDOW_NUMBER]);
+
+    /* mouse status */
+    gui_bar_item_new (NULL,
+                      gui_bar_item_names[GUI_BAR_ITEM_MOUSE_STATUS],
+                      &gui_bar_item_default_mouse_status, NULL);
+    gui_bar_item_hook_signal ("mouse_enabled",
+                              gui_bar_item_names[GUI_BAR_ITEM_MOUSE_STATUS]);
+    gui_bar_item_hook_signal ("mouse_disabled",
+                              gui_bar_item_names[GUI_BAR_ITEM_MOUSE_STATUS]);
 }
 
 /*

@@ -82,6 +82,76 @@ config_file_search (const char *name)
 }
 
 /*
+ * Searches for position of configuration file (to keep configuration files
+ * sorted by name).
+ */
+
+struct t_config_file *
+config_file_config_find_pos (const char *name)
+{
+    struct t_config_file *ptr_config;
+
+    if (name)
+    {
+        for (ptr_config = config_files; ptr_config;
+             ptr_config = ptr_config->next_config)
+        {
+            if (string_strcasecmp (name, ptr_config->name) < 0)
+                return ptr_config;
+        }
+    }
+
+    /* position not found (we will add to the end of list) */
+    return NULL;
+}
+
+/*
+ * Inserts a configuration file in list (keeping configuration files sorted by
+ * name).
+ */
+
+void
+config_file_config_insert (struct t_config_file *config_file)
+{
+    struct t_config_file *pos_config;
+
+    if (!config_file)
+        return;
+
+    if (config_files)
+    {
+        pos_config = config_file_config_find_pos (config_file->name);
+        if (pos_config)
+        {
+            /* insert configuration file into the list (before config found) */
+            config_file->prev_config = pos_config->prev_config;
+            config_file->next_config = pos_config;
+            if (pos_config->prev_config)
+                (pos_config->prev_config)->next_config = config_file;
+            else
+                config_files = config_file;
+            pos_config->prev_config = config_file;
+        }
+        else
+        {
+            /* add configuration file to the end of list */
+            config_file->prev_config = last_config_file;
+            config_file->next_config = NULL;
+            last_config_file->next_config = config_file;
+            last_config_file = config_file;
+        }
+    }
+    else
+    {
+        /* first configuration file */
+        config_file->prev_config = NULL;
+        config_file->next_config = NULL;
+        config_files = config_file;
+        last_config_file = config_file;
+    }
+}
+
+/*
  * Creates a new configuration file.
  *
  * Returns pointer to new configuration file, NULL if error.
@@ -146,6 +216,77 @@ config_file_new (struct t_weechat_plugin *plugin, const char *name,
     }
 
     return new_config_file;
+}
+
+/*
+ * Searches for position of section in configuration file (to keep sections
+ * sorted by name).
+ */
+
+struct t_config_section *
+config_file_section_find_pos (struct t_config_file *config_file,
+                              const char *name)
+{
+    struct t_config_section *ptr_section;
+
+    if (config_file && name)
+    {
+        for (ptr_section = config_file->sections; ptr_section;
+             ptr_section = ptr_section->next_section)
+        {
+            if (string_strcasecmp (name, ptr_section->name) < 0)
+                return ptr_section;
+        }
+    }
+
+    /* position not found (we will add to the end of list) */
+    return NULL;
+}
+
+/*
+ * Inserts a section in configuration file (keeping sections sorted by name).
+ */
+
+void
+config_file_section_insert_in_config (struct t_config_section *section)
+{
+    struct t_config_section *pos_section;
+
+    if (!section || !section->config_file)
+        return;
+
+    if (section->config_file->sections)
+    {
+        pos_section = config_file_section_find_pos (section->config_file,
+                                                    section->name);
+        if (pos_section)
+        {
+            /* insert section into the list (before section found) */
+            section->prev_section = pos_section->prev_section;
+            section->next_section = pos_section;
+            if (pos_section->prev_section)
+                (pos_section->prev_section)->next_section = section;
+            else
+                (section->config_file)->sections = section;
+            pos_section->prev_section = section;
+        }
+        else
+        {
+            /* add section to end of sections */
+            section->prev_section = (section->config_file)->last_section;
+            section->next_section = NULL;
+            (section->config_file)->last_section->next_section = section;
+            (section->config_file)->last_section = section;
+        }
+    }
+    else
+    {
+        /* first section of file */
+        section->prev_section = NULL;
+        section->next_section = NULL;
+        (section->config_file)->sections = section;
+        (section->config_file)->last_section = section;
+    }
 }
 
 /*
@@ -979,6 +1120,8 @@ config_file_option_reset (struct t_config_option *option, int run_callback)
                     option->value = malloc (sizeof (int));
                     if (option->value)
                         CONFIG_INTEGER(option) = 0;
+                    else
+                        break;
                 }
                 if (CONFIG_INTEGER(option) == CONFIG_INTEGER_DEFAULT(option))
                     rc = WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
@@ -1009,6 +1152,8 @@ config_file_option_reset (struct t_config_option *option, int run_callback)
                     option->value = malloc (sizeof (int));
                     if (option->value)
                         CONFIG_INTEGER(option) = 0;
+                    else
+                        break;
                 }
                 if (CONFIG_COLOR(option) == CONFIG_COLOR_DEFAULT(option))
                     rc = WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
@@ -1707,13 +1852,12 @@ config_file_option_set_with_string (const char *option_name, const char *value)
 int
 config_file_option_boolean (struct t_config_option *option)
 {
-    if (!option)
-        return 0;
-
-    if (option->type == CONFIG_OPTION_TYPE_BOOLEAN)
+    if (option && option->value
+        && (option->type == CONFIG_OPTION_TYPE_BOOLEAN))
+    {
         return CONFIG_BOOLEAN(option);
-    else
-        return 0;
+    }
+    return 0;
 }
 
 /*
@@ -1725,13 +1869,12 @@ config_file_option_boolean (struct t_config_option *option)
 int
 config_file_option_boolean_default (struct t_config_option *option)
 {
-    if (!option)
-        return 0;
-
-    if (option->type == CONFIG_OPTION_TYPE_BOOLEAN)
+    if (option && option->default_value
+        && (option->type == CONFIG_OPTION_TYPE_BOOLEAN))
+    {
         return CONFIG_BOOLEAN_DEFAULT(option);
-    else
-        return 0;
+    }
+    return 0;
 }
 
 /*
@@ -1741,23 +1884,23 @@ config_file_option_boolean_default (struct t_config_option *option)
 int
 config_file_option_integer (struct t_config_option *option)
 {
-    if (!option)
-        return 0;
-
-    switch (option->type)
+    if (option && option->value)
     {
-        case CONFIG_OPTION_TYPE_BOOLEAN:
-            if (CONFIG_BOOLEAN(option) == CONFIG_BOOLEAN_TRUE)
-                return 1;
-            else
+        switch (option->type)
+        {
+            case CONFIG_OPTION_TYPE_BOOLEAN:
+                if (CONFIG_BOOLEAN(option) == CONFIG_BOOLEAN_TRUE)
+                    return 1;
+                else
+                    return 0;
+            case CONFIG_OPTION_TYPE_INTEGER:
+            case CONFIG_OPTION_TYPE_COLOR:
+                return CONFIG_INTEGER(option);
+            case CONFIG_OPTION_TYPE_STRING:
                 return 0;
-        case CONFIG_OPTION_TYPE_INTEGER:
-        case CONFIG_OPTION_TYPE_COLOR:
-            return CONFIG_INTEGER(option);
-        case CONFIG_OPTION_TYPE_STRING:
-            return 0;
-        case CONFIG_NUM_OPTION_TYPES:
-            break;
+            case CONFIG_NUM_OPTION_TYPES:
+                break;
+        }
     }
     return 0;
 }
@@ -1769,23 +1912,23 @@ config_file_option_integer (struct t_config_option *option)
 int
 config_file_option_integer_default (struct t_config_option *option)
 {
-    if (!option)
-        return 0;
-
-    switch (option->type)
+    if (option && option->default_value)
     {
-        case CONFIG_OPTION_TYPE_BOOLEAN:
-            if (CONFIG_BOOLEAN_DEFAULT(option) == CONFIG_BOOLEAN_TRUE)
-                return 1;
-            else
+        switch (option->type)
+        {
+            case CONFIG_OPTION_TYPE_BOOLEAN:
+                if (CONFIG_BOOLEAN_DEFAULT(option) == CONFIG_BOOLEAN_TRUE)
+                    return 1;
+                else
+                    return 0;
+            case CONFIG_OPTION_TYPE_INTEGER:
+            case CONFIG_OPTION_TYPE_COLOR:
+                return CONFIG_INTEGER_DEFAULT(option);
+            case CONFIG_OPTION_TYPE_STRING:
                 return 0;
-        case CONFIG_OPTION_TYPE_INTEGER:
-        case CONFIG_OPTION_TYPE_COLOR:
-            return CONFIG_INTEGER_DEFAULT(option);
-        case CONFIG_OPTION_TYPE_STRING:
-            return 0;
-        case CONFIG_NUM_OPTION_TYPES:
-            break;
+            case CONFIG_NUM_OPTION_TYPES:
+                break;
+        }
     }
     return 0;
 }
@@ -1797,26 +1940,26 @@ config_file_option_integer_default (struct t_config_option *option)
 const char *
 config_file_option_string (struct t_config_option *option)
 {
-    if (!option)
-        return NULL;
-
-    switch (option->type)
+    if (option && option->value)
     {
-        case CONFIG_OPTION_TYPE_BOOLEAN:
-            if (CONFIG_BOOLEAN(option))
-                return config_boolean_true[0];
-            else
-                return config_boolean_false[0];
-        case CONFIG_OPTION_TYPE_INTEGER:
-            if (option->string_values)
-                return option->string_values[CONFIG_INTEGER(option)];
-            return NULL;
-        case CONFIG_OPTION_TYPE_STRING:
-            return CONFIG_STRING(option);
-        case CONFIG_OPTION_TYPE_COLOR:
-            return gui_color_get_name (CONFIG_COLOR(option));
-        case CONFIG_NUM_OPTION_TYPES:
-            return NULL;
+        switch (option->type)
+        {
+            case CONFIG_OPTION_TYPE_BOOLEAN:
+                if (CONFIG_BOOLEAN(option))
+                    return config_boolean_true[0];
+                else
+                    return config_boolean_false[0];
+            case CONFIG_OPTION_TYPE_INTEGER:
+                if (option->string_values)
+                    return option->string_values[CONFIG_INTEGER(option)];
+                return NULL;
+            case CONFIG_OPTION_TYPE_STRING:
+                return CONFIG_STRING(option);
+            case CONFIG_OPTION_TYPE_COLOR:
+                return gui_color_get_name (CONFIG_COLOR(option));
+            case CONFIG_NUM_OPTION_TYPES:
+                return NULL;
+        }
     }
     return NULL;
 }
@@ -1828,26 +1971,26 @@ config_file_option_string (struct t_config_option *option)
 const char *
 config_file_option_string_default (struct t_config_option *option)
 {
-    if (!option)
-        return NULL;
-
-    switch (option->type)
+    if (option && option->default_value)
     {
-        case CONFIG_OPTION_TYPE_BOOLEAN:
-            if (CONFIG_BOOLEAN_DEFAULT(option))
-                return config_boolean_true[0];
-            else
-                return config_boolean_false[0];
-        case CONFIG_OPTION_TYPE_INTEGER:
-            if (option->string_values)
-                return option->string_values[CONFIG_INTEGER_DEFAULT(option)];
-            return NULL;
-        case CONFIG_OPTION_TYPE_STRING:
-            return CONFIG_STRING_DEFAULT(option);
-        case CONFIG_OPTION_TYPE_COLOR:
-            return gui_color_get_name (CONFIG_COLOR_DEFAULT(option));
-        case CONFIG_NUM_OPTION_TYPES:
-            return NULL;
+        switch (option->type)
+        {
+            case CONFIG_OPTION_TYPE_BOOLEAN:
+                if (CONFIG_BOOLEAN_DEFAULT(option))
+                    return config_boolean_true[0];
+                else
+                    return config_boolean_false[0];
+            case CONFIG_OPTION_TYPE_INTEGER:
+                if (option->string_values)
+                    return option->string_values[CONFIG_INTEGER_DEFAULT(option)];
+                return NULL;
+            case CONFIG_OPTION_TYPE_STRING:
+                return CONFIG_STRING_DEFAULT(option);
+            case CONFIG_OPTION_TYPE_COLOR:
+                return gui_color_get_name (CONFIG_COLOR_DEFAULT(option));
+            case CONFIG_NUM_OPTION_TYPES:
+                return NULL;
+        }
     }
     return NULL;
 }
@@ -1859,10 +2002,12 @@ config_file_option_string_default (struct t_config_option *option)
 const char *
 config_file_option_color (struct t_config_option *option)
 {
-    if (!option)
-        return NULL;
-
-    return gui_color_get_name (CONFIG_COLOR(option));
+    if (option && option->value
+        && (option->type == CONFIG_OPTION_TYPE_COLOR))
+    {
+        return gui_color_get_name (CONFIG_COLOR(option));
+    }
+    return NULL;
 }
 
 /*
@@ -1872,10 +2017,12 @@ config_file_option_color (struct t_config_option *option)
 const char *
 config_file_option_color_default (struct t_config_option *option)
 {
-    if (!option)
-        return NULL;
-
-    return gui_color_get_name (CONFIG_COLOR_DEFAULT(option));
+    if (option && option->default_value
+        && (option->type == CONFIG_OPTION_TYPE_COLOR))
+    {
+        return gui_color_get_name (CONFIG_COLOR_DEFAULT(option));
+    }
+    return NULL;
 }
 
 /*

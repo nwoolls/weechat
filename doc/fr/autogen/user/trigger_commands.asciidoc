@@ -12,6 +12,7 @@
           restart <nom>|-all [<nom>...]
           show <nom>
           del <nom>|-all [<nom>...]
+          restore <nom> [<nom>...]
           default -yes
           monitor [<filtre>]
 
@@ -54,6 +55,7 @@ code_retour : code retour dans le callback (ok (par défaut), ok_eat, error)
        show : afficher des informations détaillées sur un trigger (avec quelques statistiques)
         del : supprimer un trigger
        -all : effectuer l'action sur tous les triggers
+    restore : restaurer un/des trigger(s) avec les valeurs par défaut (fonctionne seulement pour les triggers par défaut)
     default : restaurer les triggers par défaut
     monitor : ouvrir le tampon moniteur des triggers
      filtre : filtrer les hooks/triggers à afficher (un hook doit commencer par "@", par exemple "@signal"), plusieurs filtres peuvent être séparés par des virgules ; le caractère joker "*" est autorisé dans chaque nom de trigger
@@ -66,7 +68,7 @@ Lorsqu'un callback de trigger est appelé, les actions suivantes sont exécutée
 
 Exemples (vous pouvez aussi regarder les triggers par défaut avec /trigger listdefault) :
   ajouter des attributs *gras*, _souligné_ et /italique/ (seulement dans les messages d'utilisateurs) :
-    /trigger add effects modifier weechat_print "${tg_tag_nick}" "==\*(\S+)\*==*${color:bold}$1${color:-bold}*== ==_(\S+)_==_${color:underline}$1${color:-underline}_== ==/(\S+)/==/${color:italic}$1${color:-italic}/"
+    /trigger add effects modifier weechat_print "${tg_tag_nick}" "==\*(\S+)\*==*${color:bold}${re:1}${color:-bold}*== ==_(\S+)_==_${color:underline}${re:1}${color:-underline}_== ==/(\S+)/==/${color:italic}${re:1}${color:-italic}/"
   cacher la barre de pseudos sur les petits terminaux :
     /trigger add resize_small signal signal_sigwinch "${info:term_width} < 100" "" "/bar hide nicklist"
     /trigger add resize_big signal signal_sigwinch "${info:term_width} >= 100" "" "/bar show nicklist"

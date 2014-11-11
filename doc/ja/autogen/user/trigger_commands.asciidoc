@@ -12,6 +12,7 @@
           restart <name>|-all [<name>...]
           show <name>
           del <name>|-all [<name>...]
+          restore <name> [<name>...]
           default -yes
           monitor [<filter>]
 
@@ -54,7 +55,8 @@ return_code: コールバック内のリターンコード (ok (デフォルト)
        show: トリガに関する情報を表示 (状態を含めて)
         del: トリガを削除
        -all: 全てのトリガに関するアクションを実行
-    default: デフォルトトリガを復元
+    restore: デフォルトの値でトリガを復元 (これができるのはデフォルトトリガに限ります)
+    default: 全てのトリガを削除してデフォルトのトリガを復元
     monitor: 任意でフィルタを付けてトリガ監視バッファを開く:
      filter: フックおよびトリガをフィルタして表示 (フックは必ず "@" で始めてください、たとえば "@signal")、複数のフィルタをかける場合はそれぞれをコンマで区切ってください; 各トリガ名にワイルドカード "*" を使うことができます。
 
@@ -66,7 +68,7 @@ return_code: コールバック内のリターンコード (ok (デフォルト)
 
 例 (/trigger listdefault でデフォルトトリガを見ることができます):
   テキスト属性 *太字*、_下線_、/イタリック/ を追加 (ユーザメッセージのみ):
-    /trigger add effects modifier weechat_print "${tg_tag_nick}" "==\*(\S+)\*==*${color:bold}$1${color:-bold}*== ==_(\S+)_==_${color:underline}$1${color:-underline}_== ==/(\S+)/==/${color:italic}$1${color:-italic}/"
+    /trigger add effects modifier weechat_print "${tg_tag_nick}" "==\*(\S+)\*==*${color:bold}${re:1}${color:-bold}*== ==_(\S+)_==_${color:underline}${re:1}${color:-underline}_== ==/(\S+)/==/${color:italic}${re:1}${color:-italic}/"
   狭い端末ではニックネームリストバーを隠す:
     /trigger add resize_small signal signal_sigwinch "${info:term_width} < 100" "" "/bar hide nicklist"
     /trigger add resize_big signal signal_sigwinch "${info:term_width} >= 100" "" "/bar show nicklist"

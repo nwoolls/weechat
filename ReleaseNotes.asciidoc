@@ -15,7 +15,104 @@ http://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 (file 'ChangeLog.asciidoc' in sources).
 
 
-== Version 1.0 (under dev)
+== Version 1.1 (under dev)
+
+=== New format for regex replacement in triggers
+
+A new format is used in regex replacement to use regex groups, this format
+is incompatible with version 1.0.
+
+The existing triggers are *NOT automatically updated*.
+
+[width="60%",cols="2,2,3",options="header"]
+|===
+| Old format     | New format               | Examples (new format)
+| `$0` ... `$99` | `${re:0}` ... `${re:99}` | `${re:1}`
+| `$+`           | `${re:+}`                | `${re:+}`
+| `$.*N`         | `${hide:*,${re:N}}`      | `${hide:*,${re:2}}` +
+                                              `${hide:-,${re:+}}`
+|===
+
+Moreover, default triggers used to hide passwords have been fixed for *BSD
+operating systems.
+
+You can restore them with the following command:
+
+----
+/trigger restore cmd_pass msg_auth server_pass
+----
+
+If you added triggers with the old regex replacement format, you must update
+them manually.
+
+=== Default "beep" trigger
+
+The command of "beep" trigger is now executed only if the message is displayed
+(not filtered with /filter).
+
+You can restore the default "beep" trigger with the following command:
+
+----
+/trigger restore beep
+----
+
+=== Completion of inline commands
+
+WeeChat now completes by default inline commands (not only at beginning of
+line).
+
+When this feature is enabled, there is no more automatic completion of
+absolute paths (except if you are completing a path inside a command argument,
+like `/dcc send <nick> <path>`).
+
+To restore the old behavior (no completion of inline commands):
+
+----
+/set weechat.completion.command_inline off
+----
+
+=== Relay option relay.irc.backlog_tags
+
+The option 'relay.irc.backlog_tags' is now a list separated by commas
+(it was separated by semicolons in older versions).
+
+If you are using a list of tags in this option, you must adjust the value
+manually.
+
+=== IPv4-mapped IPv6 client address in relay
+
+The string "::ffff:" has been removed from IPv4-mapped IPv6 client address
+in relay plugin.
+
+If you are using "::ffff:" in option 'relay.network.allowed_ips', you can
+remove it.
+
+=== Temporary servers disabled by default with /connect
+
+Creating a temporary server with command `/connect <address>` or
+`/connect irc://...` is now forbidden by default.
+
+A new option has been added to unlock the feature, you can do that for
+the old behavior in command `/connect`:
+
+----
+/set irc.look.temporary_servers on
+----
+
+=== Microseconds in API timeval functions
+
+The API functions using timeval are now using or returning microseconds,
+instead of milliseconds:
+
+* function 'util_timeval_diff': returns microseconds
+* function 'util_timeval_add': the argument 'interval' is now expressed in
+  microseconds.
+
+== Version 1.0.1 (2014-09-28)
+
+Bug fix and maintenance release.
+
+== Version 1.0 (2014-08-15)
 
 === Channel type not added by default on /join
 
@@ -32,7 +129,7 @@ the new option:
 === Hide IRC channel modes arguments
 
 The option 'irc.look.item_channel_modes_hide_key' has been renamed to
-'irc.look.item_channel_modes_hide_args' and it now a string. +
+'irc.look.item_channel_modes_hide_args' and is now a string. +
 It can now hide arguments for multiple channel modes.
 
 By default, a channel key (mode "k") will hide channel arguments. For old
@@ -726,7 +823,7 @@ IRC commands /ame and /amsg are now aliases, if you are upgrading from version
 == Version 0.3.0 (2009-09-06)
 
 This version brings *MAJOR* changes, especially for configuration files and
-plugin API and it not compatible with previous versions.
+plugin API and is not compatible with previous versions.
 
 Major differences:
 

@@ -606,7 +606,7 @@ COMMAND_CALLBACK(buffer)
                     else
                     {
                         ptr_buffer = gui_buffer_search_by_number_or_name (argv[i]);
-                        number = strtol (argv[2], &error, 10);
+                        (void) strtol (argv[i], &error, 10);
                         clear_number = (error && !error[0]);
                     }
                     if (ptr_buffer)
@@ -784,7 +784,7 @@ COMMAND_CALLBACK(buffer)
                     ptr_buffer = gui_buffer_search_by_number_or_name (argv[i]);
                     if (ptr_buffer)
                     {
-                        number = strtol (argv[2], &error, 10);
+                        (void) strtol (argv[i], &error, 10);
                         if (error && !error[0])
                         {
                             for (ptr_buffer2 = gui_buffers; ptr_buffer2;
@@ -822,7 +822,7 @@ COMMAND_CALLBACK(buffer)
                     ptr_buffer = gui_buffer_search_by_number_or_name (argv[i]);
                     if (ptr_buffer)
                     {
-                        number = strtol (argv[2], &error, 10);
+                        (void) strtol (argv[i], &error, 10);
                         if (error && !error[0])
                         {
                             for (ptr_buffer2 = gui_buffers; ptr_buffer2;
@@ -1835,10 +1835,9 @@ COMMAND_CALLBACK(eval)
 {
     int i, print_only, condition;
     char *result, *ptr_args, *expr, **commands;
-    struct t_hashtable *options;
+    struct t_hashtable *pointers, *options;
 
     /* make C compiler happy */
-    (void) buffer;
     (void) data;
     (void) argv;
 
@@ -1870,12 +1869,24 @@ COMMAND_CALLBACK(eval)
 
     if (ptr_args)
     {
+        pointers = hashtable_new (32,
+                                  WEECHAT_HASHTABLE_STRING,
+                                  WEECHAT_HASHTABLE_POINTER,
+                                  NULL,
+                                  NULL);
+        if (pointers)
+        {
+            hashtable_set (pointers, "window",
+                           gui_window_search_with_buffer (buffer));
+            hashtable_set (pointers, "buffer", buffer);
+        }
+
         options = NULL;
         if (condition)
         {
             options = hashtable_new (32,
                                      WEECHAT_HASHTABLE_STRING,
-                                     WEECHAT_HASHTABLE_POINTER,
+                                     WEECHAT_HASHTABLE_STRING,
                                      NULL,
                                      NULL);
             if (options)
@@ -1888,7 +1899,7 @@ COMMAND_CALLBACK(eval)
             expr = string_remove_quotes (ptr_args, "\"");
             if (expr)
             {
-                result = eval_expression (expr, NULL, NULL, options);
+                result = eval_expression (expr, pointers, NULL, options);
                 gui_chat_printf_date_tags (NULL, 0, "no_log", "\t>> %s", ptr_args);
                 if (result)
                 {
@@ -1911,7 +1922,7 @@ COMMAND_CALLBACK(eval)
         }
         else
         {
-            result = eval_expression (ptr_args, NULL, NULL, options);
+            result = eval_expression (ptr_args, pointers, NULL, options);
             if (result)
             {
                 commands = string_split_command (result, ';');
@@ -1933,6 +1944,8 @@ COMMAND_CALLBACK(eval)
         }
         if (result)
             free (result);
+        if (pointers)
+            hashtable_free (pointers);
         if (options)
             hashtable_free (options);
     }
@@ -3886,16 +3899,9 @@ command_mouse_timer_cb (void *data, int remaining_calls)
     (void) data;
     (void) remaining_calls;
 
-    if (gui_mouse_enabled)
-    {
-        gui_mouse_disable ();
-        config_file_option_set (config_look_mouse, "0", 1);
-    }
-    else
-    {
-        gui_mouse_enable ();
-        config_file_option_set (config_look_mouse, "1", 1);
-    }
+    config_file_option_set (config_look_mouse,
+                            (gui_mouse_enabled) ? "0" : "1",
+                            1);
 
     return WEECHAT_RC_OK;
 }
@@ -3938,7 +3944,6 @@ COMMAND_CALLBACK(mouse)
     /* enable mouse */
     if (string_strcasecmp (argv[1], "enable") == 0)
     {
-        gui_mouse_enable ();
         config_file_option_set (config_look_mouse, "1", 1);
         gui_chat_printf (NULL, _("Mouse enabled"));
         if (argc > 2)
@@ -3949,7 +3954,6 @@ COMMAND_CALLBACK(mouse)
     /* disable mouse */
     if (string_strcasecmp (argv[1], "disable") == 0)
     {
-        gui_mouse_disable ();
         config_file_option_set (config_look_mouse, "0", 1);
         gui_chat_printf (NULL, _("Mouse disabled"));
         if (argc > 2)
@@ -3962,13 +3966,11 @@ COMMAND_CALLBACK(mouse)
     {
         if (gui_mouse_enabled)
         {
-            gui_mouse_disable ();
             config_file_option_set (config_look_mouse, "0", 1);
             gui_chat_printf (NULL, _("Mouse disabled"));
         }
         else
         {
-            gui_mouse_enable ();
             config_file_option_set (config_look_mouse, "1", 1);
             gui_chat_printf (NULL, _("Mouse enabled"));
         }
@@ -7179,12 +7181,13 @@ command_init ()
            "Some variables are replaced in expression, using the format "
            "${variable}, variable can be, by order of priority:\n"
            "  1. a string with escaped chars (format: \"esc:xxx\" or \"\\xxx\")\n"
-           "  2. a color (format: \"color:xxx\")\n"
-           "  3. an info (format: \"info:name,arguments\", arguments are "
+           "  2. a string with chars to hide (format: \"hide:char,string\")\n"
+           "  3. a color (format: \"color:xxx\")\n"
+           "  4. an info (format: \"info:name,arguments\", arguments are "
            "optional)\n"
-           "  4. an option (format: \"file.section.option\")\n"
-           "  5. a local variable in buffer\n"
-           "  6. a hdata name/variable (the value is automatically converted "
+           "  5. an option (format: \"file.section.option\")\n"
+           "  6. a local variable in buffer\n"
+           "  7. a hdata name/variable (the value is automatically converted "
            "to string), by default \"window\" and \"buffer\" point to current "
            "window/buffer.\n"
            "Format for hdata can be one of following:\n"
@@ -7200,23 +7203,24 @@ command_init ()
            "reference\", function \"weechat_hdata_get\".\n"
            "\n"
            "Examples (simple strings):\n"
-           "  /eval -n ${info:version}                 ==> 0.4.3\n"
-           "  /eval -n ${weechat.look.scroll_amount}   ==> 3\n"
-           "  /eval -n ${window}                       ==> 0x2549aa0\n"
-           "  /eval -n ${window.buffer}                ==> 0x2549320\n"
-           "  /eval -n ${window.buffer.full_name}      ==> core.weechat\n"
-           "  /eval -n ${window.buffer.number}         ==> 1\n"
-           "  /eval -n ${\\t}                           ==> <tab>\n"
+           "  /eval -n ${info:version}                     ==> 0.4.3\n"
+           "  /eval -n ${weechat.look.scroll_amount}       ==> 3\n"
+           "  /eval -n ${window}                           ==> 0x2549aa0\n"
+           "  /eval -n ${window.buffer}                    ==> 0x2549320\n"
+           "  /eval -n ${window.buffer.full_name}          ==> core.weechat\n"
+           "  /eval -n ${window.buffer.number}             ==> 1\n"
+           "  /eval -n ${\\t}                               ==> <tab>\n"
+           "  /eval -n ${hide:-,${relay.network.password}} ==> --------\n"
            "\n"
            "Examples (conditions):\n"
-           "  /eval -n -c ${window.buffer.number} > 2  ==> 0\n"
-           "  /eval -n -c ${window.win_width} > 100    ==> 1\n"
-           "  /eval -n -c (8 > 12) || (5 > 2)          ==> 1\n"
-           "  /eval -n -c (8 > 12) && (5 > 2)          ==> 0\n"
-           "  /eval -n -c abcd =~ ^ABC                 ==> 1\n"
-           "  /eval -n -c abcd =~ (?-i)^ABC            ==> 0\n"
-           "  /eval -n -c abcd =~ (?-i)^abc            ==> 1\n"
-           "  /eval -n -c abcd !~ abc                  ==> 0"),
+           "  /eval -n -c ${window.buffer.number} > 2 ==> 0\n"
+           "  /eval -n -c ${window.win_width} > 100   ==> 1\n"
+           "  /eval -n -c (8 > 12) || (5 > 2)         ==> 1\n"
+           "  /eval -n -c (8 > 12) && (5 > 2)         ==> 0\n"
+           "  /eval -n -c abcd =~ ^ABC                ==> 1\n"
+           "  /eval -n -c abcd =~ (?-i)^ABC           ==> 0\n"
+           "  /eval -n -c abcd =~ (?-i)^abc           ==> 1\n"
+           "  /eval -n -c abcd !~ abc                 ==> 0"),
         "-n|-c -n|-c",
         &command_eval, NULL);
     hook_command (
@@ -7240,7 +7244,7 @@ command_init ()
            "   -all: delete all filters\n"
            " buffer: comma separated list of buffers where filter is active:\n"
            "         - this is full name including plugin (example: \"irc."
-           "freenode.#weechat\")\n"
+           "freenode.#weechat\" or \"irc.server.freenode\")\n"
            "         - \"*\" means all buffers\n"
            "         - a name starting with '!' is excluded\n"
            "         - wildcard \"*\" is allowed\n"

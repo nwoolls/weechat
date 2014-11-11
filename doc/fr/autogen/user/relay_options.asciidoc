@@ -59,7 +59,7 @@
 ** valeurs: on, off (valeur par défaut: `on`)
 
 * [[option_relay.irc.backlog_tags]] *relay.irc.backlog_tags*
-** description: `étiquettes des messages qui sont affichés dans l'historique par canal IRC (étiquettes supportées : "irc_join", "irc_part", "irc_quit", "irc_nick", "irc_privmsg"), "*" = toutes les étiquettes supportées`
+** description: `liste d'étiquettes de messages (séparées par des virgules) qui sont affichés dans l'historique par canal IRC (étiquettes supportées : "irc_join", "irc_part", "irc_quit", "irc_nick", "irc_privmsg"), "*" = toutes les étiquettes supportées`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `"irc_privmsg"`)
 
@@ -117,6 +117,11 @@
 ** description: `fichier avec le certificat et la clé privée SSL (pour servir les clients avec SSL)`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `"%h/ssl/relay.pem"`)
+
+* [[option_relay.network.ssl_priorities]] *relay.network.ssl_priorities*
+** description: `chaîne avec les priorités pour gnutls (pour la syntaxe, voir la documentation de la fonction gnutls_priority_init du manuel gnutls, les chaînes courantes sont : "PERFORMANCE", "NORMAL", "SECURE128", "SECURE256", "EXPORT", "NONE")`
+** type: chaîne
+** valeurs: toute chaîne (valeur par défaut: `"NORMAL:-VERS-SSL3.0"`)
 
 * [[option_relay.network.websocket_allowed_origins]] *relay.network.websocket_allowed_origins*
 ** description: `expression régulière POSIX étendue avec les origines autorisées dans les websockets (insensible à la casse, utilisez "(?-i)" en début de chaîne pour la rendre insensible à la casse), exemple : "^http://(www\.)?example\.(com|org)"`

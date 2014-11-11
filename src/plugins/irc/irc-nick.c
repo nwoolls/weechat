@@ -664,6 +664,17 @@ irc_nick_new (struct t_irc_server *server, struct t_irc_channel *channel,
     new_nick->host = (host) ? strdup (host) : NULL;
     length = strlen (irc_server_get_prefix_chars (server));
     new_nick->prefixes = malloc (length + 1);
+    if (!new_nick->name || !new_nick->prefixes)
+    {
+        if (new_nick->name)
+            free (new_nick->name);
+        if (new_nick->host)
+            free (new_nick->host);
+        if (new_nick->prefixes)
+            free (new_nick->prefixes);
+        free (new_nick);
+        return NULL;
+    }
     if (new_nick->prefixes)
     {
         memset (new_nick->prefixes, ' ', length);
@@ -948,12 +959,13 @@ irc_nick_mode_for_display (struct t_irc_server *server, struct t_irc_nick *nick,
             {
                 str_prefix[0] = '\0';
             }
-            str_prefix_color = weechat_color (irc_nick_get_prefix_color_name (server,
-                                                                              nick->prefix[0]));
+            str_prefix_color = weechat_color (
+                irc_nick_get_prefix_color_name (server, nick->prefix[0]));
         }
         else
         {
-            str_prefix[0] = (prefix && weechat_config_boolean (irc_config_look_nick_mode_empty)) ?
+            str_prefix[0] = (prefix
+                             && weechat_config_boolean (irc_config_look_nick_mode_empty)) ?
                 ' ' : '\0';
             str_prefix_color = IRC_COLOR_RESET;
         }
@@ -993,10 +1005,15 @@ irc_nick_as_prefix (struct t_irc_server *server, struct t_irc_nick *nick,
  */
 
 const char *
-irc_nick_color_for_message (struct t_irc_server *server,
-                            struct t_irc_nick *nick,
-                            const char *nickname)
+irc_nick_color_for_msg (struct t_irc_server *server, int server_message,
+                        struct t_irc_nick *nick, const char *nickname)
 {
+    if (server_message
+        && !weechat_config_boolean (irc_config_look_color_nicks_in_server_messages))
+    {
+        return IRC_COLOR_CHAT_NICK;
+    }
+
     if (nick)
         return nick->color;
 
@@ -1011,21 +1028,6 @@ irc_nick_color_for_message (struct t_irc_server *server,
     }
 
     return IRC_COLOR_CHAT_NICK;
-}
-
-/*
- * Returns WeeChat color code for a nick (used in a server message).
- */
-
-const char *
-irc_nick_color_for_server_message (struct t_irc_server *server,
-                                   struct t_irc_nick *nick,
-                                   const char *nickname)
-{
-    if (!weechat_config_boolean(irc_config_look_color_nicks_in_server_messages))
-        return IRC_COLOR_CHAT_NICK;
-
-    return irc_nick_color_for_message (server, nick, nickname);
 }
 
 /*

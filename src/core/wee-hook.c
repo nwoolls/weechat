@@ -38,6 +38,7 @@
 
 #include "weechat.h"
 #include "wee-hook.h"
+#include "wee-config.h"
 #include "wee-hashtable.h"
 #include "wee-hdata.h"
 #include "wee-infolist.h"
@@ -654,12 +655,14 @@ hook_command (struct t_weechat_plugin *plugin, const char *command,
  * Executes a command hook.
  *
  * Returns:
- *    0: command executed and failed
- *    1: command executed successfully
- *   -1: command not found
- *   -2: command is ambiguous (same command exists for another plugin, and we
- *       don't know which one to run)
- *   -3: command is already running
+ *   HOOK_COMMAND_EXEC_OK: command executed successfully
+ *   HOOK_COMMAND_EXEC_ERROR: command executed and failed
+ *   HOOK_COMMAND_EXEC_NOT_FOUND: command not found
+ *   HOOK_COMMAND_EXEC_AMBIGUOUS_PLUGINS: command is ambiguous (same command
+ *     exists for another plugin, and we don't know which one to run)
+ *   HOOK_COMMAND_EXEC_AMBIGUOUS_INCOMPLETE: command is ambiguous (incomplete
+ *     command and multiple commands start with this name)
+ *   HOOK_COMMAND_EXEC_RUNNING: command is already running
  */
 
 int
@@ -668,70 +671,81 @@ hook_command_exec (struct t_gui_buffer *buffer, int any_plugin,
 {
     struct t_hook *ptr_hook, *next_hook;
     struct t_hook *hook_plugin, *hook_other_plugin, *hook_other_plugin2;
+    struct t_hook *hook_incomplete_command;
     char **argv, **argv_eol, *ptr_command_name;
-    int argc, rc, count_other_plugin;
+    int argc, rc, length_command_name, allow_incomplete_commands;
+    int count_other_plugin, count_incomplete_commands;
 
     if (!buffer || !string || !string[0])
-        return -1;
+        return HOOK_COMMAND_EXEC_NOT_FOUND;
 
-    rc = hook_command_run_exec (buffer, string);
-    if (rc == WEECHAT_RC_OK_EAT)
-        return 1;
-
-    rc = -1;
+    if (hook_command_run_exec (buffer, string) == WEECHAT_RC_OK_EAT)
+        return HOOK_COMMAND_EXEC_OK;
 
     argv = string_split (string, " ", 0, 0, &argc);
     if (argc == 0)
     {
         string_free_split (argv);
-        return -1;
+        return HOOK_COMMAND_EXEC_NOT_FOUND;
     }
     argv_eol = string_split (string, " ", 1, 0, NULL);
 
     ptr_command_name = utf8_next_char (argv[0]);
+    length_command_name = strlen (ptr_command_name);
 
     hook_exec_start ();
 
     hook_plugin = NULL;
     hook_other_plugin = NULL;
     hook_other_plugin2 = NULL;
+    hook_incomplete_command = NULL;
     count_other_plugin = 0;
+    allow_incomplete_commands = CONFIG_BOOLEAN(config_look_command_incomplete);
+    count_incomplete_commands = 0;
     ptr_hook = weechat_hooks[HOOK_TYPE_COMMAND];
     while (ptr_hook)
     {
         next_hook = ptr_hook->next_hook;
 
-        if (!ptr_hook->deleted
-            && (string_strcasecmp (ptr_command_name,
-                                   HOOK_COMMAND(ptr_hook, command)) == 0))
+        if (!ptr_hook->deleted)
         {
-            if (ptr_hook->plugin == plugin)
+            if (string_strcasecmp (ptr_command_name,
+                                   HOOK_COMMAND(ptr_hook, command)) == 0)
             {
-                if (!hook_plugin)
-                    hook_plugin = ptr_hook;
-            }
-            else
-            {
-                if (any_plugin)
+                if (ptr_hook->plugin == plugin)
                 {
-                    if (!hook_other_plugin)
-                        hook_other_plugin = ptr_hook;
-                    else if (!hook_other_plugin2)
-                        hook_other_plugin2 = ptr_hook;
-                    count_other_plugin++;
+                    if (!hook_plugin)
+                        hook_plugin = ptr_hook;
                 }
+                else
+                {
+                    if (any_plugin)
+                    {
+                        if (!hook_other_plugin)
+                            hook_other_plugin = ptr_hook;
+                        else if (!hook_other_plugin2)
+                            hook_other_plugin2 = ptr_hook;
+                        count_other_plugin++;
+                    }
+                }
+            }
+            else if (allow_incomplete_commands
+                     && (string_strncasecmp (ptr_command_name,
+                                             HOOK_COMMAND(ptr_hook, command),
+                                             length_command_name) == 0))
+            {
+                hook_incomplete_command = ptr_hook;
+                count_incomplete_commands++;
             }
         }
 
         ptr_hook = next_hook;
     }
 
-    if (!hook_plugin && !hook_other_plugin)
-    {
-        /* command not found at all */
-        rc = -1;
-    }
-    else
+    rc = HOOK_COMMAND_EXEC_NOT_FOUND;
+    ptr_hook = NULL;
+
+    if (hook_plugin || hook_other_plugin)
     {
         if (!hook_plugin && (count_other_plugin > 1)
             && (hook_other_plugin->priority == hook_other_plugin2->priority))
@@ -741,7 +755,7 @@ hook_command_exec (struct t_gui_buffer *buffer, int any_plugin,
              * command was found for other plugins with the same priority
              * => we don't know which one to run!
              */
-            rc = -2;
+            rc = HOOK_COMMAND_EXEC_AMBIGUOUS_PLUGINS;
         }
         else
         {
@@ -764,24 +778,35 @@ hook_command_exec (struct t_gui_buffer *buffer, int any_plugin,
                  */
                 ptr_hook = (hook_plugin) ? hook_plugin : hook_other_plugin;
             }
+        }
+    }
+    else if (hook_incomplete_command)
+    {
+        if (count_incomplete_commands == 1)
+            ptr_hook = hook_incomplete_command;
+        else
+            rc = HOOK_COMMAND_EXEC_AMBIGUOUS_INCOMPLETE;
+    }
 
-            if (ptr_hook->running >= HOOK_COMMAND_MAX_CALLS)
-            {
-                /* loop in execution of command => do NOT execute again */
-                rc = -3;
-            }
+    /* execute the command for the hook found */
+    if (ptr_hook)
+    {
+        if (ptr_hook->running >= HOOK_COMMAND_MAX_CALLS)
+        {
+            /* loop in execution of command => do NOT execute again */
+            rc = HOOK_COMMAND_EXEC_RUNNING;
+        }
+        else
+        {
+            /* execute the command! */
+            ptr_hook->running++;
+            rc = (int) (HOOK_COMMAND(ptr_hook, callback))
+                (ptr_hook->callback_data, buffer, argc, argv, argv_eol);
+            ptr_hook->running--;
+            if (rc == WEECHAT_RC_ERROR)
+                rc = HOOK_COMMAND_EXEC_ERROR;
             else
-            {
-                /* execute the command! */
-                ptr_hook->running++;
-                rc = (int) (HOOK_COMMAND(ptr_hook, callback))
-                    (ptr_hook->callback_data, buffer, argc, argv, argv_eol);
-                ptr_hook->running--;
-                if (rc == WEECHAT_RC_ERROR)
-                    rc = 0;
-                else
-                    rc = 1;
-            }
+                rc = HOOK_COMMAND_EXEC_OK;
         }
     }
 
@@ -959,7 +984,8 @@ hook_timer_init (struct t_hook *hook)
     HOOK_TIMER(hook, next_exec).tv_usec = HOOK_TIMER(hook, last_exec).tv_usec;
 
     /* add interval to next call date */
-    util_timeval_add (&HOOK_TIMER(hook, next_exec), HOOK_TIMER(hook, interval));
+    util_timeval_add (&HOOK_TIMER(hook, next_exec),
+                      ((long long)HOOK_TIMER(hook, interval)) * 1000);
 }
 
 /*
@@ -1154,8 +1180,9 @@ hook_timer_exec ()
                 HOOK_TIMER(ptr_hook, last_exec).tv_sec = tv_time.tv_sec;
                 HOOK_TIMER(ptr_hook, last_exec).tv_usec = tv_time.tv_usec;
 
-                util_timeval_add (&HOOK_TIMER(ptr_hook, next_exec),
-                                  HOOK_TIMER(ptr_hook, interval));
+                util_timeval_add (
+                    &HOOK_TIMER(ptr_hook, next_exec),
+                    ((long long)HOOK_TIMER(ptr_hook, interval)) * 1000);
 
                 if (HOOK_TIMER(ptr_hook, remaining_calls) > 0)
                 {
@@ -1517,7 +1544,7 @@ hook_process_child (struct t_hook *hook_process)
         (void) f;
     }
 
-    rc = EXIT_SUCCESS;
+    rc = EXIT_FAILURE;
 
     if (strncmp (HOOK_PROCESS(hook_process, command), "url:", 4) == 0)
     {
@@ -1605,7 +1632,6 @@ hook_process_child (struct t_hook *hook_process)
             string_free_split (exec_args);
         fprintf (stderr, "Error with command '%s'\n",
                  HOOK_PROCESS(hook_process, command));
-        rc = EXIT_FAILURE;
     }
 
     fflush (stdout);

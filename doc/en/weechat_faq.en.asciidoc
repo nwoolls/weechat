@@ -51,6 +51,21 @@ This package is built almost every day using git repository. Note that this
 package may not correspond exactly to git base and that it's less convenient
 than git cloning for installing updates.
 
+[[compile_osx]]
+=== How can I install WeeChat on OS X?
+
+It is recommended to use http://brew.sh/[Homebrew], you can get help with:
+
+----
+brew info weechat
+----
+
+You can install WeeChat with this command:
+
+----
+brew install weechat --with-python --with-perl
+----
+
 [[lost]]
 === I've launched WeeChat, but I'm lost, what can I do?
 
@@ -648,7 +663,18 @@ For WeeChat ≤ 0.3.3, options are 'irc.network.away_check' and
 [[highlight_notification]]
 === How can I be warned when someone highlights me on a channel?
 
-You can use a script like 'beep.pl' or 'launcher.pl'.
+With WeeChat ≥ 1.0, there is a default trigger "beep" which sends a 'BEL' to
+the terminal on a highlight or private message. Thus you can configure your
+terminal (or multiplexer like screen/tmux) to run a command or play a sound
+when a 'BEL' occurs.
+
+Or you can add a command in "beep" trigger:
+
+----
+/set trigger.trigger.beep.command "/print -beep;/exec -bg /path/to/command arguments"
+----
+
+With an older WeeChat, you can use a script like 'beep.pl' or 'launcher.pl'.
 
 For 'launcher.pl', you have to setup command:
 

@@ -59,7 +59,7 @@
 ** valori: on, off (valore predefinito: `on`)
 
 * [[option_relay.irc.backlog_tags]] *relay.irc.backlog_tags*
-** descrizione: `tags of messages which are displayed in backlog per IRC channel (supported tags: "irc_join", "irc_part", "irc_quit", "irc_nick", "irc_privmsg"), "*" = all supported tags`
+** descrizione: `comma-separated list of messages tags which are displayed in backlog per IRC channel (supported tags: "irc_join", "irc_part", "irc_quit", "irc_nick", "irc_privmsg"), "*" = all supported tags`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `"irc_privmsg"`)
 
@@ -117,6 +117,11 @@
 ** descrizione: `file con il certificato SSL e la chiave privata (per servire i client con SSL)`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `"%h/ssl/relay.pem"`)
+
+* [[option_relay.network.ssl_priorities]] *relay.network.ssl_priorities*
+** descrizione: `stringa con le priorità per gnutls (per la sintassi, consultare la documentazione per la funzione gnutls_priority_init nel manuale di gnutls, stringhe comuni sono: "PERFORMANCE", "NORMAL", "SECURE128", "SECURE256", "EXPORT", "NONE")`
+** tipo: stringa
+** valori: qualsiasi stringa (valore predefinito: `"NORMAL:-VERS-SSL3.0"`)
 
 * [[option_relay.network.websocket_allowed_origins]] *relay.network.websocket_allowed_origins*
 ** descrizione: `POSIX extended regular expression with origins allowed in websockets (case insensitive, use "(?-i)" at beginning to make it case sensitive), example: "^http://(www\.)?example\.(com|org)"`

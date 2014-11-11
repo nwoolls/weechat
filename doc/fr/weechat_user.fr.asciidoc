@@ -46,7 +46,7 @@ Pour installer WeeChat, vous devez avoir :
 * un système GNU/Linux (avec le compilateur et les outils associés pour le
   paquet des sources), ou un système compatible
 * droits "root" (pour installer WeeChat dans un répertoire système)
-* la bibliothèque ncurses
+* quelques bibliothèques (voir les <<dependencies,dépendances>>).
 
 [[install]]
 == Installation
@@ -76,6 +76,11 @@ la distribution pour la méthode d'installation.
 WeeChat peut être compilé avec cmake ou les autotools (cmake est la méthode
 recommandée).
 
+[NOTE]
+Sous OS X, vous pouvez utiliser http://brew.sh/[Homebrew] :
+`brew install weechat --with-python --with-perl`
+(pour l'aide : `brew info weechat`).
+
 [[dependencies]]
 ==== Dépendances
 
@@ -86,18 +91,19 @@ compiler WeeChat.
 |===
 | Paquet ^(1)^                    | Version     | Requis | Fonctionnalité
 | cmake                           |             | *oui*  | Construction (autotools toujours possible, mais cmake est recommandé)
+| pkg-config                      |             | *oui*  | Détection des bibliothèques installées
 | libncursesw5-dev ^(2)^          |             | *oui*  | Interface ncurses
 | libcurl4-gnutls-dev             |             | *oui*  | Transfert d'URL
 | zlib1g-dev                      |             | *oui*  | Compression des paquets dans l'extension relay (protocole weechat), extension script
-| libgcrypt11-dev                 |             | *oui*  | Données sécurisées, authentification IRC SASL (DH-BLOWFISH/DH-AES), extension script
-| libgnutls-dev                   | ≥ 2.2.0     |        | Connexion SSL au serveur IRC, support SSL dans l'extension relay
+| libgcrypt20-dev                 |             | *oui*  | Données sécurisées, authentification IRC SASL (DH-BLOWFISH/DH-AES), extension script
+| libgnutls28-dev                 | ≥ 2.2.0     |        | Connexion SSL au serveur IRC, support SSL dans l'extension relay
 | gettext                         |             |        | Internationalisation (traduction des messages; la langue de base est l'anglais)
 | ca-certificates                 |             |        | Certificats pour les connexions SSL
 | libaspell-dev ou libenchant-dev |             |        | Extension aspell
 | python-dev                      | ≥ 2.5 ^(3)^ |        | Extension python
 | libperl-dev                     |             |        | Extension perl
-| ruby1.9.1-dev                   | ≥ 1.8       |        | Extension ruby
-| liblua5.1-0-dev                 |             |        | Extension lua
+| ruby2.1-dev                     | ≥ 1.8       |        | Extension ruby
+| liblua5.2-dev                   |             |        | Extension lua
 | tcl-dev                         | ≥ 8.5       |        | Extension tcl
 | guile-2.0-dev                   | ≥ 2.0       |        | Extension guile (scheme)
 | asciidoc                        | ≥ 8.5.0     |        | Construction de la page man et de la documentation
@@ -510,11 +516,11 @@ L'écran est composé des zones suivantes :
 
 La barre 'status' contient les objets (items) suivants par défaut :
 
-[width="100%",cols="^3,^3,10",options="header"]
+[width="100%",cols="^3,^4,10",options="header"]
 |===
 | Objet (item)          | Exemple               | Description
 | time                  | `[12:55]`             | Heure
-| buffer_count          | `[6]`                 | Nombre de tampons ouverts
+| buffer_last_number    | `[6]`                 | Numéro du dernier tampon de la liste
 | buffer_plugin         | `[irc/freenode]`      | Extension du tampon courant (l'extension irc peut afficher le nom du serveur IRC auquel est rattaché ce tampon)
 | buffer_number         | `3`                   | Numéro du tampon courant
 | buffer_name           | `#test`               | Nom du tampon courant
@@ -522,22 +528,37 @@ La barre 'status' contient les objets (items) suivants par défaut :
 | buffer_nicklist_count | `{4}`                 | Nombre de pseudos dans la liste des pseudos
 | buffer_zoom           | !                     | `!` signifie que le tampon mélangé est zoomé, une valeur vide signifie que tous les tampons mélangés sont affichés
 | buffer_filter         | `*`                   | Indicateur de filtrage : `*` signifie que des lignes sont filtrées (cachées), une valeur vide signifie que toutes les lignes sont affichées
+| scroll                | `-PLUS(50)-`          | Indicateur de scroll, avec le nombre de lignes sous la dernière ligne affichée
 | lag                   | `[Lag: 2.5]`          | Indicateur de "lag" (ralentissements réseau), en secondes (caché si le lag est faible)
 | hotlist               | `[H: 4:#abc(2,5), 6]` | Liste des tampons où il y a de l'activité (messages non lus) (dans cet exemple, 2 highlights et 5 messages non lus sur '#abc', un message non lu sur le tampon numéro 6)
 | completion            | `abc(2) def(5)`       | Liste des mots pour la complétion, avec le nombre de complétions possibles pour chaque mot
-| scroll                | `-PLUS(50)-`          | Indicateur de scroll, avec le nombre de lignes sous la dernière ligne affichée
 |===
 
 La barre 'input' contient les objets (items) suivants par défaut :
 
-[width="100%",cols="^3,^6,8",options="header"]
+[width="100%",cols="^3,^4,10",options="header"]
 |===
 | Objet (item) | Exemple                                         | Description
-| input_paste  | `[Coller 7 lignes ? [ctrl-Y] Oui [ctrl-N] Non]` | Question à l'utilisateur pour coller des lignes
 | input_prompt | `[@Flashy(i)]`                                  | Prompt, pour irc: pseudo et modes (le mode "+i" signifie invisible sur freenode)
 | away         | `(absent)`                                      | Indicateur d'absence
 | input_search | `[Recherche (~ str,msg)]`                       | Indicateur de recherche de texte ("`~`" : insensible à la casse, "`==`" : sensible à la casse, "`str`" : recherche de chaîne, "`regex`" : recherche d'expression régulière, "`msg`" : recherche dans les messages, "`pre`" : recherche dans les préfixes, "`pre\|msg`" : recherche dans les préfixes et messages)
+| input_paste  | `[Coller 7 lignes ? [ctrl-Y] Oui [ctrl-N] Non]` | Question à l'utilisateur pour coller des lignes
 | input_text   | `salut peter !`                                 | Texte entré
+|===
+
+Autres objets (non utilisés dans des barres par défaut) :
+
+[width="100%",cols="^3,^4,10",options="header"]
+|===
+| Objet (item)      | Exemple             | Description
+| aspell_dict       | `fr,en`             | Dictionnaires utilisés pour la vérification de l'orthographe sur le tampon courant
+| aspell_suggest    | `print,prone,prune` | Suggestions pour le mot sous le curseur (si mal orthographié)
+| buffer_count      | `10`                | Nombre total de tampons ouverts
+| buffer_short_name | `#test`             | Nom court du tampon courant
+| irc_channel       | `#test`             | Nom de canal IRC courant
+| irc_nick_modes    | `@`                 | Modes IRC pour le pseudo
+| mouse_status      | `M`                 | Statut de la souris (vide si la souris est désactivée)
+| window_number     | `2`                 | Numéro de la fenêtre courante
 |===
 
 [[buffers_and_windows]]
@@ -1438,7 +1459,7 @@ Exemple : affichage de "bonjour tout le monde !" avec "bonjour" en bleu clair
 gras, et "tout le monde" en rouge clair souligné :
 
 ----
-^Cc12^Cbbonjour ^Cb^Cc04^Cutout le monde^Cu^Cc !
+^Cc12^Cbbonjour ^Cb^Cc04^C_tout le monde^C_^Cc !
 ----
 
 [NOTE]
@@ -1630,7 +1651,7 @@ Le chiffrement des données se fait en 3 étapes :
 
 . Dériver une clé de la phrase secrète (avec du salage en option).
 . Calculer la somme de contrôle des données à chiffrer.
-. Chiffrer la seomme de contrôle + les données (la sortie est : sel + somme de
+. Chiffrer la somme de contrôle + les données (la sortie est : sel + somme de
   contrôle et données chiffrées).
 
 [NOTE]
@@ -2026,8 +2047,8 @@ Sections :
 [width="100%",cols="3m,6m,16",options="header"]
 |===
 | Section | Commande de contrôle | Description
-| command | /set exec.command.*  | Options for commands
-| color   | /set exec.color.*    | Colors
+| command | /set exec.command.*  | Options pour les commandes
+| color   | /set exec.color.*    | Couleurs
 |===
 
 Options :
@@ -3155,17 +3176,17 @@ caractères identiques).
 
 Les groupes de correspondance peuvent être utilisés dans le "remplacement" :
 
-* `$0` à `$99` : `$0` est la correspondance complète, `$1` à `$99` sont les
-  groupes capturés
-* `$+` : la dernière correspondance (avec le numéro le plus élevé)
-* `$.cN` : la correspondance "N" avec tous les caractères remplacés par "c"
-  (exemple : `$.*2` est le groupe n°2 avec tous les caractères remplacés par
-  `*`).
+* `${re:0}` à `${re:99}` : `${re:0}` est la correspondance complète, `${re:1}`
+  à `${re:99}` sont les groupes capturés
+* `${re:+}` : la dernière correspondance (avec le numéro le plus élevé)
+* `${hide:c,${re:N}}` : la correspondance "N" avec tous les caractères
+  remplacés par "c" (exemple : `${hide:*,${re:2}}` est le groupe n°2 avec tous
+  les caractères remplacés par `*`).
 
 Exemple : utiliser du gras pour les mots entre "*" :
 
 ----
-/\*(\S+)\*/*${color:bold}$1${color:-bold}*/
+/\*(\S+)\*/*${color:bold}${re:1}${color:-bold}*/
 ----
 
 Exemple : le trigger par défaut 'server_pass' utilise cette expression régulière
@@ -3173,7 +3194,7 @@ pour cacher le mot de passe dans les commandes `/server` et `/connect` (les
 caractères des mots de passe sont remplacés par `*`) :
 
 ----
-==^(/(server|connect) .*-(sasl_)?password=)(\S+)(.*)==$1$.*4$5
+==^(/(server|connect) .*-(sasl_)?password=)(\S+)(.*)==${re:1}${hide:*,${re:4}}${re:5}
 ----
 
 [NOTE]
@@ -3239,7 +3260,7 @@ suivantes sont ajoutées dans la table de hachage :
 | message_without_tags | chaîne | Message sans les étiquettes
 | nick                 | chaîne | Pseudo
 | host                 | chaîne | Nom d'hôte
-| command              | chaîne | Commane IRC (exemple : "PRIVMSG", "NOTICE", ...)
+| command              | chaîne | Commande IRC (exemple : "PRIVMSG", "NOTICE", ...)
 | channel              | chaîne | Canal IRC
 | arguments            | chaîne | Paramètres de la commande (inclut la valeur de 'channel')
 |===
@@ -3300,7 +3321,7 @@ Le callback "print" définit les variables suivantes dans la table de hachage :
 [width="100%",cols="3m,2,14",options="header"]
 |===
 | Variable           | Type     | Description
-| buffer             | pointeur | Buffer
+| buffer             | pointeur | Tampon
 | tg_date            | chaîne   | Date/heure du message (format : `YYYY-MM-DD hh:mm:ss`)
 | tg_displayed       | chaîne   | "1" si affiché, "0" si ligne filtrée
 | tg_highlight       | chaîne   | "1" si highlight, sinon "0"
@@ -3495,14 +3516,14 @@ include::autogen/user/xfer_commands.asciidoc[]
 == Support
 
 Avant de faire appel au support, merci de lire la documentation et la FAQ de
-WeeChat (la documentation est le document que vous êtes en train de lire, si
-vous n'avez pas tout lu jusqu'ici, il est encore temps de recommencer !).
+WeeChat.
 
-Moyens d'obtenir du support :
+Pour le support via IRC, sur le serveur 'chat.freenode.net' :
 
-* IRC : serveur 'irc.freenode.net', canaux '#weechat' (anglais) et
-  '#weechat-fr' (français)
-* Liste de diffusion :
-** inscription : http://mail.nongnu.org/mailman/listinfo/weechat-support
-** envoi d'un mail à weechat-support@nongnu.org
-** archives : http://mail.nongnu.org/archive/html/weechat-support
+* canaux officiels (avec les développeurs) :
+** '#weechat' (Anglais)
+** '#weechat-fr' (Français)
+* canaux non officiels :
+** '#weechat-de' (Allemand)
+
+Pour les autres formes de support, voir : http://weechat.org/dev/support

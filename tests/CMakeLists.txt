@@ -26,11 +26,11 @@ set(LIB_WEECHAT_NCURSES_FAKE_SRC ncurses-fake.c)
 add_library(weechat_ncurses_fake STATIC ${LIB_WEECHAT_NCURSES_FAKE_SRC})
 
 remove_definitions(-DHAVE_CONFIG_H)
-include_directories(${CPPUTEST_INCLUDE_DIRS})
-include_directories(${PROJECT_BINARY_DIR})
+include_directories(${CPPUTEST_INCLUDE_DIRS} ${PROJECT_BINARY_DIR} ${PROJECT_SOURCE_DIR})
 
 # unit tests
 set(LIB_WEECHAT_UNIT_TESTS_SRC
+  unit/core/test-arraylist.cpp
   unit/core/test-eval.cpp
   unit/core/test-hashtable.cpp
   unit/core/test-hdata.cpp
@@ -44,7 +44,7 @@ set(LIB_WEECHAT_UNIT_TESTS_SRC
 add_library(weechat_unit_tests STATIC ${LIB_WEECHAT_UNIT_TESTS_SRC})
 
 # binary to run tests
-set(WEECHAT_TESTS_SRC tests.cpp)
+set(WEECHAT_TESTS_SRC tests.cpp tests.h)
 add_executable(tests ${WEECHAT_TESTS_SRC})
 set(LIBS
   ${LIBS}
@@ -54,6 +54,8 @@ set(LIBS
   ${PROJECT_BINARY_DIR}/src/gui/curses/libweechat_gui_curses.a
   ${CMAKE_CURRENT_BINARY_DIR}/libweechat_ncurses_fake.a
   ${CMAKE_CURRENT_BINARY_DIR}/libweechat_unit_tests.a
+  # due to circular references, we must link two times with libweechat_core.a
+  ${PROJECT_BINARY_DIR}/src/core/libweechat_core.a
   ${EXTRA_LIBS}
   ${CURL_LIBRARIES}
   ${CPPUTEST_LIBRARIES})
@@ -66,4 +68,4 @@ add_dependencies(tests
 # test for cmake (ctest)
 add_test(NAME unit
   WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
-  COMMAND tests)
+  COMMAND tests -v)

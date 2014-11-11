@@ -55,14 +55,17 @@ Alphabetically:
 * Matt Robinson
 * Mantas Mikulėnas (grawity)
 * Mateusz Poszwa
+* Max Anton Teufel
 * Murilo Opsfelder Araujo
 * Nicolas Cavigneaux
 * Nils Görs (nils_2)
+* nyuszika7h
 * Odin
 * Patrick Steinhardt
 * Paul Komkoff
 * Pavel Shevchuk (Stalwart)
 * Peter Boström (pbos)
+* Phillip Sz
 * Pierre Carru
 * Piotr Szymaniak
 * Pistos
@@ -78,6 +81,7 @@ Alphabetically:
 * Simon Kuhnle
 * Stefano Pigozzi
 * Stfn
+* Tim D. Smith
 * Tom Alsberg
 * Tor Hveem (xt)
 * Valentin Lorentz (progval)
@@ -86,7 +90,5 @@ Alphabetically:
 
 == Contact
 
-Developers are connected to IRC:
-
-* server: 'irc.freenode.net'
-* channels: '#weechat' (English) and '#weechat-fr' (French)
+See http://weechat.org/files/doc/devel/weechat_user.en.html#support[user's guide]
+or http://weechat.org/dev/support

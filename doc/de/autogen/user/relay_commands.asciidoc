@@ -3,8 +3,8 @@
 
 ----
 /relay  list|listfull|listrelay
-        add [ipv4.][ipv6.][ssl.]<protocol.name> <port>
-        del [ipv4.][ipv6.][ssl.]<protocol.name>
+        add <name> <port>
+        del|stop|restart <name>
         raw
         sslcertkey
 
@@ -13,15 +13,23 @@
     listrelay: Auflistung der Relays (Name und Port)
           add: fügt ein Relay, für ein Protokoll + Name, hinzu
           del: entfernt Relay für ein Protokoll + Name
+         stop: schließt den Server Socket (Clients bleiben verbunden)
+      restart: beendet den Server Socket und lauscht erneut am Port (Clients bleiben verbunden)
+         name: Name des Relays (siehe Format weiter unten)
+         port: Port der für Relay genutzt werden soll
+          raw: öffnet einen Buffer mit Relay-Rohdaten
+   sslcertkey: setzt SSL Zertifikat/Schlüssel mittels Pfad in Option relay.network.ssl_cert_key
+
+Aufbau des Relay-Namens: [ipv4.][ipv6.][ssl.]<Protokoll.Name>
          ipv4: erzwingt die Nutzung von IPv4
          ipv6: erzwingt die Nutzung von IPv6
           ssl: aktiviert SSL
-protocol.name: Protokoll und Name des Relay:
-                 - Protokoll "irc": Name des Servers welcher geteilt werden soll (optional). Wird kein Name angegeben, dann muss der Client den Servernamen mittels Befehl "PASS" anfordern. Format: "PASS Server:Passwort")
-                 - Protokoll "weechat" (Name wird nicht unterstützt)
-         port: Port den das Relay nutzen soll
-          raw: öffnet Buffer mit RAW-Relay Daten
-   sslcertkey: setzt SSL Zertifikat/Schlüssel mittels Eintrag in Option relay.network.ssl_cert_key
+protocol.name: Protokoll und Name relay:
+                 - Protokoll "irc": Name des Servers welcher geteilt werden soll (optional. Falls kein Name angegeben wird, muss der Client einen Namen mit dem Befehl "PASS" übermitteln, das Format ist wie folgt: "PASS Server:Passwort")
+                 - Protokoll "weechat" (es wird kein Name verwendet)
+
+Das "irc" Protokoll dient dazu eine Verbindung zu einem anderen IRC Client (oder zu einem zweiten WeeChat) herzustellen.
+Das "weechat" Protokoll wird von einem Remote-Interface genutzt um eine Verbindung herzustellen. Siehe http://weechat.org/download/
 
 Ohne Angabe von Argumenten werden alle Relay-Clients in einem neuen Buffer dargestellt.
 
